@@ -58,13 +58,21 @@ COLLATE = utf8_general_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wto`.`image_vote` (
   `idvote` INT NOT NULL AUTO_INCREMENT,
+  `iduser` INT NOT NULL,
   `idimage` INT NOT NULL COMMENT 'this attribute is the id either of the image or the comment',
   `votetype` TINYINT(1) NOT NULL COMMENT 'true is upvote\nfalse is downvote',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idvote`),
+  INDEX `fk_image_vote_user1_idx` (`iduser` ASC),
+  UNIQUE INDEX `index3` (`iduser` ASC, `idimage` ASC),
   CONSTRAINT `fk_vote_2`
     FOREIGN KEY (`idimage`)
     REFERENCES `wto`.`image` (`idimage`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_image_vote_user1`
+    FOREIGN KEY (`iduser`)
+    REFERENCES `wto`.`user` (`iduser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -128,14 +136,22 @@ COLLATE = utf8_general_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wto`.`comment_vote` (
   `idvote` INT NOT NULL AUTO_INCREMENT,
+  `iduser` INT NOT NULL,
   `idcomment` INT NOT NULL COMMENT 'this attribute is the id either of the image or the comment',
   `votetype` TINYINT(1) NOT NULL COMMENT 'true is upvote\nfalse is downvote',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idvote`),
   INDEX `fk_comment_vote_comment1_idx` (`idcomment` ASC),
+  INDEX `fk_comment_vote_user1_idx` (`iduser` ASC),
+  UNIQUE INDEX `index4` (`iduser` ASC, `idcomment` ASC),
   CONSTRAINT `fk_comment_vote_comment1`
     FOREIGN KEY (`idcomment`)
     REFERENCES `wto`.`comment` (`idcomment`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_comment_vote_user1`
+    FOREIGN KEY (`iduser`)
+    REFERENCES `wto`.`user` (`iduser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB

@@ -153,10 +153,10 @@ DELIMITER $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_INSERT` AFTER INSERT ON `image_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` + 1 ;
+	IF NEW.`votetype` = TRUE THEN
+		UPDATE `image` SET `points` = `points` + 1;
 	ELSE
-		UPDATE `comment` SET `points` = `points` - 1;
+		UPDATE `image` SET `points` = `points` - 1;
 	END IF;
 END
 $$
@@ -164,10 +164,10 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_UPDATE` AFTER UPDATE ON `image_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` + 2 ;
+	IF NEW.`votetype` = TRUE THEN
+		UPDATE `image` SET `points` = `points` + 2 ;
 	ELSE
-		UPDATE `comment` SET `points` = `points` - 2;
+		UPDATE `image` SET `points` = `points` - 2;
 	END IF;
 END
 $$
@@ -175,10 +175,10 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_BEFORE_DELETE` BEFORE DELETE ON `image_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` - 1 ;
+	IF OLD.`votetype` = TRUE THEN
+		UPDATE `image` SET `points` = `points` - 1 ;
 	ELSE
-		UPDATE `comment` SET `points` = `points` + 1;
+		UPDATE `image` SET `points` = `points` + 1;
 	END IF;
 END
 $$
@@ -186,7 +186,7 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_INSERT` AFTER INSERT ON `comment_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
+	IF NEW.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` + 1 ;
 	ELSE
 		UPDATE `comment` SET `points` = `points` - 1;
@@ -197,7 +197,7 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_UPDATE` AFTER UPDATE ON `comment_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
+	IF NEW.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` + 2 ;
 	ELSE
 		UPDATE `comment` SET `points` = `points` - 2;
@@ -208,7 +208,7 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_BEFORE_DELETE` BEFORE DELETE ON `comment_vote` FOR EACH ROW
 BEGIN
-	IF `votetype` = TRUE THEN
+	IF OLD.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` - 1 ;
 	ELSE
 		UPDATE `comment` SET `points` = `points` + 1;

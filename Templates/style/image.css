@@ -1,0 +1,86 @@
+.image {
+	width: 100%;
+	margin-top:40px;
+	margin-bottom: -15px;
+}
+
+.image img {
+	width: 100%;
+}
+
+.imageTitle {
+	font-size: 30px;
+}
+
+.imagePoints {
+	position: relative;
+	float: right;
+	bottom: 3px;
+	color: #3A3;
+}
+
+.mainContent {
+	margin: 0 auto;
+	width: 1000px;
+}
+
+.commentArea {
+	width: 100%;
+	background-color: #222;
+	margin-bottom: 40px;
+	color: #FFF;
+}
+
+.commentAreaWrapper {
+	padding:20px;
+}
+
+.comment {
+	position: relative;
+	margin-top: 10px;
+}
+
+.comment .body {
+	width: 100%;
+	font-size: 18px;
+}
+
+.comment .meta {
+	font-size: 14px;
+	color: #999;
+}
+
+#username{
+	color: #6AF;
+}
+
+.comment input {
+	padding: 10px;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.votes {
+	position: relative;
+	bottom: 3px;
+	float: right;
+}
+
+#upvote {
+	color: #6A6;
+}
+
+#downvote {
+	color: #A66;
+}
+
+.voteBar {
+	background-color: #A00;
+	width: 100%;
+}
+
+.upvotes {
+	width: 99.4%;
+	background-color: #0A0;
+	height: 2px;
+}

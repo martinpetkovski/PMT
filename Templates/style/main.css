@@ -18,6 +18,7 @@ input {
 	padding: 13px;
 	font-size: 16px;
 	background-color: #222;
+	color: #FFF;
 }
 
 input:focus {

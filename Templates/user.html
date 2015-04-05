@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<title>WTO Front Page</title>
+	<link rel="stylesheet" href="style/main.css" />	
+	<link rel="stylesheet" href="style/user.css" />	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="script/main.js"></script>
+</head>
+<body>
+	<!-- HEADER START -->
+	<header>
+		<div class="headerContainer">
+			<a href="."><div class="logo"><div class="wto">WTO</div> imager</div></a>
+			<div class="buttonArea">
+				<div class="search">
+					<input type="text" placeholder="Search..."/>
+				</div>
+				<div class="button" id="login">Login</div>
+				<div class="button" id="register">Register</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="dropMenu" id="login">
+		<div class="dropMenuWrapper">
+			<div class="title">Login</div>
+			<input type="text" placeholder="username or email" /><br/>
+			<input type="password" placeholder="password" /><button class="button" id="submit">-></button>
+		</div>
+	</div>
+
+	<div class="dropMenu" id="register">
+		<div class="dropMenuWrapper">
+			<div class="title">Register</div>
+			<input type="text" placeholder="username" /><br/>
+			<input type="email" placeholder="email" /><br/>
+			<input type="password" placeholder="password" /><button class="button" id="submit">-></button>
+		</div>
+	</div>
+	<!-- HEADER END -->
+
+	<!-- MAIN CONTENT START -->
+	
+
+	<div class="mainContent">
+		<div class="userMetaData">
+			<div class="username">ThisIsAUsername</div>
+			<div class="metaDataWrapper">
+				<div class="metaItem" id="active"><span class="number" >42</span> images </div><span class="siz">//</span>
+				<div class="metaItem"><span class="number">42</span> comments </div><span class="siz">//</span>
+				<div class="metaItem"><span class="number">42</span> points</div>
+			</div>
+		</div>
+
+		<div class="mainContentWrapper" id="user">
+			<div class="contentTitle">Showing submitted images</div>
+
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="http://i.imgur.com/rYRfq7t.gif" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sed nisl rhoncus, pulvinar augue ut, tempor mauris. Nunc lobortis neque dapibus gravida sagittis. Nulla elementum nisl leo, quis auctor odio placerat semper. Mauris vitae auctor erat, ut tincidunt lectus. Phasellus pretium nisi sed leo cursus efficitur sed ut velit. Vestibulum ornare diam lacus, non congue mi tincidunt a. Curabitur cursus sed lectus non rhoncus.
+
+Integer lacinia eget nisi quis congue. Curabitur ornare venenatis ligula sed facilisis. Suspendisse potenti. Phasellus eu lacus tristique lacus gravida semper. Donec nec sodales arcu, sit amet maximus lorem. In at lacus quis dolor luctus lacinia vel sit amet odio. Phasellus sit amet mollis lacus.
+
+Duis aliquam non nunc in consequat. Aenean mollis turpis nec nunc facilisis porttitor. Nulla vel tincidunt diam, id feugiat nisl. Cras eleifend porttitor lorem, et cursus purus faucibus nec. Proin condimentum risus tellus, malesuada facilisis nisl condimentum sed. Donec ac eros in velit lobortis finibus. Pellentesque diam ante, pretium vitae interdum vel, semper nec erat. Maecenas lectus lorem, porttitor id purus et, dictum faucibus justo. Pellentesque facilisis lacus urna, vitae luctus mauris mattis id. Aenean varius velit sed semper elementum. Quisque ac feugiat ipsum. Etiam maximus suscipit facilisis.
+				</div>
+				
+			</div>
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="http://i.imgur.com/wha8mRG.png" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span> Test
+				</div>
+				
+			</div>
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="http://www.gifsec.com/wp-content/uploads/GIF/2014/06/GIF-Hacker.gif" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span> File &gt; New &gt; Hack
+				</div>
+			</div>
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="http://newyorknotebook.net/wp-content/uploads/2013/01/tumblr_mcqr5svWbC1r4uh3mo1_500.jpg" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span> New York
+					</div>
+			</div>
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="https://imgs.xkcd.com/comics/standards.png" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span> Standards - xkcd
+				</div>
+			</div>
+			<div class="image">
+				<a href="image.html"><div class="content"><img src="http://newyorknotebook.net/wp-content/uploads/2013/01/tumblr_mcqr5svWbC1r4uh3mo1_500.jpg" /></div></a>
+				<div class="title">
+					<div class="points">4687 points</div>
+					<div class="titleMeta"><span id="upvote">upvote</span> <span id="downvote">downvote</span> - 06.04.2015 at 01:06</div>
+					<span class="titleSiz">&gt;&gt;</span> New York
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- MAIN CONTENT END -->
+
+	<!-- FOOTER START -->
+	<footer></footer>
+	<!-- FOOTER END -->
+</body>
+</html>

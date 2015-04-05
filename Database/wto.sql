@@ -22,8 +22,10 @@ CREATE TABLE IF NOT EXISTS `wto`.`user` (
   `username` VARCHAR(16) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
   `password` MEDIUMTEXT NOT NULL,
+  `points` INT NOT NULL,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`iduser`))
+  PRIMARY KEY (`iduser`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8
@@ -63,8 +65,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`image_vote` (
   `votetype` TINYINT(1) NOT NULL COMMENT 'true is upvote\nfalse is downvote',
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idvote`),
-  INDEX `fk_image_vote_user1_idx` (`iduser` ASC),
-  UNIQUE INDEX `index3` (`iduser` ASC, `idimage` ASC),
+  UNIQUE INDEX `index2` (`iduser` ASC, `idimage` ASC),
   CONSTRAINT `fk_vote_2`
     FOREIGN KEY (`idimage`)
     REFERENCES `wto`.`image` (`idimage`)
@@ -142,8 +143,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`comment_vote` (
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idvote`),
   INDEX `fk_comment_vote_comment1_idx` (`idcomment` ASC),
-  INDEX `fk_comment_vote_user1_idx` (`iduser` ASC),
-  UNIQUE INDEX `index4` (`iduser` ASC, `idcomment` ASC),
+  UNIQUE INDEX `index3` (`iduser` ASC, `idcomment` ASC),
   CONSTRAINT `fk_comment_vote_comment1`
     FOREIGN KEY (`idcomment`)
     REFERENCES `wto`.`comment` (`idcomment`)
@@ -159,10 +159,6 @@ AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 USE `wto`;
 
 DELIMITER $$
@@ -171,8 +167,10 @@ CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_INSERT` AFTER INSE
 BEGIN
 	IF NEW.`votetype` = TRUE THEN
 		UPDATE `image` SET `points` = `points` + 1;
+        UPDATE `user` SET `points` = `points` + 1;
 	ELSE
 		UPDATE `image` SET `points` = `points` - 1;
+        UPDATE `user` SET `points` = `points` - 1;
 	END IF;
 END
 $$
@@ -180,10 +178,12 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_UPDATE` AFTER UPDATE ON `image_vote` FOR EACH ROW
 BEGIN
-	IF NEW.`votetype` = TRUE THEN
+	IF NEW.`votetype` = TRUE AND OLD.`votetype` = FALSE THEN 
 		UPDATE `image` SET `points` = `points` + 2 ;
-	ELSE
+        UPDATE `user` SET `points` = `points` + 2;
+	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = FALSE THEN
 		UPDATE `image` SET `points` = `points` - 2;
+        UPDATE `user` SET `points` = `points` - 2;
 	END IF;
 END
 $$
@@ -193,8 +193,10 @@ CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_BEFORE_DELETE` BEFORE DE
 BEGIN
 	IF OLD.`votetype` = TRUE THEN
 		UPDATE `image` SET `points` = `points` - 1 ;
+        UPDATE `user` SET `points` = `points` - 1;
 	ELSE
 		UPDATE `image` SET `points` = `points` + 1;
+        UPDATE `user` SET `points` = `points` + 1;
 	END IF;
 END
 $$
@@ -204,8 +206,10 @@ CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_INSERT` AFTER IN
 BEGIN
 	IF NEW.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` + 1 ;
+        UPDATE `user` SET `points` = `points` + 1;
 	ELSE
 		UPDATE `comment` SET `points` = `points` - 1;
+        UPDATE `user` SET `points` = `points` - 1;
 	END IF;
 END
 $$
@@ -213,10 +217,12 @@ $$
 USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_UPDATE` AFTER UPDATE ON `comment_vote` FOR EACH ROW
 BEGIN
-	IF NEW.`votetype` = TRUE THEN
+	IF NEW.`votetype` = TRUE AND OLD.`votetype` = FALSE THEN
 		UPDATE `comment` SET `points` = `points` + 2 ;
-	ELSE
+        UPDATE `user` SET `points` = `points` + 2;
+	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` - 2;
+        UPDATE `user` SET `points` = `points` - 2;
 	END IF;
 END
 $$
@@ -226,11 +232,17 @@ CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_BEFORE_DELETE` BEFORE 
 BEGIN
 	IF OLD.`votetype` = TRUE THEN
 		UPDATE `comment` SET `points` = `points` - 1 ;
+        UPDATE `user` SET `points` = `points` - 1;
 	ELSE
 		UPDATE `comment` SET `points` = `points` + 1;
+        UPDATE `user` SET `points` = `points` + 1;
 	END IF;
 END
 $$
 
 
 DELIMITER ;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

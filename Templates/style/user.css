@@ -10,16 +10,16 @@
 }
 
 .userMetaData {
-	font-size: 14px;
-	background-color: #111;
 	padding: 20px;
+	background-color: #111;
+	font-size: 14px;
 }
 
 .metaItem {
 	display: inline-block;
+	margin: 0px 5px 5px 0px;
 	padding: 5px;
 	color: #FFF;
-	margin: 0px 5px 5px 0px;
 }
 
 .metaItem#active, .metaItem#active .number {
@@ -40,9 +40,9 @@
 }
 
 .userMetaData .siz, .titleSiz {
-	color: #C00;
 	font-size: 20px;
 	font-weight: bolder;
+	color: #C00;
 }
 
 .userMetaData .siz {
@@ -51,8 +51,9 @@
 
 .userMetaData .number {
 	font-size: 18px;
-	vertical-align: middle;
 	color:#0C0;
+	vertical-align: middle;
+	
 }
 
 .separator {
@@ -66,42 +67,41 @@
 }
 
 .image .content {
-	display: inline-block;
-	background-color: #000;
 	position: relative;
+	display: inline-block;
 	width: 200px;
 	height: 200px;
+	background-color: #000;
 }
 
 .image img {
 	position: absolute;
+	margin: auto;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	margin: auto;
 	max-width: 100%;
 	max-height: 200px;
 }
 
 #user .title {
-	display: inline-block;
 	position: relative;
-	padding: 10px;
-	padding-bottom: 40px;
-	font-size: 18px;
-	vertical-align: top;
+	display: inline-block;
 	margin-left: -5px;
-	background-color: #333;
+	padding: 10px 10px 40px 10px;
 	min-height: 150px;
 	width: 715px;
+	font-size: 18px;
+	background-color: #333;
+	vertical-align: top;
 }
 
 .titleMeta {
 	position: absolute;
-	font-size: 12px;
 	bottom: 5px;
 	right: 5px;
+	font-size: 12px;
 }
 
 .points {
@@ -109,6 +109,9 @@
 	font-size: 16px;
 	bottom: 5px;
 	left: 15px;
+}
+
+.points .numberOfPoints {
 	color: #0A0;
 }
 

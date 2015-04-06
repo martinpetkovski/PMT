@@ -1,9 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Play:400,700&subset=latin,cyrillic);
 
 * {
-	font-family: Play, Arial, Ubuntu;
 	margin: 0;
 	padding: 0;
+	font-family: Play, Arial, Ubuntu;
+	
 }
 
 body {
@@ -13,12 +14,12 @@ body {
 }
 
 input {
-	border: none;
-	width:250px;
 	padding: 13px;
+	width:250px;
 	font-size: 16px;
 	background-color: #222;
 	color: #FFF;
+	border: none;
 }
 
 input:focus {
@@ -39,12 +40,6 @@ hr {
 	border-top:thin solid rgba(255,255,255,0.1);
 }
 
-/*
- *
- * HEADER 
- *
- */
-
 header {
 	width: 100%;
 	background-color:#F6F6F6;
@@ -64,11 +59,11 @@ header {
 }
 
 .button {
+	display: inline-block;
+	padding: 12px;
+	font-size:18px;
 	background-color: #069;
 	color:#FFF;
-	display: inline-block;
-	font-size:18px;
-	padding: 12px;
 }
 
 .button:hover {
@@ -77,8 +72,8 @@ header {
 }
 
 .button:active {
-	border: none;
 	background-color: #148;
+	border: none;
 }
 
 .button#submit {
@@ -88,11 +83,11 @@ header {
 
 .wto {
 	display: inline-block;	
-	background-color: #066;
-	font-weight: 700;
 	padding: 5px;
 	margin: 3px 0px;
+	font-weight: 700;
 	color: #FFF;
+	background-color: #066;
 }
 
 .logo {
@@ -110,12 +105,12 @@ header {
 }
 
 .dropMenu {
-	margin: 0 auto;
-	width: 1000px;
-	padding-top:20px;
-	text-align: right;
-	background-color: #111;
 	display: none;
+	margin: 0 auto;
+	padding-top:20px;
+	width: 1000px;
+	background-color: #111;
+	text-align: right;
 }
 
 .dropMenuWrapper {

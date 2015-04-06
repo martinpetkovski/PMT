@@ -2,129 +2,211 @@
 <html>
 <head>
 	<meta charset="utf8">
+
 	<title>WTO Front Page</title>
-	<link rel="stylesheet" href="style/main.css" />	
-	<link rel="stylesheet" href="style/image.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script type="text/javascript" src="script/main.js"></script>
+	<link href="style/main.css" rel="stylesheet">
+	<link href="style/image.css" rel="stylesheet">
+	<script src=
+	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="script/main.js" type="text/javascript"></script>
 </head>
+
 <body>
 	<!-- HEADER START -->
+
+
 	<header>
 		<div class="headerContainer">
-			<a href="."><div class="logo"><div class="wto">WTO</div> imager</div></a>
+			<a href=".">
+			<div class="logo">
+				<div class="wto">
+					WTO
+				</div>
+				imager
+			</div></a>
+
 			<div class="buttonArea">
 				<div class="search">
-					<input type="text" placeholder="Search..."/>
+					<input placeholder="Search..." type="text">
 				</div>
-				<div class="button" id="login">Login</div>
-				<div class="button" id="register">Register</div>
+
+
+				<div class="button" id="login">
+					Login
+				</div>
+
+
+				<div class="button" id="register">
+					Register
+				</div>
 			</div>
 		</div>
 	</header>
 	<!-- HEADER END -->
-
 	<!-- MAIN CONTENT START -->
+
+
 	<div class="dropMenu" id="login">
 		<div class="dropMenuWrapper">
-			<div class="title">Login</div>
-			<input type="text" placeholder="username or email" /><br/>
-			<input type="password" placeholder="password" /><button class="button" id="submit">-></button>
+			<div class="title">
+				Login
+			</div>
+			<input placeholder="username or email" type="text"><br>
+			<input placeholder="password" type="password"><button class=
+			"button" id="submit">-&gt;</button>
 		</div>
 	</div>
+
 
 	<div class="dropMenu" id="register">
 		<div class="dropMenuWrapper">
-			<div class="title">Register</div>
-			<input type="text" placeholder="username" /><br/>
-			<input type="email" placeholder="email" /><br/>
-			<input type="password" placeholder="password" /><button class="button" id="submit">-></button>
+			<div class="title">
+				Register
+			</div>
+			<input placeholder="username" type="text"><br>
+			<input placeholder="email" type="email"><br>
+			<input placeholder="password" type="password"><button class=
+			"button" id="submit">-&gt;</button>
 		</div>
 	</div>
+
 
 	<div class="mainContent">
 		<div class="imageMeta">
 			<div class="votes">
-				<a href="#"><span id="prev">random</span></a>
-				<a href="#"><span id="prev">&lt;&lt;previous</span></a>
-				<a href="#"><span id="upvote">upvote</span></a>
-				<a href="#"><span id="downvote">downvote</span></a>
-				<a href="#"><span id="next">next&gt;&gt;</span></a>
+				<a href="#"><span id="prev">random</span></a> <a href=
+				"#"><span id="prev">&lt;&lt;previous</span></a> <a href=
+				"#"><span id="upvote">upvote</span></a> <a href="#"><span id=
+				"downvote">downvote</span></a> <a href="#"><span id=
+				"next">next&gt;&gt;</span></a>
 			</div>
-		</div>	
-		<div class="image">
-			<img src="http://th05.deviantart.net/fs71/PRE/i/2012/284/e/7/ode_to_uss_enterprise_ncc_1701_b___3_by_mechinus-d5hfdfd.jpg">
 		</div>
+
+
+		<div class="image"><img src=
+		"http://th05.deviantart.net/fs71/PRE/i/2012/284/e/7/ode_to_uss_enterprise_ncc_1701_b___3_by_mechinus-d5hfdfd.jpg">
+		</div>
+
+
 		<div class="commentArea">
 			<div class="commentAreaWrapper">
 				<div class="imageTitle">
-					<div class="imagePoints">8382</div>
-					<div>Star Trek</div>
-				</div>
-				<div class="comment">
-					<div class="body">
-						<input type="text" placeholder="Write a comment" />
+					<div class="imagePoints">
+						8382
 					</div>
-					<hr/>
+
+
+					<div>
+						Star Trek
+					</div>
 				</div>
+
 
 				<div class="comment">
 					<div class="body">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur tortor et justo pretium bibendum. Suspendisse eget ipsum turpis. Ut sit amet sem mi. Aenean scelerisque eget mi ac fermentum. Aliquam iaculis sem sed ligula rhoncus, sed porta eros interdum. Duis sed iaculis tortor, quis pulvinar justo.
+						<input placeholder="Write a comment" type="text">
 					</div>
+
+					<hr>
+				</div>
+
+
+				<div class="comment">
+					<div class="body">
+						Lorem ipsum dolor sit amet, consectetur adipiscing
+						elit. Aenean efficitur tortor et justo pretium
+						bibendum. Suspendisse eget ipsum turpis. Ut sit amet
+						sem mi. Aenean scelerisque eget mi ac fermentum.
+						Aliquam iaculis sem sed ligula rhoncus, sed porta eros
+						interdum. Duis sed iaculis tortor, quis pulvinar justo.
+					</div>
+
+
 					<div class="votes">
-						<span id="upvote">upvote</span>
-						<span id="downvote">downvote</span>
+						<span id="upvote">upvote</span> <span id=
+						"downvote">downvote</span>
 					</div>
+
+
 					<div class="meta">
-						<span id="username"><a href="user.html">ThisIsAUsername</a></span> //
-						<span id="date">02.01.2015</span> //
-						<span id="points">99</span>
+						<span id="username"><a href=
+						"user.html">ThisIsAUsername</a></span> // <span id=
+						"date">02.01.2015</span> // <span id="points">99</span>
 					</div>
-					<div class="voteBar"><div class="upvotes"></div>
+
+
+					<div class="voteBar">
+						<div class="upvotes">
+						</div>
+					</div>
+
+
+					<div class="comment">
+						<div class="body">
+							iuhfdgi hfuasdh uiashdiu ashidu fhasuidhf uasdhui
+							asdiuf asduif auisdf hedhf asdhf h
+							uihfisfhuasdh9fshdiu ahsudif haud fhudshf hd
+						</div>
+
+
+						<div class="votes">
+							<span id="upvote">upvote</span> <span id=
+							"downvote">downvote</span>
+						</div>
+
+
+						<div class="meta">
+							<span id="username"><a href=
+							"user.html">ThisIsAUsername</a></span> // <span id=
+							"date">02.01.2015</span> // <span id=
+							"points">69</span>
+						</div>
+
+
+						<div class="voteBar">
+							<div class="upvotes" style="width: 69%">
+							</div>
+						</div>
+
+
+						<div class="comment">
+							<div class="body">
+								iuhfdgi hfuasdh uiashdiu ashidu fhasuidhf
+								uasdhui asdiuf asduif auisdf hedhf asdhf h
+								uihfisfhuasdh9fshdiu ahsudif haud fhudshf hd
+							</div>
+
+
+							<div class="votes">
+								<span id="upvote">upvote</span> <span id=
+								"downvote">downvote</span>
+							</div>
+
+
+							<div class="meta">
+								<span id="username"><a href=
+								"user.html">ThisIsAUsername</a></span> //
+								<span id="date">02.01.2015</span> // <span id=
+								"points">42</span>
+							</div>
+
+
+							<div class="voteBar">
+								<div class="upvotes" style="width: 42%">
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-
-				<div class="comment">
-					<div class="body">
-						iuhfdgi hfuasdh uiashdiu ashidu fhasuidhf uasdhui asdiuf asduif auisdf hedhf asdhf h uihfisfhuasdh9fshdiu ahsudif haud fhudshf hd
-					</div>
-					<div class="votes">
-						<span id="upvote">upvote</span>
-						<span id="downvote">downvote</span>
-					</div>
-					<div class="meta">
-						<span id="username"><a href="user.html">ThisIsAUsername</a></span> //
-						<span id="date">02.01.2015</span> //
-						<span id="points">69</span>
-					</div>
-					<div class="voteBar"><div class="upvotes" style="width: 69%"></div>
-				</div>
-
-				<div class="comment">
-					<div class="body">
-						iuhfdgi hfuasdh uiashdiu ashidu fhasuidhf uasdhui asdiuf asduif auisdf hedhf asdhf h uihfisfhuasdh9fshdiu ahsudif haud fhudshf hd
-					</div>
-					<div class="votes">
-						<span id="upvote">upvote</span>
-						<span id="downvote">downvote</span>
-					</div>
-					<div class="meta">
-						<span id="username"><a href="user.html">ThisIsAUsername</a></span> //
-						<span id="date">02.01.2015</span> //
-						<span id="points">42</span>
-					</div>
-					<div class="voteBar"><div class="upvotes" style="width: 42%"></div>
-				</div>
+				<!-- MAIN CONTENT END -->
+				<!-- FOOTER START -->
 
 
+				<footer>
+				</footer>
+				<!-- FOOTER END -->
 			</div>
 		</div>
 	</div>
-	
-	<!-- MAIN CONTENT END -->
-
-	<!-- FOOTER START -->
-	<footer></footer>
-	<!-- FOOTER END -->
 </body>
 </html>

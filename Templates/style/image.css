@@ -44,6 +44,20 @@
 	font-size: 18px;
 }
 
+.comment .button {
+	display: none;
+	position: absolute;
+	width: 5%;
+	bottom: -2px;
+	right: 0px;
+}
+
+.comment input {
+	box-sizing: border-box;
+	padding: 10px;
+	width: 95%;
+}
+
 .comment .meta {
 	font-size: 14px;
 	color: #999;
@@ -53,24 +67,12 @@
 	color: #6AF;
 }
 
-.comment input {
-	box-sizing: border-box;
-	padding: 10px;
-	width: 100%;
-}
+
 
 .votes {
 	position: relative;
 	bottom: 3px;
 	float: right;
-}
-
-#upvote {
-	color: #6A6;
-}
-
-#downvote {
-	color: #A66;
 }
 
 .voteBar {

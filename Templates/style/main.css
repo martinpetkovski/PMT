@@ -42,7 +42,8 @@ hr {
 
 header {
 	width: 100%;
-	background-color:#F6F6F6;
+	background-color:#080808;
+	color: #FFF;
 	box-shadow: 1px 0px 3px #333;
 }
 
@@ -124,4 +125,22 @@ header {
 
 .dropMenu input {
 	margin-top: 10px;
+}
+
+#upvote {
+	color: #6A6;
+}
+
+#downvote {
+	color: #A66;
+}
+
+#upvote:hover {
+	text-shadow:0px 0px 2px #6A6;
+	cursor: pointer;
+}
+
+#downvote:hover {
+	text-shadow:0px 0px 2px #A66;
+	cursor: pointer;
 }

@@ -88,8 +88,8 @@ COMMENT = 'Trigger explanation: \nafter create - if votetype is true increase po
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wto`.`comment` (
   `idcomment` INT NOT NULL AUTO_INCREMENT,
-  `idimage` INT NOT NULL,
   `iduser` INT NOT NULL,
+  `idimage` INT NOT NULL,
   `content` VARCHAR(140) NOT NULL,
   `points` INT NOT NULL DEFAULT 0,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -166,11 +166,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_INSERT` AFTER INSERT ON `image_vote` FOR EACH ROW
 BEGIN
 	IF NEW.`votetype` = TRUE THEN
-		UPDATE `image` SET `points` = `points` + 1;
-        UPDATE `user` SET `points` = `points` + 1;
+		UPDATE `image` SET `points` = `points` + 1 WHERE `image`.`idimage` = NEW.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` + 1 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
 	ELSE
-		UPDATE `image` SET `points` = `points` - 1;
-        UPDATE `user` SET `points` = `points` - 1;
+		UPDATE `image` SET `points` = `points` - 1 WHERE `image`.`idimage` = NEW.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` - 1 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
 	END IF;
 END
 $$
@@ -179,11 +179,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_AFTER_UPDATE` AFTER UPDATE ON `image_vote` FOR EACH ROW
 BEGIN
 	IF NEW.`votetype` = TRUE AND OLD.`votetype` = FALSE THEN 
-		UPDATE `image` SET `points` = `points` + 2 ;
-        UPDATE `user` SET `points` = `points` + 2;
+		UPDATE `image` SET `points` = `points` + 2 WHERE `image`.`idimage` = NEW.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` + 2 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
 	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = FALSE THEN
-		UPDATE `image` SET `points` = `points` - 2;
-        UPDATE `user` SET `points` = `points` - 2;
+		UPDATE `image` SET `points` = `points` - 2 WHERE `image`.`idimage` = NEW.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` - 2 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
 	END IF;
 END
 $$
@@ -192,11 +192,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`image_vote_BEFORE_DELETE` BEFORE DELETE ON `image_vote` FOR EACH ROW
 BEGIN
 	IF OLD.`votetype` = TRUE THEN
-		UPDATE `image` SET `points` = `points` - 1 ;
-        UPDATE `user` SET `points` = `points` - 1;
+		UPDATE `image` SET `points` = `points` - 1 WHERE `image`.`idimage` = OLD.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` - 1 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = OLD.`idimage`);
 	ELSE
-		UPDATE `image` SET `points` = `points` + 1;
-        UPDATE `user` SET `points` = `points` + 1;
+		UPDATE `image` SET `points` = `points` + 1 WHERE `image`.`idimage` = OLD.`idimage`;
+        UPDATE `user`, `image` SET `user`.`points` = `user`.`points` + 1 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = OLD.`idimage`);
 	END IF;
 END
 $$
@@ -205,11 +205,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_INSERT` AFTER INSERT ON `comment_vote` FOR EACH ROW
 BEGIN
 	IF NEW.`votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` + 1 ;
-        UPDATE `user` SET `points` = `points` + 1;
+		UPDATE `comment` SET `points` = `points` + 1 WHERE `comment`.`idcomment` = NEW.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` + 1  WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = NEW.`idcomment`);
 	ELSE
-		UPDATE `comment` SET `points` = `points` - 1;
-        UPDATE `user` SET `points` = `points` - 1;
+		UPDATE `comment` SET `points` = `points` - 1 WHERE `comment`.`idcomment` = NEW.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` - 1 WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = NEW.`idcomment`);
 	END IF;
 END
 $$
@@ -218,11 +218,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_AFTER_UPDATE` AFTER UPDATE ON `comment_vote` FOR EACH ROW
 BEGIN
 	IF NEW.`votetype` = TRUE AND OLD.`votetype` = FALSE THEN
-		UPDATE `comment` SET `points` = `points` + 2 ;
-        UPDATE `user` SET `points` = `points` + 2;
+		UPDATE `comment` SET `points` = `points` + 2 WHERE `comment`.`idcomment` = NEW.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` + 2  WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = NEW.`idcomment`);
 	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` - 2;
-        UPDATE `user` SET `points` = `points` - 2;
+		UPDATE `comment` SET `points` = `points` - 2 WHERE `comment`.`idcomment` = NEW.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` - 2  WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = NEW.`idcomment`);
 	END IF;
 END
 $$
@@ -231,11 +231,11 @@ USE `wto`$$
 CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`comment_vote_BEFORE_DELETE` BEFORE DELETE ON `comment_vote` FOR EACH ROW
 BEGIN
 	IF OLD.`votetype` = TRUE THEN
-		UPDATE `comment` SET `points` = `points` - 1 ;
-        UPDATE `user` SET `points` = `points` - 1;
+		UPDATE `comment` SET `points` = `points` - 1 WHERE `comment`.`idcomment` = OLD.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` - 1  WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = OLD.`idcomment`);
 	ELSE
-		UPDATE `comment` SET `points` = `points` + 1;
-        UPDATE `user` SET `points` = `points` + 1;
+		UPDATE `comment` SET `points` = `points` + 1 WHERE `comment`.`idcomment` = OLD.`idcomment`;
+        UPDATE `user`, `comment` SET `user`.`points` = `user`.`points` + 1  WHERE `user`.`iduser` = (SELECT `iduser` FROM `comment` WHERE `idcomment` = OLD.`idcomment`);
 	END IF;
 END
 $$

@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`image` (
   CONSTRAINT `fk_image_1`
     FOREIGN KEY (`iduser`)
     REFERENCES `wto`.`user` (`iduser`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
@@ -69,12 +69,12 @@ CREATE TABLE IF NOT EXISTS `wto`.`image_vote` (
   CONSTRAINT `fk_vote_2`
     FOREIGN KEY (`idimage`)
     REFERENCES `wto`.`image` (`idimage`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_image_vote_user1`
     FOREIGN KEY (`iduser`)
     REFERENCES `wto`.`user` (`iduser`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
@@ -99,12 +99,12 @@ CREATE TABLE IF NOT EXISTS `wto`.`comment` (
   CONSTRAINT `fk_comment_1`
     FOREIGN KEY (`iduser`)
     REFERENCES `wto`.`user` (`iduser`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_comment_2`
     FOREIGN KEY (`idimage`)
     REFERENCES `wto`.`image` (`idimage`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`tag` (
   CONSTRAINT `fk_tag_1`
     FOREIGN KEY (`idimage`)
     REFERENCES `wto`.`image` (`idimage`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
@@ -147,12 +147,12 @@ CREATE TABLE IF NOT EXISTS `wto`.`comment_vote` (
   CONSTRAINT `fk_comment_vote_comment1`
     FOREIGN KEY (`idcomment`)
     REFERENCES `wto`.`comment` (`idcomment`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_comment_vote_user1`
     FOREIGN KEY (`iduser`)
     REFERENCES `wto`.`user` (`iduser`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 0

@@ -12,11 +12,11 @@ import org.hibernate.annotations.DynamicUpdate;
 public class WtoTag {
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="idtag")
 	private int idtag;
-	@Column
+	@Column(name="idimage")
 	private int idimage;
-	@Column
+	@Column(name="content")
 	private String content;
 	
 	public WtoTag(){}

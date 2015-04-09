@@ -1,9 +1,13 @@
 package wto.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,20 +16,21 @@ import org.hibernate.annotations.DynamicUpdate;
 public class WtoCommentVote {
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="idvote")
 	private int idvote;
-	@Column
+	@Column(name="iduser")
 	private int iduser;
-	@Column
+	@Column(name="idcomment")
 	private int idcomment;
-	@Column
+	@Column(name="votetype")
 	private boolean votetype;
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private String createTime;
+	private Date createTime;
 	
 	public WtoCommentVote() {}
 	public WtoCommentVote(int idvote, int iduser, int idcomment,
-			boolean votetype, String createTime) {
+			boolean votetype, Date createTime) {
 		super();
 		this.idvote = idvote;
 		this.iduser = iduser;
@@ -57,10 +62,10 @@ public class WtoCommentVote {
 	public void setVotetype(boolean votetype) {
 		this.votetype = votetype;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

@@ -1,9 +1,13 @@
 package wto.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,22 +16,23 @@ import org.hibernate.annotations.DynamicUpdate;
 public class WtoImage {
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="idimage")
 	private int idimage;
-	@Column
+	@Column(name="iduser")
 	private int iduser;
-	@Column
+	@Column(name="title")
 	private String title;
-	@Column
+	@Column(name="content")
 	private String content;
-	@Column
+	@Column(name="points")
 	private int points;
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private String createTime;
+	private Date createTime;
 	
 	public WtoImage(){}
 	public WtoImage(int idimage, int iduser, String title, String content,
-			int points, String createTime) {
+			int points, Date createTime) {
 		super();
 		this.idimage = idimage;
 		this.iduser = iduser;
@@ -66,10 +71,10 @@ public class WtoImage {
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

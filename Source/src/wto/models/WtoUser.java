@@ -1,9 +1,13 @@
 package wto.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -12,20 +16,21 @@ import org.hibernate.annotations.DynamicUpdate;
 public class WtoUser {
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="iduser")
 	private int iduser;
-	@Column
+	@Column(name="username")
 	private String username;
-	@Column
+	@Column(name="password")
 	private String password;
-	@Column
+	@Column(name="points")
 	private int points;
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
-	private String createTime;
+	private Date createTime;
 	
 	public WtoUser() {}
 	public WtoUser(int iduser, String username, String password, int points,
-			String createTime) {
+			Date createTime) {
 		super();
 		this.iduser = iduser;
 		this.username = username;
@@ -57,10 +62,10 @@ public class WtoUser {
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

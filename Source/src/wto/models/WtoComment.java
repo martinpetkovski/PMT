@@ -1,5 +1,7 @@
 package wto.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,22 +14,22 @@ import org.hibernate.annotations.DynamicUpdate;
 public class WtoComment {
 	@Id
 	@GeneratedValue
-	@Column
+	@Column(name="idcomment")
 	private int idcomment;
-	@Column
+	@Column(name="iduser")
 	private int iduser;
-	@Column
+	@Column(name="idimage")
 	private int idimage;
-	@Column
+	@Column(name="content")
 	private String content;
-	@Column
+	@Column(name="points")
 	private int points;
 	@Column(name="create_time")
-	private String createTime;
+	private Date createTime;
 	
 	public WtoComment() {}
 	public WtoComment(int idcomment, int iduser, int idimage, String content,
-			int points, String createTime) {
+			int points, Date createTime) {
 		super();
 		this.idcomment = idcomment;
 		this.iduser = iduser;
@@ -66,10 +68,10 @@ public class WtoComment {
 	public void setPoints(int points) {
 		this.points = points;
 	}
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 	

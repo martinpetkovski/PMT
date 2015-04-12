@@ -1,4 +1,4 @@
-package wto.models;
+package wto.model;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 @DynamicUpdate
 @Table(name="tag")
-public class WtoTag {
+public class Tag {
 	@Id
 	@GeneratedValue
 	@Column(name="idtag")
@@ -19,8 +19,8 @@ public class WtoTag {
 	@Column(name="content")
 	private String content;
 	
-	public WtoTag(){}
-	public WtoTag(int idtag, int idimage, String content) {
+	public Tag(){}
+	public Tag(int idtag, int idimage, String content) {
 		super();
 		this.idtag = idtag;
 		this.idimage = idimage;
@@ -44,6 +44,4 @@ public class WtoTag {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
 }

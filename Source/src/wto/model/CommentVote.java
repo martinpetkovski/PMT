@@ -1,4 +1,4 @@
-package wto.models;
+package wto.model;
 
 import java.util.Date;
 
@@ -12,31 +12,37 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicUpdate;
 
 @DynamicUpdate
-@Table(name="user")
-public class WtoUser {
+@Table(name="comment_vote")
+public class CommentVote {
 	@Id
 	@GeneratedValue
+	@Column(name="idvote")
+	private int idvote;
 	@Column(name="iduser")
 	private int iduser;
-	@Column(name="username")
-	private String username;
-	@Column(name="password")
-	private String password;
-	@Column(name="points")
-	private int points;
+	@Column(name="idcomment")
+	private int idcomment;
+	@Column(name="votetype")
+	private boolean votetype;
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
 	
-	public WtoUser() {}
-	public WtoUser(int iduser, String username, String password, int points,
-			Date createTime) {
+	public CommentVote() {}
+	public CommentVote(int idvote, int iduser, int idcomment,
+			boolean votetype, Date createTime) {
 		super();
+		this.idvote = idvote;
 		this.iduser = iduser;
-		this.username = username;
-		this.password = password;
-		this.points = points;
+		this.idcomment = idcomment;
+		this.votetype = votetype;
 		this.createTime = createTime;
+	}
+	public int getIdvote() {
+		return idvote;
+	}
+	public void setIdvote(int idvote) {
+		this.idvote = idvote;
 	}
 	public int getIduser() {
 		return iduser;
@@ -44,23 +50,17 @@ public class WtoUser {
 	public void setIduser(int iduser) {
 		this.iduser = iduser;
 	}
-	public String getUsername() {
-		return username;
+	public int getIdcomment() {
+		return idcomment;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setIdcomment(int idcomment) {
+		this.idcomment = idcomment;
 	}
-	public String getPassword() {
-		return password;
+	public boolean isVotetype() {
+		return votetype;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public int getPoints() {
-		return points;
-	}
-	public void setPoints(int points) {
-		this.points = points;
+	public void setVotetype(boolean votetype) {
+		this.votetype = votetype;
 	}
 	public Date getCreateTime() {
 		return createTime;

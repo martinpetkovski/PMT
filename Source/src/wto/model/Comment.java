@@ -1,51 +1,54 @@
-package wto.models;
+package wto.model;
 
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DynamicUpdate;
-
-@DynamicUpdate
-@Table(name="image")
-public class WtoImage {
+@Entity
+@Table(name="comment")
+public class Comment {
 	@Id
 	@GeneratedValue
-	@Column(name="idimage")
-	private int idimage;
+	@Column(name="idcomment")
+	private int idcomment;
 	@Column(name="iduser")
 	private int iduser;
-	@Column(name="title")
-	private String title;
+	@Column(name="idimage")
+	private int idimage;
 	@Column(name="content")
 	private String content;
 	@Column(name="points")
 	private int points;
-    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
 	
-	public WtoImage(){}
-	public WtoImage(int idimage, int iduser, String title, String content,
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="idimage", referencedColumnName="idimage", insertable = false, updatable = false)
+    private Image img;
+	
+	public Comment() {}
+	public Comment(int idcomment, int iduser, int idimage, String content,
 			int points, Date createTime) {
 		super();
-		this.idimage = idimage;
+		this.idcomment = idcomment;
 		this.iduser = iduser;
-		this.title = title;
+		this.idimage = idimage;
 		this.content = content;
 		this.points = points;
 		this.createTime = createTime;
 	}
-	public int getIdimage() {
-		return idimage;
+	public int getIdcomment() {
+		return idcomment;
 	}
-	public void setIdimage(int idimage) {
-		this.idimage = idimage;
+	public void setIdcomment(int idcomment) {
+		this.idcomment = idcomment;
 	}
 	public int getIduser() {
 		return iduser;
@@ -53,11 +56,11 @@ public class WtoImage {
 	public void setIduser(int iduser) {
 		this.iduser = iduser;
 	}
-	public String getTitle() {
-		return title;
+	public int getIdimage() {
+		return idimage;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setIdimage(int idimage) {
+		this.idimage = idimage;
 	}
 	public String getContent() {
 		return content;
@@ -77,6 +80,11 @@ public class WtoImage {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+	public Image getImg() {
+		return img;
+	}
+	public void setImg(Image img) {
+		this.img = img;
+	}
 	
 }

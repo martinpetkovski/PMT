@@ -22,5 +22,9 @@
 	      root
 	   </property>
 
+		 <mapping class="wto.model.Comment" />
+		  <mapping class="wto.model.Image" />
+		   <mapping class="wto.model.User" />
+
 	</session-factory>
 </hibernate-configuration>

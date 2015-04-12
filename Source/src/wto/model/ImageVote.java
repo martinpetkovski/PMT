@@ -1,4 +1,4 @@
-package wto.models;
+package wto.model;
 
 import java.util.Date;
 
@@ -12,29 +12,29 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicUpdate;
 
 @DynamicUpdate
-@Table(name="comment_vote")
-public class WtoCommentVote {
+@Table(name="image_vote")
+public class ImageVote {
 	@Id
 	@GeneratedValue
 	@Column(name="idvote")
 	private int idvote;
 	@Column(name="iduser")
 	private int iduser;
-	@Column(name="idcomment")
-	private int idcomment;
+	@Column(name="idimage")
+	private int idimage;
 	@Column(name="votetype")
 	private boolean votetype;
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
 	
-	public WtoCommentVote() {}
-	public WtoCommentVote(int idvote, int iduser, int idcomment,
-			boolean votetype, Date createTime) {
+	public ImageVote() {}
+	public ImageVote(int idvote, int iduser, int idimage, boolean votetype,
+			Date createTime) {
 		super();
 		this.idvote = idvote;
 		this.iduser = iduser;
-		this.idcomment = idcomment;
+		this.idimage = idimage;
 		this.votetype = votetype;
 		this.createTime = createTime;
 	}
@@ -50,11 +50,11 @@ public class WtoCommentVote {
 	public void setIduser(int iduser) {
 		this.iduser = iduser;
 	}
-	public int getIdcomment() {
-		return idcomment;
+	public int getIdimage() {
+		return idimage;
 	}
-	public void setIdcomment(int idcomment) {
-		this.idcomment = idcomment;
+	public void setIdimage(int idimage) {
+		this.idimage = idimage;
 	}
 	public boolean isVotetype() {
 		return votetype;
@@ -68,7 +68,6 @@ public class WtoCommentVote {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
 	
 	
 }

@@ -1,0 +1,70 @@
+.mainContent {
+	margin: 20px auto;
+	width: 1000px;
+	background-color: #222;
+}
+
+.mainContentWrapper {
+	padding: 10px 0px 20px 0px;
+	text-align: center;
+}
+
+.mainContentWrapper .image img
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	max-width: 100%;
+	max-height: 300px;
+	z-index: 5;
+}
+
+.sort {
+	background-color: #0A0A0A;
+	color: #FFF;
+	text-align: center;
+}
+
+.sortItem {
+	display: inline-block;
+	padding: 20px;
+}
+
+.sortItem:hover {
+	background-color: #069;
+	cursor: pointer;
+}
+
+.sortItem:active {
+	background-color: #058;
+}
+
+.image {
+	position: relative;
+	display: inline-block;
+	margin: 10px 10px 0px 10px;
+	width: 300px;
+	height: 300px;
+	vertical-align: top;
+	background-color: #000;
+}
+
+.mainContent .image .title {
+	position: absolute;
+	display: none;
+	top: 20px;
+	left: 0px;
+	width: 100%;
+	z-index: 25;
+	text-align: left;
+}
+
+.mainContent .image .title span { 
+   padding: 10px; 
+   color: #FFF; 
+   background-color: rgba(0, 0, 0, 0.8);
+   font-size: 18px;
+}

@@ -1,48 +1,55 @@
-package wto.models;
+package wto.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DynamicUpdate;
-
-@DynamicUpdate
-@Table(name="comment")
-public class WtoComment {
+@Entity
+@Table(name="image")
+public class Image {
 	@Id
 	@GeneratedValue
-	@Column(name="idcomment")
-	private int idcomment;
-	@Column(name="iduser")
-	private int iduser;
 	@Column(name="idimage")
 	private int idimage;
+	@Column(name="iduser")
+	private int iduser;
+	@Column(name="title")
+	private String title;
 	@Column(name="content")
 	private String content;
 	@Column(name="points")
 	private int points;
+    @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
-	
-	public WtoComment() {}
-	public WtoComment(int idcomment, int iduser, int idimage, String content,
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage")
+    private Set<Comment> comments;
+    
+	public Image(){}
+	public Image(int idimage, int iduser, String title, String content,
 			int points, Date createTime) {
 		super();
-		this.idcomment = idcomment;
-		this.iduser = iduser;
 		this.idimage = idimage;
+		this.iduser = iduser;
+		this.title = title;
 		this.content = content;
 		this.points = points;
 		this.createTime = createTime;
 	}
-	public int getIdcomment() {
-		return idcomment;
+	public int getIdimage() {
+		return idimage;
 	}
-	public void setIdcomment(int idcomment) {
-		this.idcomment = idcomment;
+	public void setIdimage(int idimage) {
+		this.idimage = idimage;
 	}
 	public int getIduser() {
 		return iduser;
@@ -50,11 +57,11 @@ public class WtoComment {
 	public void setIduser(int iduser) {
 		this.iduser = iduser;
 	}
-	public int getIdimage() {
-		return idimage;
+	public String getTitle() {
+		return title;
 	}
-	public void setIdimage(int idimage) {
-		this.idimage = idimage;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getContent() {
 		return content;
@@ -74,5 +81,14 @@ public class WtoComment {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	
+	
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
 	
 }

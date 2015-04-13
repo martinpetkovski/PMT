@@ -4,12 +4,14 @@
 
 	<header>
 		<div class="headerContainer">
-			<a href=".">
+			<a href="${pageContext.request.contextPath}">
 			<div class="logo">
 				<div class="wto">
 					WTO
 				</div>
-				imager
+				<div class="imager">
+					imager
+				</div>
 			</div></a>
 
 			<div class="buttonArea">

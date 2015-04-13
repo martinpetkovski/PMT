@@ -19,12 +19,15 @@
 	      root
 	   </property>
 	   <property name="hibernate.connection.password">
-	      root
+	      space2001
 	   </property>
 
-		 <mapping class="wto.model.Comment" />
-		  <mapping class="wto.model.Image" />
-		   <mapping class="wto.model.User" />
+		<mapping class="wto.model.Comment" />
+		<mapping class="wto.model.Image" />
+		<mapping class="wto.model.User" />
+		<mapping class="wto.model.CommentVote" />
+		<mapping class="wto.model.ImageVote" />
+		<mapping class="wto.model.Tag" />
 
 	</session-factory>
 </hibernate-configuration>

@@ -1,7 +1,9 @@
 package wto.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,9 +32,14 @@ public class Comment {
 	@Column(name="create_time")
 	private Date createTime;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="idimage", referencedColumnName="idimage", insertable = false, updatable = false)
     private Image img;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)
+    private User user;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "idcomment", fetch = FetchType.LAZY)
+    private Set<CommentVote> votes;
 	
 	public Comment() {}
 	public Comment(int idcomment, int iduser, int idimage, String content,
@@ -85,6 +93,18 @@ public class Comment {
 	}
 	public void setImg(Image img) {
 		this.img = img;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Set<CommentVote> getVotes() {
+		return votes;
+	}
+	public void setVotes(Set<CommentVote> votes) {
+		this.votes = votes;
 	}
 	
 }

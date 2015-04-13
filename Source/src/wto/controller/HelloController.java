@@ -1,6 +1,7 @@
 package wto.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import wto.model.Comment;
 import wto.model.Image;
 import wto.model.User;
 import wto.repository.UserRepositoryImpl;
+import wto.service.ImageServiceImpl;
 import wto.service.UserServiceImpl;
 
 @Controller
@@ -20,36 +22,61 @@ public class HelloController{
 	
 	@RequestMapping(value = "/user/{userName}/images", method = RequestMethod.GET)
     public String userImagesPage(@PathVariable("userName") String userName, Model model) {
-        UserServiceImpl usi = new UserServiceImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         
-        User theUser = usi.getUserByName(userName);
-        List<Image> theImages = usi.getImagesByUserId(theUser.getIduser());
-        List<Comment> theComments = usi.getCommentsByUserId(theUser.getIduser());
+        User theUser = userService.getUserByName(userName);
+        Set<Comment> comments = theUser.getComments();
+        Set<Image> images = theUser.getImages();
         
         model.addAttribute("UserName",theUser.getUsername());
 		model.addAttribute("UserPoints", theUser.getPoints());
-		model.addAttribute("ImageNumber", theImages.size());
-		model.addAttribute("CommentNumber", theComments.size());
+		model.addAttribute("ImageNumber", images.size());
+		model.addAttribute("CommentNumber", comments.size());
 		
-		model.addAttribute("Images", theImages);
+		model.addAttribute("Images", images);
         return "userImages";
     }
 	
 	@RequestMapping(value = "/user/{userName}/comments", method = RequestMethod.GET)
     public String userCommentsPage(@PathVariable("userName") String userName, Model model) {
-        UserServiceImpl usi = new UserServiceImpl();
+        UserServiceImpl userService = new UserServiceImpl();
         
-        User theUser = usi.getUserByName(userName);
-        List<Image> theImages = usi.getImagesByUserId(theUser.getIduser());
-        List<Comment> theComments = usi.getCommentsByUserId(theUser.getIduser());
+        User theUser = userService.getUserByName(userName);
+        Set<Comment> comments = theUser.getComments();
+        Set<Image> images = theUser.getImages();
         
         model.addAttribute("UserName",theUser.getUsername());
 		model.addAttribute("UserPoints", theUser.getPoints());
-		model.addAttribute("ImageNumber", theImages.size());
-		model.addAttribute("CommentNumber", theComments.size());
+		model.addAttribute("ImageNumber", images.size());
+		model.addAttribute("CommentNumber", comments.size());
 		
-		model.addAttribute("Comments", theComments);
+		model.addAttribute("Comments", comments);
         return "userComments";
+    }
+	
+	@RequestMapping(value = "/image/{imageId}", method = RequestMethod.GET)
+    public String imagePage(@PathVariable("imageId") Integer imageId, Model model) {
+        ImageServiceImpl imageService = new ImageServiceImpl();
+        
+        Image theImage = imageService.getImageById(imageId);
+        
+        model.addAttribute("ImageLocation", theImage.getContent());
+        model.addAttribute("ImagePoints", theImage.getPoints());
+        model.addAttribute("ImageTitle", theImage.getTitle());
+        
+        model.addAttribute("Comments", theImage.getComments());
+        return "image";
+    }
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	 public String indexPage(Model model) {
+        ImageServiceImpl imageService = new ImageServiceImpl();
+        
+        List<Image> images = imageService.getAllImages();
+        
+        model.addAttribute("Images", images);
+        
+        return "index";
     }
 	
 	@RequestMapping("/test")

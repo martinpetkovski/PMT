@@ -2,6 +2,7 @@ package wto.repository;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -110,6 +111,10 @@ public class UserRepositoryImpl implements UserRepository {
 			Query q = session.createQuery("FROM User u WHERE u.username LIKE ?");
 			q.setString(0, "%"+username+"%");
 			users = q.list();
+			for(User user : users) {
+				Hibernate.initialize(user.getImages());
+				Hibernate.initialize(user.getComments());
+			}
 			tx.commit();
 		} catch(HibernateException e) {
 			if(tx!=null)

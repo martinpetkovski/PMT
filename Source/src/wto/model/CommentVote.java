@@ -3,15 +3,17 @@ package wto.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.DynamicUpdate;
-
-@DynamicUpdate
+@Entity
 @Table(name="comment_vote")
 public class CommentVote {
 	@Id
@@ -27,6 +29,13 @@ public class CommentVote {
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="idcomment", referencedColumnName="idcomment", insertable = false, updatable = false)
+    private Comment comment;
 	
 	public CommentVote() {}
 	public CommentVote(int idvote, int iduser, int idcomment,
@@ -67,6 +76,18 @@ public class CommentVote {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Comment getComment() {
+		return comment;
+	}
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 	
 	

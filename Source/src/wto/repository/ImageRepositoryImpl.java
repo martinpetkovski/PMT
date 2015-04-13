@@ -2,12 +2,14 @@ package wto.repository;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import wto.model.Image;
+import wto.model.User;
 import wto.util.SessionHandler;
 
 public class ImageRepositoryImpl implements ImageRepository {
@@ -40,9 +42,12 @@ public class ImageRepositoryImpl implements ImageRepository {
 		List<Image> images = null;
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Image i WHERE i.idimage = :pk");
+			Query q = session.createQuery("FROM Image as i WHERE i.idimage = :pk");
 			q.setParameter("pk", primaryKey);
 			images = q.list();
+			for(Image image : images) {
+				Hibernate.initialize(image.getComments());
+			}
 			tx.commit();
 		} catch(HibernateException e) {
 			if(tx!=null)

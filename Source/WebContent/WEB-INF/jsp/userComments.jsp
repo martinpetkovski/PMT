@@ -34,7 +34,7 @@
 			<c:forEach var="comment" items="${Comments}">
 
 				<div class="image">
-					<a href="image.html">
+					<a href="${pageContext.request.contextPath}/image/${comment.getImg().getIdimage()}">
 					<div class="content"><img src="${comment.getImg().getContent()}">
 					</div></a>
 	

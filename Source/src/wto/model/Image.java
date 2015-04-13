@@ -6,8 +6,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -31,8 +34,17 @@ public class Image {
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage")
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)
+    private User user;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
     private Set<Comment> comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
+    private Set<Tag> tags;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
+    private Set<ImageVote> votes;
     
 	public Image(){}
 	public Image(int idimage, int iduser, String title, String content,
@@ -88,6 +100,24 @@ public class Image {
 	}
 	public void setComments(Set<Comment> comments) {
 		this.comments = comments;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Set<Tag> getTags() {
+		return tags;
+	}
+	public void setTags(Set<Tag> tags) {
+		this.tags = tags;
+	}
+	public Set<ImageVote> getVotes() {
+		return votes;
+	}
+	public void setVotes(Set<ImageVote> votes) {
+		this.votes = votes;
 	}
 
 	

@@ -135,6 +135,27 @@ public class Image {
 	public void setLastIndex(int lastIndex) {
 		this.lastIndex = lastIndex;
 	}
+	
+	@Override
+	public int hashCode() {
+        return this.getContent().hashCode();
+    }
 
+    @Override
+    public boolean equals(final Object obj) {
+    	 if (this == obj)
+             return true;
+         if (obj == null)
+             return false;
+         if (getClass() != obj.getClass())
+             return false;
+         final Image other = (Image) obj;
+         if (content == null) {
+             if (other.content != null)
+                 return false;
+         } else if (!content.equals(other.content))
+             return false;
+         return true;
+    }
 	
 }

@@ -51,9 +51,10 @@
 					
 					<div class="imageMetadata">
 						<div class="tags">
-							<a href="#">#Tag1</a>
-							<a href="#">#Tag2</a>
-							<a href="#">#Tag3</a>
+							<c:forEach var="Tag" items="${Tags}">
+								<a href="${pageContext.request.contextPath}/search/tag:${Tag.getContent()}">#${Tag.getContent() }</a>
+							</c:forEach>
+							&nbsp;
 						</div>
 						<div class="dateCreated">${ImageCreateTime }</div>
 					</div>

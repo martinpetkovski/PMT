@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 	<header>
 		<div class="headerContainer">
@@ -16,7 +16,9 @@
 
 			<div class="buttonArea">
 				<div class="search">
-					<input placeholder="Search..." type="text">
+				  	<form:form modelAttribute="search" method="GET" >
+						<input placeholder="Search..." type="text" name="search" />
+					</form:form>
 				</div>
 
 

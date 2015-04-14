@@ -2,15 +2,12 @@ package wto.service;
 
 import java.util.List;
 
-import wto.model.Comment;
 import wto.model.Image;
-import wto.model.Tag;
 import wto.repository.ImageRepositoryImpl;
 
 public class ImageServiceImpl implements ImageService {
 
 	ImageRepositoryImpl img = new ImageRepositoryImpl();
-	CommentServiceImpl cmt = new CommentServiceImpl();
 	
 	@Override
 	public Image getImageById(Integer Id) {
@@ -33,13 +30,8 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<Comment> getImageComments(Integer imageId) {
-		return cmt.getCommentByImage(imageId);
-	}
-
-	@Override
-	public List<Tag> getImageTags() {
-		return null;
+	public Image getRandomImage() {
+		return img.randomImage();
 	}
 
 }

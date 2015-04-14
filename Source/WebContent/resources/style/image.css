@@ -18,6 +18,28 @@
 	color: #3A3;
 }
 
+.imageMetadata {
+	position: relative;
+	font-size:14px;
+	color: #999;
+}
+
+.dateCreated {
+	position: absolute;
+	right: 0px;
+	top:0px;
+}
+
+.tags a {
+	padding:0px 5px;
+	border-radius:3px;
+}
+
+.tags a:hover {
+	background-color:#069;
+	color:#FFF;
+}
+
 .mainContent {
 	margin: 0 auto;
 	width: 1000px;

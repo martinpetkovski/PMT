@@ -45,7 +45,7 @@
 	
 	
 						<div class="titleMeta">
-							<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${comment.getCreateTime()}
+							<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${comment.getCreateTimeAsString()}
 						</div>
 						<span class="titleSiz">&gt;&gt;</span> ${comment.getContent()}
 					</div>

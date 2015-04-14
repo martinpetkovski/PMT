@@ -2,6 +2,8 @@ package wto.service;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import wto.model.Comment;
 import wto.model.Image;
 import wto.model.User;
@@ -27,12 +29,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByCredentials(String username, String password) {
-		int id = ur.readByCombination(username, password);
-		if(id != -1)
-			return ur.read(id);
-		else
-			return null;
+	public User getUserByCredentials(String username, String password) throws UsernameNotFoundException {
+		User user = ur.readByCombination(username, password);
+		return user;
 	}
 
 	@Override

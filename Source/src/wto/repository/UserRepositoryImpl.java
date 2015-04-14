@@ -127,7 +127,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public int readByCombination(String username, String password) {
+	public User readByCombination(String username, String password) {
 		Session session = sh.getSessionFactory().openSession();
 		Transaction tx = null;
 		List<User> users = null;
@@ -146,9 +146,9 @@ public class UserRepositoryImpl implements UserRepository {
 			session.close();
 		}
 		if(users.size() == 1)
-			return -1;
+			return users.get(0);
 		else
-			return users.get(0).getIduser();
+			return null;
 	}
 
 	@SuppressWarnings("unchecked")

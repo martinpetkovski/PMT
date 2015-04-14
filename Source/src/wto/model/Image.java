@@ -1,6 +1,8 @@
 package wto.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="image")
@@ -34,13 +38,16 @@ public class Image {
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
+    @Transient
+    private int lastIndex;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)
     private User user;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
-    private Set<Comment> comments;
+    @OrderBy("points desc")
+    private List<Comment> comments;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
     private Set<Tag> tags;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idimage", fetch = FetchType.LAZY)
@@ -88,17 +95,20 @@ public class Image {
 		this.points = points;
 	}
 	public Date getCreateTime() {
-		return createTime;
+		return this.createTime;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+	public String getCreateTimeAsString() {
+		SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm"); 
+		return dt.format(this.createTime);
+	}
 	
-	
-	public Set<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
 	public User getUser() {
@@ -118,6 +128,12 @@ public class Image {
 	}
 	public void setVotes(Set<ImageVote> votes) {
 		this.votes = votes;
+	}
+	public int getLastIndex() {
+		return lastIndex;
+	}
+	public void setLastIndex(int lastIndex) {
+		this.lastIndex = lastIndex;
 	}
 
 	

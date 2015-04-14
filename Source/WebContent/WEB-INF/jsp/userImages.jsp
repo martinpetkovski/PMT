@@ -44,7 +44,7 @@
 	
 	
 						<div class="titleMeta">
-							<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${image.getCreateTime()}
+							<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${image.getCreateTimeAsString()}
 						</div>
 						<span class="titleSiz">&gt;&gt;</span> ${image.getTitle()}
 					</div>

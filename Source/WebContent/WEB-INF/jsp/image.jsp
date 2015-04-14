@@ -24,10 +24,10 @@
 	<div class="mainContent">
 		<div class="imageMeta">
 			<div class="votes">
-				<a href="#"><span id="prev">random</span></a> <a href=
-				"#"><span id="prev">&lt;&lt;previous</span></a> <a href=
+				<a href="random"><span id="prev">random</span></a> <a href=
+				"${ImageId - 1}"><span id="prev">&lt;&lt;previous</span></a> <a href=
 				"#"><span id="upvote">upvote</span></a> <a href="#"><span id=
-				"downvote">downvote</span></a> <a href="#"><span id=
+				"downvote">downvote</span></a> <a href="${ImageId + 1}"><span id=
 				"next">next&gt;&gt;</span></a>
 			</div>
 		</div>
@@ -47,6 +47,15 @@
 
 					<div>
 						${ImageTitle }
+					</div>
+					
+					<div class="imageMetadata">
+						<div class="tags">
+							<a href="#">#Tag1</a>
+							<a href="#">#Tag2</a>
+							<a href="#">#Tag3</a>
+						</div>
+						<div class="dateCreated">${ImageCreateTime }</div>
 					</div>
 				</div>
 
@@ -72,12 +81,12 @@
 	
 	
 						<div class="meta">
-							<span id="username"><a href="${pageContext.request.contextPath}/user/${Comment.getUser().getUsername()}/comments">${Comment.getUser().getUsername() }</a></span> // <span id="date">${Comment.getCreateTime() }</span> // <span id="points">${Comment.getPoints() }</span>
+							<span id="username"><a href="${pageContext.request.contextPath}/user/${Comment.getUser().getUsername()}/comments">${Comment.getUser().getUsername() }</a></span> <span class="siz">//</span> <span id="date">date submitted: ${Comment.getCreateTimeAsString() }</span> <span class="siz">//</span> <span id="points">${Comment.getPoints() } points</span>
 						</div>
 	
 	
 						<div class="voteBar">
-							<div class="upvotes">
+							<div class="upvotes" style="width:${Comment.getPoints() / MostPoints * 100}%">
 							</div>
 						</div>
 					</div>

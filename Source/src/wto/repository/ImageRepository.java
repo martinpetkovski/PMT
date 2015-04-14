@@ -12,4 +12,5 @@ public interface ImageRepository {
 	public List<Image> readByUserId(int userId);
 	public List<Image> readAll();
 	public List<Image> readByQuery(String query);
+	public Image randomImage();
 }

@@ -1,5 +1,6 @@
 package wto.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -85,7 +86,11 @@ public class User {
 		this.points = points;
 	}
 	public Date getCreateTime() {
-		return createTime;
+		return this.createTime;
+	}
+	public String getCreateTimeAsString() {
+		SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy 'at' HH:mm"); 
+		return dt.format(this.createTime);
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;

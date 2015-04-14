@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import wto.model.Image;
-import wto.model.User;
 import wto.util.SessionHandler;
 
 public class ImageRepositoryImpl implements ImageRepository {
@@ -34,20 +33,17 @@ public class ImageRepositoryImpl implements ImageRepository {
 		return imageID;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Image read(Integer primaryKey) {
 		Session session = sh.getSessionFactory().openSession();
 		Transaction tx = null;
-		List<Image> images = null;
+		Image image = null;
 		try {
 			tx = session.beginTransaction();
 			Query q = session.createQuery("FROM Image as i WHERE i.idimage = :pk");
 			q.setParameter("pk", primaryKey);
-			images = q.list();
-			for(Image image : images) {
-				Hibernate.initialize(image.getComments());
-			}
+			image = (Image) q.list().get(0);
+			Hibernate.initialize(image.getComments());
 			tx.commit();
 		} catch(HibernateException e) {
 			if(tx!=null)
@@ -56,10 +52,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		} finally {
 			session.close();
 		}
-		if(images.size() != 1)
-			return null;
-		else
-			return images.get(0);
+		return image;
 	}
 
 	@Override
@@ -162,6 +155,28 @@ public class ImageRepositoryImpl implements ImageRepository {
 			session.close();
 		}
 		return images;
+	}
+
+
+	@Override
+	public Image randomImage() {
+		Session session = sh.getSessionFactory().openSession();
+		Transaction tx = null;
+		Image image = null;
+		try {
+			tx = session.beginTransaction();
+			Query q = session.createQuery("FROM Image as i ORDER BY rand()").setMaxResults(1);
+			image = (Image) q.uniqueResult();
+			Hibernate.initialize(image.getComments());
+			tx.commit();
+		} catch(HibernateException e) {
+			if(tx!=null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return image;
 	}
 
 }

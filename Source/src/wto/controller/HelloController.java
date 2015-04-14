@@ -1,6 +1,7 @@
 package wto.controller;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,23 @@ import wto.service.UserServiceImpl;
 
 @Controller
 public class HelloController{
+	
+	public String imagePage(Model model, Image theImage) {
+		int mostPoints = 0;
+        
+        if(theImage.getComments().size() > 0)
+        	 mostPoints = theImage.getComments().get(0).getPoints();
+        
+        model.addAttribute("ImageId", theImage.getIdimage());
+        model.addAttribute("ImageLocation", theImage.getContent());
+        model.addAttribute("ImageCreateTime", theImage.getCreateTimeAsString());
+        model.addAttribute("ImagePoints", theImage.getPoints());
+        model.addAttribute("ImageTitle", theImage.getTitle());
+        
+        model.addAttribute("Comments", theImage.getComments());
+        model.addAttribute("MostPoints", mostPoints);
+		return "image";
+	}
 	
 	@RequestMapping(value = "/user/{userName}/images", method = RequestMethod.GET)
     public String userImagesPage(@PathVariable("userName") String userName, Model model) {
@@ -60,12 +78,16 @@ public class HelloController{
         
         Image theImage = imageService.getImageById(imageId);
         
-        model.addAttribute("ImageLocation", theImage.getContent());
-        model.addAttribute("ImagePoints", theImage.getPoints());
-        model.addAttribute("ImageTitle", theImage.getTitle());
+        return imagePage(model, theImage);
+    }
+	
+	@RequestMapping(value = "/image/random", method = RequestMethod.GET)
+    public String imageRandomPage(Model model) {
+        ImageServiceImpl imageService = new ImageServiceImpl();
         
-        model.addAttribute("Comments", theImage.getComments());
-        return "image";
+        Image theImage = imageService.getRandomImage();
+
+        return imagePage(model, theImage);
     }
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)

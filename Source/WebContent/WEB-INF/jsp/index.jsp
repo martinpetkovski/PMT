@@ -23,8 +23,8 @@
 
 	<div class="mainContent">
 		<div class="sort">
-			<div class="sortItem">by points</div>
-			<div class="sortItem">by upload time</div>
+			<div class="sortItem">by highest scoring</div>
+			<div class="sortItem">by newest first</div>
 			<div class="sortItem">by random number</div>
 		</div>
 		<div class="mainContentWrapper">

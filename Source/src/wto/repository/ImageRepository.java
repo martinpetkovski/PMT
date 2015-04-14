@@ -10,7 +10,9 @@ public interface ImageRepository {
 	public void update(Image entity);
 	public void delete(Integer primaryKey);
 	public List<Image> readByUserId(int userId);
-	public List<Image> readAll();
-	public List<Image> readByQuery(String query);
+	public List<Image> readAll(String order);
+	public List<Image> readByQuery(String query, String order);
+	public List<Image> readByTag(String query, String order);
 	public Image randomImage();
+	List<Image> readByUsername(String username, String order);
 }

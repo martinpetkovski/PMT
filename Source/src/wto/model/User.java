@@ -2,6 +2,7 @@ package wto.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,13 +37,13 @@ public class User {
 	private Date createTime;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
-    private Set<Image> images;
+    private List<Image> images;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
-    private Set<Comment> comments;
+    private List<Comment> comments;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
-    private Set<CommentVote> commentVotes;
+    private List<CommentVote> commentVotes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
-    private Set<ImageVote> imageVotes;
+    private List<ImageVote> imageVotes;
 	
 	public User() {}
 	public User(Integer iduser, String username, String email, String password, Integer points,
@@ -95,28 +96,28 @@ public class User {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	public Set<Image> getImages() {
+	public List<Image> getImages() {
 		return images;
 	}
-	public void setImages(Set<Image> images) {
+	public void setImages(List<Image> images) {
 		this.images = images;
 	}
-	public Set<Comment> getComments() {
+	public List<Comment> getComments() {
 		return comments;
 	}
-	public void setComments(Set<Comment> comments) {
+	public void setComments(List<Comment> comments) {
 		this.comments = comments;
 	}
-	public Set<CommentVote> getCommentVotes() {
+	public List<CommentVote> getCommentVotes() {
 		return commentVotes;
 	}
-	public void setCommentVotes(Set<CommentVote> commentVotes) {
+	public void setCommentVotes(List<CommentVote> commentVotes) {
 		this.commentVotes = commentVotes;
 	}
-	public Set<ImageVote> getImageVotes() {
+	public List<ImageVote> getImageVotes() {
 		return imageVotes;
 	}
-	public void setImageVotes(Set<ImageVote> imageVotes) {
+	public void setImageVotes(List<ImageVote> imageVotes) {
 		this.imageVotes = imageVotes;
 	}
 	

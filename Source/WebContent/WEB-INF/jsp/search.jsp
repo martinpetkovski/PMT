@@ -23,9 +23,9 @@
 
 	<div class="mainContent">
 		<div class="sort">
-			<a href="${pageContext.request.contextPath}/bypoints"><div class="sortItem">by highest scoring</div></a>
-			<a href="${pageContext.request.contextPath}"><div class="sortItem">by newest first</div></a>
-			<a href="${pageContext.request.contextPath}/byrandom"><div class="sortItem">by random number</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }/bypoints"><div class="sortItem">by highest scoring</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }"><div class="sortItem">by newest first</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }/byrandom"><div class="sortItem">by random number</div></a>
 		</div>
 		<div class="mainContentWrapper">
 			<c:forEach var="Image" items="${Images }">

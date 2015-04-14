@@ -1,5 +1,6 @@
 package wto.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -9,6 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import wto.model.Image;
+import wto.model.Tag;
+import wto.model.User;
 import wto.util.SessionHandler;
 
 public class ImageRepositoryImpl implements ImageRepository {
@@ -113,16 +116,47 @@ public class ImageRepositoryImpl implements ImageRepository {
 		}
 		return images;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Image> readByUsername(String username, String order) {
+		Session session = sh.getSessionFactory().openSession();
+		Transaction tx = null;
+		List<User> users = null;
+		List<Image> images = new ArrayList<Image>();
+		try {
+			tx = session.beginTransaction();
+			Query q = session.createQuery("FROM User u WHERE u.username = :uid" + order);
+			q.setParameter("uid", username);
+			users = q.list();
+			for(User user : users) {
+				Hibernate.initialize(user.getImages());
+				List<Image> temps = user.getImages();
+				for(Image temp : temps ) {
+					images.add(temp);
+				}
+			}
+			tx.commit();
+		} catch(HibernateException e) {
+			if(tx!=null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return images;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Image> readAll() {
+	public List<Image> readAll(String order) {
 		Session session = sh.getSessionFactory().openSession();
 		Transaction tx = null;
 		List<Image> images = null;
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Image");
+			Query q = session.createQuery("FROM Image i " + order);
 			images = q.list();
 			tx.commit();
 		} catch(HibernateException e) {
@@ -137,14 +171,14 @@ public class ImageRepositoryImpl implements ImageRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Image> readByQuery(String query) {
+	public List<Image> readByQuery(String query, String order) {
 		Session session = sh.getSessionFactory().openSession();
 		Transaction tx = null;
 		List<Image> images = null;
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Image i WHERE i.title = :s");
-			q.setParameter("s", query);
+			Query q = session.createQuery("FROM Image i WHERE i.title LIKE :sb " + order);
+			q.setParameter("sb", "%" + query + "%");
 			images = q.list();
 			tx.commit();
 		} catch(HibernateException e) {
@@ -156,7 +190,33 @@ public class ImageRepositoryImpl implements ImageRepository {
 		}
 		return images;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Image> readByTag(String query, String order) {
+		Session session = sh.getSessionFactory().openSession();
+		Transaction tx = null;
+		List<Tag> tags = null;
+		List<Image> images = new ArrayList<Image>();
+		try {
+			tx = session.beginTransaction();
+			Query q = session.createQuery("FROM Tag t WHERE t.content LIKE :sb " + order);
+			q.setParameter("sb", "%" + query + "%");
+			tags = q.list();
+			for(Tag tag : tags) {
+				Hibernate.initialize(tag.getImage());
+				images.add(tag.getImage());
+			}
+			tx.commit();
+		} catch(HibernateException e) {
+			if(tx!=null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return images;
+	}
 
 	@Override
 	public Image randomImage() {

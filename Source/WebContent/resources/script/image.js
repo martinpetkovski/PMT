@@ -1,5 +1,17 @@
-$(document).ready(function(){
+function changeImagesOnKeypress() {
+	$('body').bind('keydown', function(event){
+		if(event.keyCode  == 37) {
+			var prevImage = imageId - 1;
+			window.location.href = ctxPath + "/image/" + prevImage;
+		}
+		else if(event.keyCode == 39) {
+			var nextImage = imageId + 1;
+			window.location.href = ctxPath + "/image/" + nextImage;
+		}
+	});
+}
 
+function displayCommentButtonOnClick() {
 	mouseDownHappened = false;
 
 	$('.comment input').focus(function(){
@@ -19,5 +31,9 @@ $(document).ready(function(){
 	    mouseDownHappened = false;
 	    $('.comment .button').css('display', 'none');
 	});
+}
 
+$(document).ready(function(){
+	changeImagesOnKeypress();
+	displayCommentButtonOnClick();
 });

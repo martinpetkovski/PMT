@@ -5,20 +5,41 @@
 	<header>
 		<div class="headerContainer">
 			<a href="${pageContext.request.contextPath}">
-			<div class="logo">
-				<div class="wto">
-					WTO
+				<div class="logo">
+					<div class="wto">
+						WTO
+					</div>
+					<div class="imager">
+						imager
+					</div>
 				</div>
-				<div class="imager">
-					imager
-				</div>
-			</div></a>
+			</a>
 
 			<div class="buttonArea">
 				<div class="search">
-				  	<form:form method="GET" action="${pageContext.request.contextPath}/search">
-						<input placeholder="Search..." type="text" name="query"/>
+				  	<form:form method="GET" action="${pageContext.request.contextPath}/search" >
+						<input placeholder="Search..." type="text" name="query" autocomplete="off"/>
 					</form:form>
+				</div>
+				
+				<div class="syntax">
+					<div class="helpItemWrapper">
+						<div class="helpItem"><span class="white">tag:</span> shows only images of a tag</div>
+						<div class="helpDescription">(usage - tag:StarTrek)</div>
+					</div>
+					<div class="helpItemWrapper">
+						<div class="helpItem"><span class="white">title:</span> search images only by their title</div>
+						<div class="helpDescription">(usage - title:Some Title)</div>
+					</div>
+					<div class="helpItemWrapper">
+						<div class="helpItem"><span class="white">user:</span> displays users page</div>
+						<div class="helpDescription">(usage - user:Username)</div>
+					</div>
+					<div class="helpItemWrapper">
+						<div class="helpItem"><span class="white">F2</span></div>
+						<div class="helpDescription">(pressing F2 will focus the search bar)</div>
+					</div>
+					<div class="syntaxTitle">search syntax</div>
 				</div>
 
 

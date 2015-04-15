@@ -18,6 +18,10 @@ body {
 	background-color: #CCC;
 }
 
+img {
+	z-index:0;
+}
+
 input {
 	padding: 13px;
 	width:250px;
@@ -49,19 +53,27 @@ header {
 	width: 100%;
 	background-color:#080808;
 	color: #FFF;
-	box-shadow: 1px 0px 3px #333;
+	box-shadow: 0px 1px 3px #666;
 }
 
 .headerContainer {
+	position:relative;
 	margin: 0 auto;
 	width: 1000px;
+	height: 50px;
 }
 
-.search {
-	position: relative;
-	display: inline-block;
-	margin-right: 30px;
-	top: -1px;
+.search form input {
+	box-sizing: border-box;
+	background-color:#111;
+	position: absolute;
+	right:170px;
+	width: 120px;
+	height: 50px;
+}
+
+.search form input:focus {
+	background-color:#222;
 }
 
 .button {
@@ -70,6 +82,20 @@ header {
 	font-size:18px;
 	background-color: #069;
 	color:#FFF;
+}
+
+.button#login {
+	box-sizing: border-box;
+	position: absolute;
+	right:91px;
+	height:50px;
+}
+
+.button#register {
+	box-sizing: border-box;
+	position: absolute;
+	right:0px;
+	height:50px;
 }
 
 .button:hover {
@@ -108,8 +134,9 @@ header {
 }
 
 .logo {
-	display: inline-block;
-	position: relative;
+	position: absolute;
+	top:0px;
+	left:0px;
 	padding:0px 5px;
 }
 
@@ -118,8 +145,43 @@ header {
 }
 
 .buttonArea {
-	display: inline-block;
-	float: right;
+	position:absolute;
+	right:0px;
+}
+
+.syntax {
+	box-sizing: border-box;
+	display:none;
+	position:absolute;
+	top:50px;
+	right:170px;
+	border-top:#636 thick solid;
+	width:500px;
+	padding:10px;
+	font-size:12px;
+	background-color:rgba(0,0,0,0.9);
+	z-index:42;
+	color:#888;
+}
+
+.syntax .helpItem .white {
+	color: #FFF;
+}
+
+.syntax .helpItemWrapper {
+	display:inline-block;
+	width:49.5%;
+}
+
+.syntax .helpItemWrapper:nth-child(1), .syntax .helpItemWrapper:nth-child(2) {
+	padding-bottom:10px;
+}
+
+.syntaxTitle {
+	font-size:24px;
+	text-align:right;
+	color:#AAA;
+	padding-top:10px;
 }
 
 .dropMenu input[type=password] {

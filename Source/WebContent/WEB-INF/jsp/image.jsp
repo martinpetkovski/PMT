@@ -8,8 +8,8 @@
 	<title>WTO Front Page</title>
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/image.css" rel="stylesheet">
-	<script src=
-	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>var ctxPath = "${pageContext.request.contextPath}"; var imageId = parseInt(${ImageId});</script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/image.js" type="text/javascript"></script>
 </head>

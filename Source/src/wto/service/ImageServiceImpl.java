@@ -1,8 +1,9 @@
 package wto.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import wto.model.Image;
 import wto.repository.ImageRepositoryImpl;
@@ -42,10 +43,19 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	public Set<Image> getImagesByAll(String query, String order) {
-		Set<Image> images = new HashSet<Image>();
-		images.addAll(img.readByQuery(query, order));
-		images.addAll(img.readByTag(query, order));
-		images.addAll(img.readByUsername(query, order));
+		SortedSet<Image> images;
+		
+		if(order.equals("bypoints"))
+			images = new TreeSet<Image>(Image.getPointsComparator());
+		else if(order.equals("bynewest"))
+			images = new TreeSet<Image>(Image.getTimeComparator());
+		else // За рандом не работи
+			images = new TreeSet<Image>();
+		
+		images.addAll(img.readByQuery(query,""));
+		images.addAll(img.readByTag(query,""));
+		images.addAll(img.readByUsername(query,""));
+		
 		return images;
 	}
 }

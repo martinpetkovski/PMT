@@ -201,8 +201,8 @@ public class ImageRepositoryImpl implements ImageRepository {
 		List<Image> images = new ArrayList<Image>();
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Tag t WHERE t.content LIKE :sb " + order);
-			q.setParameter("sb", "%" + query + "%");
+			Query q = session.createQuery("FROM Tag t WHERE t.content = :sb " + order);
+			q.setParameter("sb", query);
 			tags = q.list();
 			for(Tag tag : tags) {
 				Hibernate.initialize(tag.getImage());

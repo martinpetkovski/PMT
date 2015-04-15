@@ -1,6 +1,7 @@
 package wto.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="image")
-public class Image {
+public class Image implements Comparable<Image> {
 	@Id
 	@GeneratedValue
 	@Column(name="idimage")
@@ -157,5 +158,35 @@ public class Image {
              return false;
          return true;
     }
+    
+	public static Comparator<Image> getPointsComparator() {
+        return new Comparator<Image>() {
+
+			@Override
+			public int compare(Image o1, Image o2) {
+				if(o1.getPoints() < o2.getPoints())
+					return 1;
+				else if(o1.getPoints() > o2.getPoints())
+					return -1;
+				else
+					return 0;
+			}
+        };
+    }
+
+    public static Comparator<Image> getTimeComparator() {
+        return new Comparator<Image>() {
+
+			@Override
+			public int compare(Image o1, Image o2) {
+				return o2.getCreateTime().compareTo(o1.getCreateTime());
+			}
+            
+        };
+    }
+	@Override
+	public int compareTo(Image o) {
+		return this.getCreateTime().compareTo(o.getCreateTime());
+	}
 	
 }

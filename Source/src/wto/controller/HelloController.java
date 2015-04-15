@@ -3,11 +3,16 @@ package wto.controller;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import wto.model.Comment;
 import wto.model.Image;
@@ -82,6 +87,7 @@ public class HelloController{
 		List<Image> images = imageService.getImagesByTag(query, order);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", "tag:" + query);
+		model.addAttribute("Order", order);
 		return "search";
 	}
 	
@@ -90,35 +96,45 @@ public class HelloController{
 		Set<Image> images = imageService.getImagesByAll(query, order);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", query);
+		model.addAttribute("Order", order);
 		return "search";
 	}
 	
 	public String searchPageFlagHandler(Model model, String query, String order) {
-		String orderStatement;
-		if(order == "bypoints")
-			orderStatement = "ORDER BY i.points DESC";
-		else if(order == "byrandom")
-			orderStatement = "ORDER BY rand()";
-		else if(order == "bynewest")
-			orderStatement = "ORDER BY i.createTime DESC";
-		else
-			orderStatement = "";
+		String orderStatement = "ORDER BY i.points DESC";
 		
 		if(query.startsWith("user:")) {
 			query = query.replace("user:", "");
 			return "redirect:/user/" + query + "/images";
 		}
 		else if(query.startsWith("title:")) {
+			if(order.equals("bypoints"))
+				orderStatement = "ORDER BY i.points DESC";
+			else if(order.equals("byrandom"))
+				orderStatement = "ORDER BY rand()";
+			else if(order.equals("bynewest"))
+				orderStatement = "ORDER BY i.createTime DESC";
+			else
+				orderStatement = "";
 			query = query.replace("title:", "");
 			return searchPageWithTitle(model, query, orderStatement);
 		}
 		else if(query.startsWith("tag:")) {
+			if(order.equals("bypoints"))
+				orderStatement = "ORDER BY t.image.points DESC";
+			else if(order.equals("byrandom"))
+				orderStatement = "ORDER BY rand()";
+			else if(order.equals("bynewest"))
+				orderStatement = "ORDER BY t.image.createTime DESC";
+			else
+				orderStatement = "";
 			query = query.replace("tag:", "");
 			return searchPageWithTag(model, query, orderStatement);
 		}
 		else {
-			return searchPageWithAll(model, query, orderStatement);
+			return searchPageWithAll(model, query, order);
 		}
+		
 	}
 	
 	
@@ -166,6 +182,11 @@ public class HelloController{
 	@RequestMapping(value = "/byrandom", method = RequestMethod.GET)
 	 public String indexPageByRandom(Model model) {
 		return indexPage(model, "ORDER BY rand()");
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	 public ModelAndView searchMapper(@RequestParam("query") String query) {
+		return new ModelAndView(new RedirectView("search/" + query));
 	}
 	
 	@RequestMapping(value = "/search/{query}/{order}", method = RequestMethod.GET)

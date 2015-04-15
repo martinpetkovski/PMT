@@ -20,11 +20,10 @@
 	<!-- HEADER END -->
 	<!-- MAIN CONTENT START -->
 
-
 	<div class="mainContent">
 		<div class="sort">
 			<a href="${pageContext.request.contextPath}/search/${Query }/bypoints"><div class="sortItem">by highest scoring</div></a>
-			<a href="${pageContext.request.contextPath}/search/${Query }"><div class="sortItem">by newest first</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }/bynewest"><div class="sortItem">by newest first</div></a>
 			<a href="${pageContext.request.contextPath}/search/${Query }/byrandom"><div class="sortItem">by random number</div></a>
 		</div>
 		<div class="mainContentWrapper">

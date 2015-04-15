@@ -1,16 +1,14 @@
-/*package wto.util;
+/*
+package wto.util;
 
-import javax.transaction.Transactional;
+import wto.controller.HelloController;
 
-import wto.service.CommentServiceImpl;
 
 public class Main {
 
 	public static void main(String[] args) {
-		CommentServiceImpl csi = new CommentServiceImpl();
-		System.out.println(csi.getCommentByImage(2).get(0).getImg());
-
+		HelloController hl = new HelloController();
+		hl.searchPageWithAll(null, "t", " ORDER BY i.points DESC");
 	}
 
-}
-*/
+}*/

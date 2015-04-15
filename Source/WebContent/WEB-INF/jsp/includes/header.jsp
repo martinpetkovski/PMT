@@ -16,8 +16,8 @@
 
 			<div class="buttonArea">
 				<div class="search">
-				  	<form:form modelAttribute="search" method="GET" >
-						<input placeholder="Search..." type="text" name="search" />
+				  	<form:form method="GET" action="${pageContext.request.contextPath}/search">
+						<input placeholder="Search..." type="text" name="query"/>
 					</form:form>
 				</div>
 

@@ -29,8 +29,8 @@ function searchBarClick() {
 		});
 	});
 	$('.search input').blur(function(){
-		$('.search input').animate({width: 120}, 400);
-		$('.buttonArea .syntax').fadeOut(200);
+		$('.search input').animate({width: 150}, 400);
+		$('.buttonArea .syntax').fadeOut(100);
 	});
 }
 

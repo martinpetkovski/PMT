@@ -61,9 +61,8 @@
 			<div class="title">
 				Login
 			</div>
-			<input placeholder="username or email" type="text"><br>
-			<input placeholder="password" type="password"><button class=
-			"button" id="submit">-&gt;</button>
+			<input id="username" placeholder="username or email" type="text"><br>
+			<input placeholder="password" type="password"><button class="button" id="submit">-&gt;</button>
 		</div>
 	</div>
 
@@ -73,7 +72,7 @@
 			<div class="title">
 				Register
 			</div>
-			<input placeholder="username" type="text"><br>
+			<input id="username" placeholder="username" type="text"><br>
 			<input placeholder="email" type="email"><br>
 			<input placeholder="password" type="password"><button class=
 			"button" id="submit">-&gt;</button>

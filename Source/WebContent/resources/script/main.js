@@ -11,6 +11,7 @@ function loginRegisterClick() {
 		$('.dropMenu#login').slideToggle(500);
 		if($('.dropMenu#register').is(':visible')){
 			$('.dropMenu#register').slideUp(500);
+			$('.dropMenu#register input#username').focus();
 		}
 	});
 
@@ -18,6 +19,7 @@ function loginRegisterClick() {
 		$('.dropMenu#register').slideToggle(500);
 		if($('.dropMenu#login').is(':visible')){
 			$('.dropMenu#login').slideUp(500);
+			$('.dropMenu#login input#username').focus();
 		}
 	});
 }

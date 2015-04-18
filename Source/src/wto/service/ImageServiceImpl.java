@@ -40,7 +40,7 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	@Transactional
-	public Image getRandomImage() {
+	public Integer getRandomImage() {
 		return img.randomImage();
 	}
 

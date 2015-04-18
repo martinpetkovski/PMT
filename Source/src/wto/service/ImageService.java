@@ -12,5 +12,5 @@ public interface ImageService {
 	public List<Image> getImagesByQuery(String query, String order);
 	public List<Image> getImagesByTag(String query, String order);
 	public Set<Image> getImagesByAll(String query, String order);
-	public Image getRandomImage();
+	public Integer getRandomImage();
 }

@@ -1,0 +1,12 @@
+.alert {
+	padding:10px 0px;
+	display:none;
+}
+
+.alert#error {
+	color:#C00;
+}
+
+.alert#success {
+	color:#0C0;
+}

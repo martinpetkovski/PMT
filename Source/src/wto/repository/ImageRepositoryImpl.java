@@ -220,16 +220,14 @@ public class ImageRepositoryImpl implements ImageRepository {
 	}
 
 	@Override
-	public Image randomImage() {
+	public Integer randomImage() {
 		Session session = sh.getSessionFactory().openSession();
 		Transaction tx = null;
-		Image image = null;
+		Integer image = null;
 		try {
 			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Image as i ORDER BY rand()").setMaxResults(1);
-			image = (Image) q.uniqueResult();
-			Hibernate.initialize(image.getComments());
-			Hibernate.initialize(image.getTags());
+			Query q = session.createQuery("SELECT idimage FROM Image i ORDER BY rand()").setMaxResults(1);
+			image = (Integer) q.uniqueResult();
 			tx.commit();
 		} catch(HibernateException e) {
 			if(tx!=null)

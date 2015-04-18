@@ -7,21 +7,11 @@ function focusSearchBarOnKeypress() {
 }
 
 function loginRegisterClick() {
-	$('.button#login').click(function(){
-		$('.dropMenu#login').slideToggle(500);
-		if($('.dropMenu#register').is(':visible')){
-			$('.dropMenu#register').slideUp(500);
-			$('.dropMenu#register input#username').focus();
-		}
-	});
+		$('.dropMenu#login').slideDown(500);
+		$('.dropMenu#login input#username').focus();
 
-	$('.button#register').click(function(){
-		$('.dropMenu#register').slideToggle(500);
-		if($('.dropMenu#login').is(':visible')){
-			$('.dropMenu#login').slideUp(500);
-			$('.dropMenu#login input#username').focus();
-		}
-	});
+		$('.dropMenu#register').slideDown(500);
+		$('.dropMenu#register input#username').focus();
 }
 
 function searchBarClick() {

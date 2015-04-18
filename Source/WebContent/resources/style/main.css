@@ -63,6 +63,25 @@ header {
 	height: 50px;
 }
 
+.random {
+	position: absolute;
+	left: 140px;
+	padding:7px 10px;
+}
+
+.random img {
+	position:relative;
+	top:2px;
+}
+
+.random:hover {
+	background-color:#069;
+}
+
+.random:active {
+	background-color:#036;
+}
+
 .search form input {
 	box-sizing: border-box;
 	background-color:#111;

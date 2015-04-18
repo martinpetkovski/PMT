@@ -33,7 +33,18 @@ function displayCommentButtonOnClick() {
 	});
 }
 
+function imageHover() {
+	$(".image img").mouseenter(function(){
+		$(".imageMeta").stop().fadeIn(200);
+	});
+	
+	$(".image").mouseleave(function(){
+		$(".imageMeta").stop().delay(400).fadeOut(200);
+	});
+}
+
 $(document).ready(function(){
+	imageHover();
 	changeImagesOnKeypress();
 	displayCommentButtonOnClick();
 });

@@ -14,6 +14,12 @@
 					</div>
 				</div>
 			</a>
+			
+			<a href="${pageContext.request.contextPath}/image/random">
+				<div class="random">
+					<img src="${pageContext.request.contextPath}/resources/style/random.png" />
+				</div>
+			</a>
 
 			<div class="buttonArea">
 				<div class="search">
@@ -43,38 +49,17 @@
 				</div>
 
 
-				<div class="button" id="login">
+				<a href="${pageContext.request.contextPath}/login"><div class="button" id="login">
 					Login
-				</div>
+				</div></a>
 
 
-				<div class="button" id="register">
+				<a href="${pageContext.request.contextPath}/register"><div class="button" id="register">
 					Register
-				</div>
+				</div></a>
 			</div>
 		</div>
 	</header>
 
 
-	<div class="dropMenu" id="login">
-		<div class="dropMenuWrapper">
-			<div class="title">
-				Login
-			</div>
-			<input id="username" placeholder="username or email" type="text"><br>
-			<input placeholder="password" type="password"><button class="button" id="submit">-&gt;</button>
-		</div>
-	</div>
-
-
-	<div class="dropMenu" id="register">
-		<div class="dropMenuWrapper">
-			<div class="title">
-				Register
-			</div>
-			<input id="username" placeholder="username" type="text"><br>
-			<input placeholder="email" type="email"><br>
-			<input placeholder="password" type="password"><button class=
-			"button" id="submit">-&gt;</button>
-		</div>
-	</div>
+	

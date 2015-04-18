@@ -3,8 +3,6 @@ package wto.controller;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -164,9 +162,9 @@ public class HelloController{
     public String imageRandomPageMapper(Model model) {
         ImageServiceImpl imageService = new ImageServiceImpl();
         
-        Image theImage = imageService.getRandomImage();
+        Integer theImage = imageService.getRandomImage();
 
-        return imagePage(model, theImage);
+        return "redirect:/image/" + theImage;
     }
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -197,5 +195,15 @@ public class HelloController{
 	@RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
 	 public String searchPageMapper(@PathVariable("query") String query, Model model) {
 		return searchPageFlagHandler(model, query, "");
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	 public String loginPageMapper() {
+		return "login";
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	 public String  registerPageMapper() {
+		return "register";
 	}
 }

@@ -1,5 +1,29 @@
+.imageMeta {
+	display:none;
+	position:absolute;
+	left:0px;
+	right:0px;
+	background-color: rgba(0,0,0,0.8);	
+	color:#FFF;
+}
+
+.imageMeta .votes {
+	height:30px;
+}
+
+.imageMeta .votes span {
+	position:relative;
+	padding:5px;
+	top:5px;
+}
+
+.imageMeta .votes span:hover {
+	background-color:rgba(0,100,200,0.2);
+}
+
 .image {
-	margin:40px 0px -15px 0px;
+	position: relative;
+	margin:20px 0px -15px 0px;
 	width: 100%;
 }
 
@@ -91,7 +115,7 @@
 
 
 
-.votes {
+.comment .votes {
 	position: relative;
 	bottom: 3px;
 	float: right;

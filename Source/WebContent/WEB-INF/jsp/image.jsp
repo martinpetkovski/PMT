@@ -22,18 +22,16 @@
 
 
 	<div class="mainContent">
-		<div class="imageMeta">
-			<div class="votes">
-				<a href="random"><span id="prev">random</span></a> <a href=
-				"${ImageId - 1}"><span id="prev">&lt;&lt;previous</span></a> <a href=
-				"#"><span id="upvote">upvote</span></a> <a href="#"><span id=
-				"downvote">downvote</span></a> <a href="${ImageId + 1}"><span id=
-				"next">next&gt;&gt;</span></a>
+		
+
+
+		<div class="image">
+			<div class="imageMeta">
+				<div class="votes">
+					<a href="${ImageId - 1}"><span id="prev">« previous</span></a> <a href="#"><span id="upvote">upvote</span></a> <a href="#"><span id="downvote">downvote</span></a> <a href="${ImageId + 1}"><span id="next">next »</span></a>
+				</div>
 			</div>
-		</div>
-
-
-		<div class="image"><img src="${ImageLocation }">
+			<img src="${ImageLocation }">
 		</div>
 
 

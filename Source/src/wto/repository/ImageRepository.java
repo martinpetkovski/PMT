@@ -13,6 +13,6 @@ public interface ImageRepository {
 	public List<Image> readAll(String order);
 	public List<Image> readByQuery(String query, String order);
 	public List<Image> readByTag(String query, String order);
-	public Image randomImage();
+	public Integer randomImage();
 	List<Image> readByUsername(String username, String order);
 }

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`user` (
   `email` VARCHAR(150) NOT NULL,
   `password` MEDIUMTEXT NOT NULL,
   `points` INT NOT NULL,
+  `enabled` TINYINT NOT NULL DEFAULT 1,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`iduser`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC))
@@ -39,11 +40,13 @@ CREATE TABLE IF NOT EXISTS `wto`.`image` (
   `idimage` INT NOT NULL AUTO_INCREMENT,
   `iduser` INT NOT NULL,
   `title` VARCHAR(150) NOT NULL,
+  `address` VARCHAR(14) NOT NULL,
   `content` LONGTEXT NOT NULL,
   `points` INT NOT NULL DEFAULT 0,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`idimage`),
   INDEX `fk_image_1_idx` (`iduser` ASC),
+  UNIQUE INDEX `address_UNIQUE` (`address` ASC),
   CONSTRAINT `fk_image_1`
     FOREIGN KEY (`iduser`)
     REFERENCES `wto`.`user` (`iduser`)
@@ -158,6 +161,23 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
+
+
+-- -----------------------------------------------------
+-- Table `wto`.`user_roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wto`.`user_roles` (
+  `idrole` INT(11) NOT NULL AUTO_INCREMENT,
+  `iduser` INT NOT NULL,
+  `ROLE` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idrole`),
+  INDEX `uni_user_role` (`iduser` ASC, `ROLE` ASC),
+  CONSTRAINT `fk_user_roles_user1`
+    FOREIGN KEY (`iduser`)
+    REFERENCES `wto`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
 
 USE `wto`;
 

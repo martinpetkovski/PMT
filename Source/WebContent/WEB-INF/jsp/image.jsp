@@ -30,6 +30,10 @@
 				<div class="votes">
 					<a href="${ImageId - 1}"><span id="prev">« previous</span></a> <a href="#"><span id="upvote">upvote</span></a> <a href="#"><span id="downvote">downvote</span></a> <a href="${ImageId + 1}"><span id="next">next »</span></a>
 				</div>
+				
+				<div class="user">
+					submitted by <a href="${pageContext.request.contextPath}/user/${ImageUser }/images">${ImageUser }</a>
+				</div>
 			</div>
 			<img src="${ImageLocation }">
 		</div>

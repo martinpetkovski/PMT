@@ -8,8 +8,7 @@
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/index.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/login.css" rel="stylesheet">
-	<script src=
-	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 </head>
 
@@ -24,6 +23,7 @@
 		<div class="mainContentWrapper">
 			<div class="dropMenu" id="login">
 				<div class="dropMenuWrapper">
+					<img src="${pageContext.request.contextPath}/resources/style/regular-show.png">
 					<div class="title">
 						Login
 					</div>

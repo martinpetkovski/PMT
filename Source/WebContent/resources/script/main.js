@@ -29,7 +29,7 @@ function searchBarClick() {
 
 $(document).ready(function(){
 
-	loginRegisterClick();
+	//loginRegisterClick();
 	searchBarClick();
 	focusSearchBarOnKeypress();
 });

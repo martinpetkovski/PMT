@@ -16,8 +16,14 @@
 			</a>
 			
 			<a href="${pageContext.request.contextPath}/image/random">
-				<div class="random">
+				<div class="logoButton" id="random">
 					<img src="${pageContext.request.contextPath}/resources/style/random.png" />
+				</div>
+			</a>
+			
+			<a href="${pageContext.request.contextPath}/help">
+				<div class="logoButton" id="help">
+					<img src="${pageContext.request.contextPath}/resources/style/help.png" />
 				</div>
 			</a>
 
@@ -35,28 +41,32 @@
 					</div>
 					<div class="helpItemWrapper">
 						<div class="helpItem"><span class="white">title:</span> search images only by their title</div>
-						<div class="helpDescription">(usage - title:Some Title)</div>
+						<div class="helpDescription">(usage - title:Bender Futurama)</div>
 					</div>
 					<div class="helpItemWrapper">
 						<div class="helpItem"><span class="white">user:</span> displays users page</div>
-						<div class="helpDescription">(usage - user:Username)</div>
+						<div class="helpDescription">(usage - user:najjak)</div>
 					</div>
 					<div class="helpItemWrapper">
-						<div class="helpItem"><span class="white">F2</span></div>
-						<div class="helpDescription">(pressing F2 will focus the search bar)</div>
+						<div class="helpItem"><span class="white">Enter</span></div>
+						<div class="helpDescription">(will execute the query)</div>
 					</div>
 					<div class="syntaxTitle">search syntax</div>
 				</div>
 
 
-				<a href="${pageContext.request.contextPath}/login"><div class="button" id="login">
-					Login
-				</div></a>
+				<a href="${pageContext.request.contextPath}/login">
+					<div class="button" id="login">
+						Login
+					</div>
+				</a>
 
 
-				<a href="${pageContext.request.contextPath}/register"><div class="button" id="register">
-					Register
-				</div></a>
+				<a href="${pageContext.request.contextPath}/register">
+					<div class="button" id="register">
+						Register
+					</div>
+				</a>
 			</div>
 		</div>
 	</header>

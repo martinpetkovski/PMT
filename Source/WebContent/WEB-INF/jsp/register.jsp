@@ -8,8 +8,8 @@
 	<title>WTO Front Page</title>
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/index.css" rel="stylesheet">
-	<script src=
-	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link href="${pageContext.request.contextPath}/resources/style/login.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 </head>
 
@@ -24,6 +24,7 @@
 		<div class="mainContentWrapper">
 			<div class="dropMenu" id="register">
 				<div class="dropMenuWrapper">
+					<img src="${pageContext.request.contextPath}/resources/style/bender.png">
 					<div class="title">
 						Register
 					</div>

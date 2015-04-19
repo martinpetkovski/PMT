@@ -62,23 +62,30 @@ header {
 	width: 1000px;
 	height: 50px;
 }
-
-.random {
-	position: absolute;
+.logoButton#random {
 	left: 140px;
+}
+
+.logoButton#help {
+	left: 192px;
+}
+
+.logoButton#random, .logoButton#help {
+	position: absolute;
 	padding:7px 10px;
 }
 
-.random img {
+.logoButton#random img, .logoButton#help img {
 	position:relative;
 	top:2px;
+	text-align:center;
 }
 
-.random:hover {
+.logoButton#random:hover, .logoButton#help:hover {
 	background-color:#069;
 }
 
-.random:active {
+.logoButton#random:active, .logoButton#help:active {
 	background-color:#036;
 }
 
@@ -108,6 +115,7 @@ header {
 	position: absolute;
 	right:91px;
 	height:50px;
+	background-color:transparent;
 }
 
 .button#register {
@@ -115,14 +123,15 @@ header {
 	position: absolute;
 	right:0px;
 	height:50px;
+	background-color:transparent;
 }
 
-.button:hover {
+.button:hover, .button#login:hover, .button#register:hover {
 	cursor: pointer;
-	background-color: #08A;
+	background-color: #069;
 }
 
-.button:active {
+.button:active, .button#login:active, .button#register:active {
 	background-color: #148;
 	border: none;
 }
@@ -208,7 +217,6 @@ header {
 }
 
 .dropMenu {
-	display: none;
 	margin: 0 auto;
 	padding-top:20px;
 	width: 1000px;

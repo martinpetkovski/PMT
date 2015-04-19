@@ -46,6 +46,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 			Query q = session.createQuery("FROM Image as i WHERE i.idimage = :pk");
 			q.setParameter("pk", primaryKey);
 			image = (Image) q.list().get(0);
+			Hibernate.initialize(image.getUser());
 			Hibernate.initialize(image.getComments());
 			Hibernate.initialize(image.getTags());
 			tx.commit();

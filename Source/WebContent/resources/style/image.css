@@ -21,6 +21,17 @@
 	background-color:rgba(0,100,200,0.2);
 }
 
+.imageMeta .user {
+	position: absolute;
+	right: 5px;
+	bottom: 0px;
+	padding: 6px;
+}
+
+.imageMeta .user a {
+	color: #0AF;
+}
+
 .image {
 	position: relative;
 	margin:20px 0px -15px 0px;

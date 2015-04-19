@@ -32,6 +32,7 @@ public class HelloController{
         model.addAttribute("ImageCreateTime", theImage.getCreateTimeAsString());
         model.addAttribute("ImagePoints", theImage.getPoints());
         model.addAttribute("ImageTitle", theImage.getTitle());
+        model.addAttribute("ImageUser", theImage.getUser().getUsername());
         
         model.addAttribute("Comments", theImage.getComments());
         model.addAttribute("Tags", theImage.getTags());

@@ -9,7 +9,7 @@
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/image.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script>var ctxPath = "${pageContext.request.contextPath}"; var imageId = parseInt(${ImageId});</script>
+	<script>var ctxPath = "${pageContext.request.contextPath}"; var prevImage = "${PrevImage}"; var nextImage = "${NextImage}";</script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/image.js" type="text/javascript"></script>
 </head>
@@ -28,7 +28,7 @@
 		<div class="image">
 			<div class="imageMeta">
 				<div class="votes">
-					<a href="${ImageId - 1}"><span id="prev">« previous</span></a> <a href="#"><span id="upvote">upvote</span></a> <a href="#"><span id="downvote">downvote</span></a> <a href="${ImageId + 1}"><span id="next">next »</span></a>
+					<a href="${pageContext.request.contextPath}/image/${PrevImage}${Order}"><span id="prev">« previous</span></a> <a href="#"><span id="upvote">upvote</span></a> <a href="#"><span id="downvote">downvote</span></a> <a href="${pageContext.request.contextPath}/image/${NextImage}${Order}"><span id="next">next »</span></a>
 				</div>
 				
 				<div class="user">

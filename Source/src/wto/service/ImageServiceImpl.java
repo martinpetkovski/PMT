@@ -1,5 +1,6 @@
 package wto.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -18,6 +19,12 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public Image getImageById(Integer Id) {
 		return img.read(Id);
+	}
+	
+	@Override
+	@Transactional
+	public Image getImageByAddress(String address) {
+		return img.readByAddress(address);
 	}
 
 	@Override
@@ -40,7 +47,7 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	@Transactional
-	public Integer getRandomImage() {
+	public String getRandomImage() {
 		return img.randomImage();
 	}
 
@@ -66,5 +73,10 @@ public class ImageServiceImpl implements ImageService {
 		images.addAll(img.readByUsername(query,""));
 		
 		return images;
+	}
+
+	@Override
+	public List<String> getNextPrevAddress(Date id, int points, String order) {
+		return img.readNextPrev(id, points, order);
 	}
 }

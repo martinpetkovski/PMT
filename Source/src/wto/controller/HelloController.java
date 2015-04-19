@@ -21,7 +21,7 @@ import wto.service.UserServiceImpl;
 @Controller
 public class HelloController{
 	
-	public String imagePage(Model model, Image theImage) {
+	public String imagePage(Model model, Image theImage, List<String> nextprev, String order) {
 		int mostPoints = 0;
         
         if(theImage.getComments().size() > 0)
@@ -33,6 +33,11 @@ public class HelloController{
         model.addAttribute("ImagePoints", theImage.getPoints());
         model.addAttribute("ImageTitle", theImage.getTitle());
         model.addAttribute("ImageUser", theImage.getUser().getUsername());
+        
+        model.addAttribute("NextImage", nextprev.get(0));
+        model.addAttribute("PrevImage", nextprev.get(1));
+        
+        model.addAttribute("Order", order);
         
         model.addAttribute("Comments", theImage.getComments());
         model.addAttribute("Tags", theImage.getTags());
@@ -150,20 +155,33 @@ public class HelloController{
         return userPage(model, userName, false);
     }
 	
-	@RequestMapping(value = "/image/{imageId}", method = RequestMethod.GET)
-    public String imagePageMapper(@PathVariable("imageId") Integer imageId, Model model) {
+	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
+    public String imagePageMapper(@PathVariable("address") String address, Model model) {
         ImageServiceImpl imageService = new ImageServiceImpl();
         
-        Image theImage = imageService.getImageById(imageId);
+        Image theImage = imageService.getImageByAddress(address);
         
-        return imagePage(model, theImage);
+        List<String> nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), "ORDER BY i.createTime DESC");
+        
+        return imagePage(model, theImage, nextprev, "");
+    }
+	
+	@RequestMapping(value = "/image/{address}/{order}", method = RequestMethod.GET)
+    public String imageOrderedPageMapper(@PathVariable("address") String address, @PathVariable("order") String order, Model model) {
+        ImageServiceImpl imageService = new ImageServiceImpl();
+        
+        Image theImage = imageService.getImageByAddress(address);
+        
+        List<String> nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), order);
+        
+        return imagePage(model, theImage, nextprev, "/" + order);
     }
 	
 	@RequestMapping(value = "/image/random", method = RequestMethod.GET)
     public String imageRandomPageMapper(Model model) {
         ImageServiceImpl imageService = new ImageServiceImpl();
         
-        Integer theImage = imageService.getRandomImage();
+        String theImage = imageService.getRandomImage();
 
         return "redirect:/image/" + theImage;
     }

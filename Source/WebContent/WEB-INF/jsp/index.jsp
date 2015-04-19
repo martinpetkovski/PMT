@@ -29,7 +29,7 @@
 		</div>
 		<div class="mainContentWrapper">
 			<c:forEach var="Image" items="${Images }">
-				<a href="${pageContext.request.contextPath}/image/${Image.getIdimage()}">
+				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}">
 					<div class="image">
 						<div class="title">
 							<span>${Image.getTitle() }</span>

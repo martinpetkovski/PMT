@@ -32,6 +32,8 @@ public class Image implements Comparable<Image> {
 	private int iduser;
 	@Column(name="title")
 	private String title;
+	@Column(name="address")
+	private String address;
 	@Column(name="content")
 	private String content;
 	@Column(name="points")
@@ -82,6 +84,13 @@ public class Image implements Comparable<Image> {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getContent() {
 		return content;

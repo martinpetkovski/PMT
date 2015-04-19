@@ -33,7 +33,7 @@
 			<c:forEach var="image" items="${Images}">
 
 				<div class="image">
-					<a href="${pageContext.request.contextPath}/image/${image.getIdimage()}">
+					<a href="${pageContext.request.contextPath}/image/${image.getAddress()}">
 					<div class="content"><img src="${image.getContent()}">
 					</div></a>
 	

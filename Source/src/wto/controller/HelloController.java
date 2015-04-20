@@ -3,6 +3,7 @@ package wto.controller;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +16,19 @@ import org.springframework.web.servlet.view.RedirectView;
 import wto.model.Comment;
 import wto.model.Image;
 import wto.model.User;
-import wto.service.ImageServiceImpl;
-import wto.service.UserServiceImpl;
+import wto.service.CommentService;
+import wto.service.ImageService;
+import wto.service.UserService;
 
 @Controller
 public class HelloController{
-	
+	@Autowired
+    ImageService imageService;
+	@Autowired
+	UserService userService;
+	@Autowired
+	CommentService commentService;
+
 	public String imagePage(Model model, Image theImage, List<String> nextprev, String order) {
 		int mostPoints = 0;
         
@@ -45,9 +53,7 @@ public class HelloController{
 		return "image";
 	}
 	
-	public String userPage(Model model, String userName, boolean isImages) {
-		UserServiceImpl userService = new UserServiceImpl();
-        
+	public String userPage(Model model, String userName, boolean isImages) {        
         User theUser = userService.getUserByName(userName);
         
         List<Comment> comments = theUser.getComments();
@@ -69,7 +75,6 @@ public class HelloController{
 	}
 	
 	public String indexPage(Model model, String order) {
-		ImageServiceImpl imageService = new ImageServiceImpl();
         
         List<Image> images = imageService.getAllImages(order);
         
@@ -79,7 +84,6 @@ public class HelloController{
 	}
 	
 	public String searchPageWithTitle(Model model, String query, String order) {
-		ImageServiceImpl imageService = new ImageServiceImpl();
 		List<Image> images = imageService.getImagesByQuery(query, order);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", "title:" + query);
@@ -87,7 +91,6 @@ public class HelloController{
 	}
 	
 	public String searchPageWithTag(Model model, String query, String order) {
-		ImageServiceImpl imageService = new ImageServiceImpl();
 		List<Image> images = imageService.getImagesByTag(query, order);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", "tag:" + query);
@@ -96,7 +99,6 @@ public class HelloController{
 	}
 	
 	public String searchPageWithAll(Model model, String query, String order) {
-		ImageServiceImpl imageService = new ImageServiceImpl();
 		Set<Image> images = imageService.getImagesByAll(query, order);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", query);
@@ -157,7 +159,6 @@ public class HelloController{
 	
 	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
     public String imagePageMapper(@PathVariable("address") String address, Model model) {
-        ImageServiceImpl imageService = new ImageServiceImpl();
         
         Image theImage = imageService.getImageByAddress(address);
         
@@ -168,7 +169,6 @@ public class HelloController{
 	
 	@RequestMapping(value = "/image/{address}/{order}", method = RequestMethod.GET)
     public String imageOrderedPageMapper(@PathVariable("address") String address, @PathVariable("order") String order, Model model) {
-        ImageServiceImpl imageService = new ImageServiceImpl();
         
         Image theImage = imageService.getImageByAddress(address);
         
@@ -179,7 +179,6 @@ public class HelloController{
 	
 	@RequestMapping(value = "/image/random", method = RequestMethod.GET)
     public String imageRandomPageMapper(Model model) {
-        ImageServiceImpl imageService = new ImageServiceImpl();
         
         String theImage = imageService.getRandomImage();
 

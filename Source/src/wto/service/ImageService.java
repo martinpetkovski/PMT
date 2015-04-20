@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import wto.model.Image;
 
+@Service
 public interface ImageService {
 	public Image getImageById(Integer Id);
 	public Image getImageByAddress(String address);

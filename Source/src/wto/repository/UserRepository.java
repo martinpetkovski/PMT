@@ -10,5 +10,6 @@ public interface UserRepository {
 	public void update(User entity);
 	public void delete(Integer primaryKey);
 	public List<User> readByUsername(String username);
+	public User readByCombination(String username, String password);
 	public List<User> readAll();
 }

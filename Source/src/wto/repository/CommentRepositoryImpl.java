@@ -2,56 +2,47 @@ package wto.repository;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
+import javax.transaction.Transactional;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import wto.model.Comment;
-import wto.util.SessionHandler;
 
+@Repository
 public class CommentRepositoryImpl implements CommentRepository {
 
-	SessionHandler sh = new SessionHandler(Comment.class);
+	@Autowired
+	SessionFactory sf;
 	
+	public CommentRepositoryImpl(){}
+	
+	public CommentRepositoryImpl(SessionFactory sessionFactory) {
+		this.sf = sessionFactory;
+	}
+
 	@Override
+	@Transactional
 	public Integer create(Comment entity) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
+		Session session = sf.getCurrentSession();
 		Integer commentID = null;
-		try {
-			tx = session.beginTransaction();
-			commentID = (int)session.save(entity);
-			tx.commit();
-		} catch (HibernateException e) {
-			if(tx!=null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		commentID = (int)session.save(entity);
 		return commentID;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public Comment read(Integer primaryKey) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
+		Session session = sf.getCurrentSession();
 		List<Comment> comments = null;
-		try {
-			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Comment u WHERE u.idcomment = :pk");
-			q.setParameter("pk", primaryKey);
-			comments = q.list();
-			tx.commit();
-		} catch(HibernateException e) {
-			if(tx!=null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		Query q = session.createQuery("FROM Comment u WHERE u.idcomment = :pk");
+		q.setParameter("pk", primaryKey);
+		comments = q.list();
+		
 		if(comments.size() != 1)
 			return null;
 		else
@@ -59,84 +50,47 @@ public class CommentRepositoryImpl implements CommentRepository {
 	}
 
 	@Override
+	@Transactional
 	public void update(Comment entity) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			Comment comment = (Comment)session.get(Comment.class, entity.getIdcomment());
-			comment.setContent(entity.getContent());
-			session.update(comment);
-			tx.commit();
-		} catch (HibernateException e) {
-			if(tx!=null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		Session session = sf.getCurrentSession();
+		
+		Comment comment = (Comment)session.get(Comment.class, entity.getIdcomment());
+		comment.setContent(entity.getContent());
+		session.update(comment);
+		
 	}
 
 	@Override
+	@Transactional
 	public void delete(Integer primaryKey) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
-		try {
-			tx = session.beginTransaction();
-			Comment comment = (Comment) session.get(Comment.class, primaryKey);
-			session.delete(comment);
-			tx.commit();
-		} catch(HibernateException e) {
-			if(tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		Session session = sf.getCurrentSession();
+		Comment comment = (Comment) session.get(Comment.class, primaryKey);
+		session.delete(comment);
 
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Comment> readByImageId(Integer imageId) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
+		Session session = sf.getCurrentSession();
 		List<Comment> comments = null;
-		try {
-			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Comment c WHERE c.idimage = :iid");
-			q.setParameter("iid", imageId);
-			comments = q.list();
-			tx.commit();
-		} catch(HibernateException e) {
-			if(tx!=null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		Query q = session.createQuery("FROM Comment c WHERE c.idimage = :iid");
+		q.setParameter("iid", imageId);
+		comments = q.list();
 		return comments;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Comment> readByUserId(Integer userId) {
-		Session session = sh.getSessionFactory().openSession();
-		Transaction tx = null;
+		Session session = sf.getCurrentSession();
 		List<Comment> comments = null;
-		try {
-			tx = session.beginTransaction();
-			Query q = session.createQuery("FROM Comment c WHERE c.iduser = :iid");
-			q.setParameter("iid", userId);
-			comments = q.list();
-			tx.commit();
-		} catch(HibernateException e) {
-			if(tx!=null)
-				tx.rollback();
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+		Query q = session.createQuery("FROM Comment c WHERE c.iduser = :iid");
+		q.setParameter("iid", userId);
+		comments = q.list();
+		
 		return comments;
 	}
 

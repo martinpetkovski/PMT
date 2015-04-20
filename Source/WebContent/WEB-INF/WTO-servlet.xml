@@ -12,7 +12,7 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
-   	<context:component-scan base-package="wto.controller" />
+   	<context:component-scan base-package="wto" />
 
    	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       	<property name="prefix" value="/WEB-INF/jsp/" />

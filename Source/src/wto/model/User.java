@@ -3,6 +3,7 @@ package wto.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,6 +32,8 @@ public class User {
 	private String password;
 	@Column(name="points")
 	private Integer points;
+	@Column(name="enabled")
+	private boolean enabled;
     @Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
@@ -43,6 +46,8 @@ public class User {
     private List<CommentVote> commentVotes;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
     private List<ImageVote> imageVotes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
+    private Set<UserRole> userRoles;
 	
 	public User() {}
 	public User(Integer iduser, String username, String email, String password, Integer points,
@@ -118,6 +123,18 @@ public class User {
 	}
 	public void setImageVotes(List<ImageVote> imageVotes) {
 		this.imageVotes = imageVotes;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 	
 }

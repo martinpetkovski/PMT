@@ -54,7 +54,7 @@ public class HelloController{
 	}
 	
 	public String userPage(Model model, String userName, boolean isImages) {        
-        User theUser = userService.getUserByName(userName);
+        User theUser = userService.getUserByNameAndFetch(userName);
         
         List<Comment> comments = theUser.getComments();
         List<Image> images = theUser.getImages();

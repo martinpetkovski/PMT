@@ -70,36 +70,30 @@ public class UserRepositoryImpl implements UserRepository {
 		session.delete(user);		
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<User> readByUsername(String username) {
+	public User readByUsername(String username) {
 		Session session = sf.getCurrentSession();
-		List<User> users = null;
+		User user = null;
 		Query q = session.createQuery("FROM User u WHERE u.username = :un");
 		q.setParameter("un", username);
-		users = q.list();
-		for(User user : users) {
-			Hibernate.initialize(user.getImages());
-			Hibernate.initialize(user.getComments());
-		}
-		return users;
+		user = (User) q.list().get(0);
+		Hibernate.initialize(user.getUserRoles());
+		return user;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Transactional
-	public User readByCombination(String username, String password) {
+	public User readByNameAndFetch(String username) {
 		Session session = sf.getCurrentSession();
-		List<User> users = null;
-		Query q = session.createQuery("FROM User u WHERE u.username = :un AND u.password = :pw");
+		User user = null;
+		Query q = session.createQuery("FROM User u WHERE u.username = :un");
 		q.setParameter("un", username);
-		q.setParameter("pw", password);
-		users = q.list();
-			
-		if(users.size() == 1)
-			return users.get(0);
-		else
-			return null;
+		user = (User) q.list().get(0);
+		
+		Hibernate.initialize(user.getImages());
+		Hibernate.initialize(user.getComments());
+		
+		return user;
 	}
 
 	@SuppressWarnings("unchecked")

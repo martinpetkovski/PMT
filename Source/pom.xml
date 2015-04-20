@@ -127,10 +127,11 @@
     </dependency>
     
     <dependency>
-		<groupId>org.thymeleaf</groupId>
-		<artifactId>thymeleaf</artifactId>
-		<version>2.1.4.RELEASE</version>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-dbcp2</artifactId>
+		<version>2.1</version>
 	</dependency>
+
     
 
   </dependencies>

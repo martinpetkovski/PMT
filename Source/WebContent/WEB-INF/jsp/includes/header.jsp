@@ -54,7 +54,10 @@
 					<div class="syntaxTitle">search syntax</div>
 				</div>
 
-
+				<c:choose>
+				  <c:when test="${pageContext.request.userPrincipal.name}">Show something</c:when>
+				  <c:otherwise>Show something else</c:otherwise>
+				</c:choose>
 				<a href="${pageContext.request.contextPath}/login">
 					<div class="button" id="login">
 						Login

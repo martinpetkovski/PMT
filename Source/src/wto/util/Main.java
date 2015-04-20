@@ -1,10 +1,13 @@
-/*
+
 package wto.util;
 
-public class Main {
+import wto.repository.UserRepositoryImpl;
 
+public class Main {
+	
 	public static void main(String[] args) {
-		System.out.println(ImageAddressGenerator.generate());
+		UserRepositoryImpl userRepository = new UserRepositoryImpl();
+		System.out.println(userRepository.readByNameAndFetch("Martin").getUserRoles().size());
 	}
 
-}*/
+}

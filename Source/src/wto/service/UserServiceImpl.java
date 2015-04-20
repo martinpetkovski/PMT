@@ -1,9 +1,6 @@
 package wto.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import wto.model.User;
@@ -27,21 +24,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByName(String username) {
-		List<User> usr = ur.readByUsername(username);
-		if(usr.size() != 1)
-			return null;
-		else
-			return usr.get(0);
+		return ur.readByUsername(username);
 	}
 
 	@Override
-	public User getUserByCredentials(String username, String password) throws UsernameNotFoundException {
-		User user = ur.readByCombination(username, password);
+	public User getUserByNameAndFetch(String username) {
+		User user = ur.readByNameAndFetch(username);
 		return user;
 	}
 
 	@Override
-	public List<User> getUserByQuery(String username) {
+	public User getUserByQuery(String username) {
 		return ur.readByUsername(username);
 	}
 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<html>
 <head>
 	<meta charset="utf8">
 
@@ -27,16 +28,10 @@
 					<div class="title">
 						Login
 					</div>
-					<form name="f" th:action="@{/login}" method="post">
+					<form name='loginForm' action="<c:url value='/login' />" method='POST'>
 						<input id="username" placeholder="username" name="username" type="text" autocomplete="off"><br>
 						<input placeholder="password" name="password" type="password"><button class="button" id="submit">-&gt;</button>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<div th:if="${param.error}" class="alert" id="error">
-	                    	Invalid username and password.
-		                </div>
-		                <div th:if="${param.logout}" class="alert" id="success"> 
-		                    You have been logged out.
-		                </div>
 		            </form>
 				</div>
 			</div>

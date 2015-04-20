@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,6 +22,7 @@ public class UserRole {
 	private String role;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)
 	private User user;
 
 	public int getIdrole() {

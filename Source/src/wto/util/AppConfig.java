@@ -2,11 +2,12 @@ package wto.util;
 
 import java.util.Properties;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan("wto")
 @EnableTransactionManagement
-//@Import({ SecurityConfig.class })
+@Import({ SecurityConfig.class })
 public class AppConfig {
  
     @Bean
@@ -49,7 +50,6 @@ public class AppConfig {
 		return ds;
 	}
  
-	//Create a transaction manager
 	@Bean
     public HibernateTransactionManager txManager() {
             return new HibernateTransactionManager(sessionFactory());

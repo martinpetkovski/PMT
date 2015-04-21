@@ -70,22 +70,26 @@ header {
 	left: 192px;
 }
 
-.logoButton#random, .logoButton#help {
+.logoButton#upload {
+	left: 244px;
+}
+
+.logoButton#random, .logoButton#help, .logoButton#upload {
 	position: absolute;
 	padding:7px 10px;
 }
 
-.logoButton#random img, .logoButton#help img {
+.logoButton#random img, .logoButton#help img, .logoButton#upload img {
 	position:relative;
 	top:2px;
 	text-align:center;
 }
 
-.logoButton#random:hover, .logoButton#help:hover {
+.logoButton#random:hover, .logoButton#help:hover,  .logoButton#upload:hover {
 	background-color:#069;
 }
 
-.logoButton#random:active, .logoButton#help:active {
+.logoButton#random:active, .logoButton#help:active, .logoButton#upload:active {
 	background-color:#036;
 }
 
@@ -102,11 +106,11 @@ header {
 	background-color:#222;
 }
 
-.button {
+.button, button#logout {
 	display: inline-block;
 	padding: 12px;
 	font-size:18px;
-	background-color: #069;
+	background-color:#048;
 	color:#FFF;
 }
 
@@ -126,12 +130,20 @@ header {
 	background-color:transparent;
 }
 
-.button:hover, .button#login:hover, .button#register:hover {
+button#logout {
+	position:relative;
+	top:-1px;
+	padding:12px;
+	padding-bottom:16px;
+	background-color:#090909;
+}
+
+.button:hover, .button#login:hover, .button#register:hover, button#logout:hover {
 	cursor: pointer;
 	background-color: #069;
 }
 
-.button:active, .button#login:active, .button#register:active {
+.button:active, .button#login:active, .button#register:active, button#logout:active {
 	background-color: #148;
 	border: none;
 }

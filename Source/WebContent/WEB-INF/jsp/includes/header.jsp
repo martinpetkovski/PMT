@@ -26,6 +26,14 @@
 					<img src="${pageContext.request.contextPath}/resources/style/help.png" />
 				</div>
 			</a>
+			
+			<c:if test="${pageContext.request.userPrincipal.name != null}">
+				<a href="${pageContext.request.contextPath}/upload">
+					<div class="logoButton" id="upload">
+						<img src="${pageContext.request.contextPath}/resources/style/upload.png" />
+					</div>
+				</a>
+			</c:if>
 
 			<div class="buttonArea">
 				<div class="search">
@@ -54,22 +62,34 @@
 					<div class="syntaxTitle">search syntax</div>
 				</div>
 
-				<c:choose>
-				  <c:when test="${pageContext.request.userPrincipal.name}">Show something</c:when>
-				  <c:otherwise>Show something else</c:otherwise>
-				</c:choose>
-				<a href="${pageContext.request.contextPath}/login">
-					<div class="button" id="login">
-						Login
-					</div>
-				</a>
-
-
-				<a href="${pageContext.request.contextPath}/register">
-					<div class="button" id="register">
-						Register
-					</div>
-				</a>
+				<c:if test="${pageContext.request.userPrincipal.name == null}">
+					<a href="${pageContext.request.contextPath}/login">
+						<div class="button" id="login">
+							Login
+						</div>
+					</a>
+	
+	
+					<a href="${pageContext.request.contextPath}/register">
+						<div class="button" id="register">
+							Register
+						</div>
+					</a>
+				</c:if>
+				<c:if test="${pageContext.request.userPrincipal.name != null}">
+					<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}/images">
+						<div class="button" id="login">
+							${pageContext.request.userPrincipal.name}
+						</div>
+					</a>
+					
+					<c:url value="/logout" var="logoutUrl" />
+					<form action="${logoutUrl}" method="post">
+						<button id="logout">Logout</button>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</form>
+					
+				</c:if>
 			</div>
 		</div>
 	</header>

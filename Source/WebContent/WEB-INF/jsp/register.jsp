@@ -24,13 +24,14 @@
 		<div class="mainContentWrapper">
 			<div class="dropMenu" id="register">
 				<div class="dropMenuWrapper">
-					<img src="${pageContext.request.contextPath}/resources/style/bender.png">
+					<img src="${pageContext.request.contextPath}/resources/style/phineas.png">
 					<div class="title">
 						Register
 					</div>
-					<input id="username" placeholder="username" type="text" autocomplete="off"><br>
-					<input placeholder="email" type="email" autocomplete="off"><br>
-					<input placeholder="password" type="password"><button class="button" id="submit">-&gt;</button>
+					<input id="username" placeholder="username" type="text" autocomplete="off"><br/>
+					<input placeholder="email" type="email" autocomplete="off"><br/>
+					<input placeholder="password" type="password" id="password"><br/>
+					<input placeholder="repeat password" type="password" id="last"><button class="button" id="submit">-&gt;</button>
 				</div>
 			</div>
 		</div>

@@ -224,7 +224,7 @@ button#logout {
 	padding-top:10px;
 }
 
-.dropMenu input[type=password] {
+.dropMenu input#last {
 	width: 200px;
 }
 

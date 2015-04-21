@@ -30,7 +30,7 @@
 					</div>
 					<form name='loginForm' action="<c:url value='/login' />" method='POST'>
 						<input id="username" placeholder="username" name="username" type="text" autocomplete="off"><br>
-						<input placeholder="password" name="password" type="password"><button class="button" id="submit">-&gt;</button>
+						<input placeholder="password" name="password" type="password" id="last"><button class="button" id="submit">-&gt;</button>
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		            </form>
 				</div>

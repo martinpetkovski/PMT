@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class HelloController{
 	UserService userService;
 	@Autowired
 	CommentService commentService;
-
+	
 	public String imagePage(Model model, Image theImage, List<String> nextprev, String order) {
 		int mostPoints = 0;
         
@@ -215,11 +216,13 @@ public class HelloController{
 		return searchPageFlagHandler(model, query, "");
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	 public String loginPageMapper() {
 		return "login";
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	 public String  registerPageMapper() {
 		return "register";

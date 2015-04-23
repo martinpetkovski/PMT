@@ -37,5 +37,9 @@ public class UserServiceImpl implements UserService {
 	public User getUserByQuery(String username) {
 		return ur.readByUsername(username);
 	}
+	
+	public void saveUser(User theUser) {
+		ur.create(theUser);
+	}
 
 }

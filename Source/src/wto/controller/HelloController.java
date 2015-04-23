@@ -5,6 +5,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import wto.model.Comment;
+import wto.model.CustomUserDetails;
 import wto.model.Image;
 import wto.model.User;
 import wto.service.CommentService;
@@ -187,44 +191,66 @@ public class HelloController{
     }
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	 public String indexPageMapper(Model model) {
+	public String indexPageMapper(Model model) {
         return indexPage(model, "ORDER BY i.createTime DESC");
     }
 	
 	@RequestMapping(value = "/bypoints", method = RequestMethod.GET)
-	 public String indexPageByPointsMapper(Model model) {
+	public String indexPageByPointsMapper(Model model) {
 		return indexPage(model, "ORDER BY i.points DESC");
 	}
 	
 	@RequestMapping(value = "/byrandom", method = RequestMethod.GET)
-	 public String indexPageByRandom(Model model) {
+	public String indexPageByRandom(Model model) {
 		return indexPage(model, "ORDER BY rand()");
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	 public ModelAndView searchMapper(@RequestParam("query") String query) {
+	public ModelAndView searchMapper(@RequestParam("query") String query) {
 		return new ModelAndView(new RedirectView("search/" + query));
 	}
 	
 	@RequestMapping(value = "/search/{query}/{order}", method = RequestMethod.GET)
-	 public String searchPageOrderedMapper(@PathVariable("query") String query, @PathVariable("order") String order, Model model) {
+	public String searchPageOrderedMapper(@PathVariable("query") String query, @PathVariable("order") String order, Model model) {
 		return searchPageFlagHandler(model, query, order);
 	}
 	
 	@RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
-	 public String searchPageMapper(@PathVariable("query") String query, Model model) {
+	public String searchPageMapper(@PathVariable("query") String query, Model model) {
 		return searchPageFlagHandler(model, query, "");
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	 public String loginPageMapper() {
+	public String loginPageMapper() {
 		return "login";
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	 public String  registerPageMapper() {
+	public String registerPageMapper(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
 		return "register";
+	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerPageProcess(@RequestParam("username") String username, 
+			@RequestParam("email") String email, @RequestParam("password") String password,
+			@RequestParam("password2") String password2) {
+		
+		PasswordEncoder pe = new BCryptPasswordEncoder();
+		password = pe.encode(password);
+		userService.saveUser(new User(null,username,email,password,0,null));
+		return "register";
+			
+	}
+	
+	@RequestMapping(value = "/comment", method = RequestMethod.POST)
+	public String commentProcess(@RequestParam("content") String content, @RequestParam("imageId") int idimage) {
+	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+	    
+		commentService.saveComment(new Comment(null, user.getUser().getIduser(), idimage, content, 0, null));
+		return "redirect:/";
 	}
 }

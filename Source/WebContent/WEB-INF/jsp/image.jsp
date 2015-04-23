@@ -65,7 +65,11 @@
 
 				<div class="comment">
 					<div class="body">
-						<input placeholder="Write a comment" type="text"><button class="button">-></button>
+						<form action="<c:url value='/comment' />" method="POST">
+							<input name="content" placeholder="Write a comment" type="text"><button class="button">-></button>
+							<input type="hidden" name="imageId" value="${ImageId}"/>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						</form>
 					</div>
 
 					<hr>

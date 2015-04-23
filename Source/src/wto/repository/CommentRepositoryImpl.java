@@ -26,11 +26,9 @@ public class CommentRepositoryImpl implements CommentRepository {
 
 	@Override
 	@Transactional
-	public Integer create(Comment entity) {
+	public void create(Comment entity) {
 		Session session = sf.getCurrentSession();
-		Integer commentID = null;
-		commentID = (int)session.save(entity);
-		return commentID;
+		session.save(entity);
 	}
 
 	@SuppressWarnings("unchecked")

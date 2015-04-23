@@ -10,4 +10,6 @@ import wto.model.Comment;
 public interface CommentService {
 	public List<Comment> getCommentByImage(Integer imageId);
 	public List<Comment> getCommentByUser(Integer userId);
+	public void saveComment(Comment theComment);
 }
+

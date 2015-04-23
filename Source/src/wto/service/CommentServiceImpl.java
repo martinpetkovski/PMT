@@ -30,4 +30,9 @@ public class CommentServiceImpl implements CommentService {
 		return cri.readByUserId(userId);
 	}
 
+	@Override
+	public void saveComment(Comment theComment) {
+		cri.create(theComment);
+	}
+
 }

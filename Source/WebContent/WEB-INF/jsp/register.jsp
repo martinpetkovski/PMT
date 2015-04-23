@@ -28,10 +28,13 @@
 					<div class="title">
 						Register
 					</div>
-					<input id="username" placeholder="username" type="text" autocomplete="off"><br/>
-					<input placeholder="email" type="email" autocomplete="off"><br/>
-					<input placeholder="password" type="password" id="password"><br/>
-					<input placeholder="repeat password" type="password" id="last"><button class="button" id="submit">-&gt;</button>
+					<form action="<c:url value='/register' />" method="post">
+						<input name="username" placeholder="username" id="username" type="text" autocomplete="off" maxlength="20"><br/>
+						<input name="email" placeholder="email" type="email" autocomplete="off"><br/>
+						<input name="password" placeholder="password" type="password" id="password"><br/>
+						<input name="password2" placeholder="repeat password" type="password" id="last"><button class="button" id="submit">-&gt;</button>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					</form>
 				</div>
 			</div>
 		</div>

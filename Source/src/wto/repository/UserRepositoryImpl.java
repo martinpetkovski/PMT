@@ -27,13 +27,10 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	@Transactional
-	public Integer create(User entity) {
+	public void create(User entity) {
 		Session session = sf.getCurrentSession();
-		Integer userID = null;
-		userID = (int)session.save(entity);
-			
-		return userID;
-	}
+		session.save(entity);
+}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -89,9 +86,9 @@ public class UserRepositoryImpl implements UserRepository {
 		Query q = session.createQuery("FROM User u WHERE u.username = :un");
 		q.setParameter("un", username);
 		user = (User) q.list().get(0);
-		
-		Hibernate.initialize(user.getImages());
+
 		Hibernate.initialize(user.getComments());
+		Hibernate.initialize(user.getImages());
 		
 		return user;
 	}

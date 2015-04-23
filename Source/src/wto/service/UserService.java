@@ -10,4 +10,5 @@ public interface UserService {
 	public User getUserByName(String username);
 	public User getUserByNameAndFetch(String username);
 	public User getUserByQuery(String username);
+	public void saveUser(User theUser);
 }

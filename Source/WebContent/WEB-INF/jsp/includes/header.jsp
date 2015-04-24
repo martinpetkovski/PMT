@@ -77,7 +77,7 @@
 					</a>
 				</c:if>
 				<c:if test="${pageContext.request.userPrincipal.name != null}">
-					<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}/images">
+					<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}">
 						<div class="button" id="login">
 							${pageContext.request.userPrincipal.name}
 						</div>

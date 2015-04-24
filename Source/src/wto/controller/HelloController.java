@@ -1,5 +1,8 @@
 package wto.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -58,7 +63,7 @@ public class HelloController{
 		return "image";
 	}
 	
-	public String userPage(Model model, String userName, boolean isImages) {        
+	public String userPage(Model model, String userName) {        
         User theUser = userService.getUserByNameAndFetch(userName);
         
         List<Comment> comments = theUser.getComments();
@@ -69,14 +74,10 @@ public class HelloController{
 		model.addAttribute("ImageNumber", images.size());
 		model.addAttribute("CommentNumber", comments.size());
 		
-		if(isImages) {
-			model.addAttribute("Images", images);
-			return "userImages";
-		}
-		else {
-			model.addAttribute("Comments", comments);
-			return "userComments";
-		}		
+		model.addAttribute("Images", images);
+		model.addAttribute("Comments", comments);
+		return "user";
+			
 	}
 	
 	public String indexPage(Model model, String order) {
@@ -116,7 +117,7 @@ public class HelloController{
 		
 		if(query.startsWith("user:")) {
 			query = query.replace("user:", "");
-			return "redirect:/user/" + query + "/images";
+			return "redirect:/user/" + query;
 		}
 		else if(query.startsWith("title:")) {
 			if(order.equals("bypoints"))
@@ -152,14 +153,9 @@ public class HelloController{
 	
 	// Mapper functions
 	
-	@RequestMapping(value = "/user/{userName}/images", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{userName}", method = RequestMethod.GET)
     public String userImagesPageMapper(@PathVariable("userName") String userName, Model model) {
-        return userPage(model, userName, true);
-    }
-	
-	@RequestMapping(value = "/user/{userName}/comments", method = RequestMethod.GET)
-    public String userCommentsPageMapper(@PathVariable("userName") String userName, Model model) {
-        return userPage(model, userName, false);
+        return userPage(model, userName);
     }
 	
 	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
@@ -246,6 +242,7 @@ public class HelloController{
 			
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public String commentProcess(@RequestParam("content") String content, @RequestParam("imageId") int idimage) {
 	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
@@ -253,4 +250,31 @@ public class HelloController{
 		commentService.saveComment(new Comment(null, user.getUser().getIduser(), idimage, content, 0, null));
 		return "redirect:/";
 	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/upload", method = RequestMethod.GET)
+	public String uploadPageMapping(Model model) {
+		return "upload";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/upload", method = RequestMethod.POST)
+	public @ResponseBody String handleFileUpload(@RequestParam("title") String title,
+			@RequestParam("tags") String tags,
+            @RequestParam("file") MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(title)));
+                stream.write(bytes);
+                stream.close();
+                return "index";
+            } catch (Exception e) {
+                return "user";
+            }
+        } else {
+            return "user";
+        }
+    }
+
 }

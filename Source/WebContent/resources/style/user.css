@@ -20,11 +20,6 @@
 	margin: 0px 5px 5px 0px;
 	padding: 5px;
 	color: #FFF;
-}
-
-.metaItem#active, .metaItem#active .number {
-	background-color: #06A;
-	color: #FFF;
 	border-radius: 5px;
 }
 
@@ -119,3 +114,6 @@
 	font-size: 34px;
 }
 
+#user .comments {
+	display:none;
+}

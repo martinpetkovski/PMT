@@ -33,7 +33,7 @@ public class Comment {
 	@Column(name="create_time")
 	private Date createTime;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="idimage", referencedColumnName="idimage", insertable = false, updatable = false)
     private Image img;
 	@ManyToOne(fetch = FetchType.EAGER)

@@ -6,23 +6,16 @@
 				${UserName}
 			</div>
 			<div class="metaDataWrapper">
-				<a href="${pageContext.request.contextPath}/user/${UserName}/images">
-				 	
-					<div class="metaItem" id="${activeImages ? 'active' : ''}">
-						<span class="number">${ImageNumber }</span> images
-					</div>
-				</a>
-				
-				<span class="siz">//</span>
+	 	
+				<div class="metaItem" id="imagesButton" style="background-color: #06A;">
+					<span class="number">${ImageNumber }</span> images
+				</div>
 
-				<a href="${pageContext.request.contextPath}/user/${UserName}/comments">
-					<div class="metaItem" id="${activeComments ? 'active' : ''}">
-						<span class="number">${CommentNumber }</span> comments
-					</div>
-				</a>
-				<span class="siz">//</span>
+				<div class="metaItem" id="commentsButton">
+					<span class="number">${CommentNumber }</span> comments
+				</div>
 
-				<div class="metaItem" id="${activeAll ? 'active' : ''}">
+				<div class="metaItem" id="pointsButton">
 					<span class="number">${UserPoints}</span> points
 				</div>
 			</div>

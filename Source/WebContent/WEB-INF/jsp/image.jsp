@@ -32,7 +32,7 @@
 				</div>
 				
 				<div class="user">
-					submitted by <a href="${pageContext.request.contextPath}/user/${ImageUser }/images">${ImageUser }</a>
+					submitted by <a href="${pageContext.request.contextPath}/user/${ImageUser }">${ImageUser }</a>
 				</div>
 			</div>
 			<img src="${ImageLocation }">
@@ -66,7 +66,7 @@
 				<div class="comment">
 					<div class="body">
 						<form action="<c:url value='/comment' />" method="POST">
-							<input name="content" placeholder="Write a comment" type="text"><button class="button">-></button>
+							<input name="content" placeholder="Write a comment ..." type="text" autocomplete="off">
 							<input type="hidden" name="imageId" value="${ImageId}"/>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						</form>
@@ -88,7 +88,7 @@
 	
 	
 						<div class="meta">
-							<span id="username"><a href="${pageContext.request.contextPath}/user/${Comment.getUser().getUsername()}/comments">${Comment.getUser().getUsername() }</a></span> <span class="siz">//</span> <span id="date">date submitted: ${Comment.getCreateTimeAsString() }</span> <span class="siz">//</span> <span id="points">${Comment.getPoints() } points</span>
+							<span id="username"><a href="${pageContext.request.contextPath}/user/${Comment.getUser().getUsername()}">${Comment.getUser().getUsername() }</a></span> <span class="siz">//</span> <span id="date">date submitted: ${Comment.getCreateTimeAsString() }</span> <span class="siz">//</span> <span id="points">${Comment.getPoints() } points</span>
 						</div>
 	
 	

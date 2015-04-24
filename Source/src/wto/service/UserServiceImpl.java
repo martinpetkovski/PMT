@@ -29,8 +29,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByNameAndFetch(String username) {
-		User user = ur.readByNameAndFetch(username);
-		return user;
+		 return ur.readByNameAndFetch(username);
 	}
 
 	@Override

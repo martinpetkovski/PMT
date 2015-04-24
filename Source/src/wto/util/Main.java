@@ -1,13 +1,16 @@
-
+/*
 package wto.util;
 
-import wto.repository.UserRepositoryImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import wto.repository.UserRepository;
 
 public class Main {
+	@Autowired
+	static UserRepository userRepository;
 	
 	public static void main(String[] args) {
-		UserRepositoryImpl userRepository = new UserRepositoryImpl();
-		System.out.println(userRepository.readByNameAndFetch("Martin").getUserRoles().size());
+		System.out.println(userRepository.readByNameAndFetch("Martin"));
 	}
 
-}
+}*/

@@ -17,5 +17,5 @@ public interface ImageRepository {
 	public List<Image> readByQuery(String query, String order);
 	public List<Image> readByTag(String query, String order);
 	public String randomImage();
-	List<Image> readByUsername(String username, String order);
+	public List<Image> readByUsername(String username, String order);
 }

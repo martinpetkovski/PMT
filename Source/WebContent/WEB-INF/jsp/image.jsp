@@ -28,7 +28,20 @@
 		<div class="image">
 			<div class="imageMeta">
 				<div class="votes">
-					<a href="${pageContext.request.contextPath}/image/${PrevImage}${Order}"><span id="prev">« previous</span></a> <a href="#"><span id="upvote">upvote</span></a> <a href="#"><span id="downvote">downvote</span></a> <a href="${pageContext.request.contextPath}/image/${NextImage}${Order}"><span id="next">next »</span></a>
+					<a href="${pageContext.request.contextPath}/image/${PrevImage}${Order}"><span id="prev">« previous</span></a> 
+					<form action="<c:url value='/image_vote' />" method="POST">
+						<input type="hidden" name="voteType" value="true">
+						<input type="hidden" name="imageId" value="${ImageId }">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<span class="submit" id="upvote">upvote</span>
+					</form>
+					<form action="<c:url value='/image_vote' />" method="POST">
+						<input type="hidden" name="voteType" value="false">
+						<input type="hidden" name="imageId" value="${ImageId }">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<span class="submit" id="downvote">downvote</span>
+					</form>
+					<a href="${pageContext.request.contextPath}/image/${NextImage}${Order}"><span id="next">next »</span></a>
 				</div>
 				
 				<div class="user">

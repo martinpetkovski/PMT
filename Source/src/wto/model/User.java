@@ -1,5 +1,6 @@
 package wto.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	@Column(name="iduser")

@@ -41,8 +41,15 @@ function imageHover() {
 	});
 }
 
+function submitParentForm() {
+	$(".submit").click(function(event){
+		$(this).parent().submit();
+	})
+}
+
 $(document).ready(function(){
 	imageHover();
 	changeImagesOnKeypress();
 	displayCommentButtonOnClick();
+	submitParentForm();
 });

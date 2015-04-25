@@ -10,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import wto.model.Image;
+import wto.model.ImageVote;
 import wto.repository.ImageRepository;
+import wto.repository.ImageVoteRepository;
 
 @Service("ImageService")
 public class ImageServiceImpl implements ImageService {
 
 	@Autowired
 	ImageRepository img;
+	@Autowired
+	ImageVoteRepository ivr;
 	
 	public ImageServiceImpl() {}
 	
@@ -66,7 +70,7 @@ public class ImageServiceImpl implements ImageService {
 			images = new TreeSet<Image>(Image.getPointsComparator());
 		else if(order.equals("bynewest"))
 			images = new TreeSet<Image>(Image.getTimeComparator());
-		else // За рандом не работи
+		else 
 			images = new TreeSet<Image>();
 		
 		images.addAll(img.readByQuery(query,""));
@@ -79,5 +83,11 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	public List<String> getNextPrevAddress(Date id, int points, String order) {
 		return img.readNextPrev(id, points, order);
+	}
+
+	@Override
+	public void voteImage(int iduser, int idimage, boolean voteType) {
+		ivr.create(new ImageVote(null, iduser, idimage, voteType, null));
+		
 	}
 }

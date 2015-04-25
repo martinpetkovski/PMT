@@ -19,4 +19,5 @@ public interface ImageService {
 	public List<Image> getImagesByTag(String query, String order);
 	public Set<Image> getImagesByAll(String query, String order);
 	public String getRandomImage();
+	public void voteImage(int iduser, int idimage, boolean voteType);
 }

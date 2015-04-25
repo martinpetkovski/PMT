@@ -1,3 +1,7 @@
+.image form {
+	display:inline-block;
+}
+
 .imageMeta {
 	display:none;
 	position:absolute;

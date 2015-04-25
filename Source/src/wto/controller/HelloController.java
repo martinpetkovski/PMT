@@ -276,5 +276,18 @@ public class HelloController{
             return "user";
         }
     }
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/image_vote", method = RequestMethod.POST)
+	public String imageVoteProcess(@RequestParam boolean voteType, @RequestParam int imageId) {
+	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+
+	    imageService.voteImage(user.getUser().getIduser(), imageId, voteType);
+	    
+	    if(voteType)
+	    	return "user";
+	    else
+	    	return "index";
+	}
 
 }

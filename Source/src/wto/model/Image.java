@@ -27,7 +27,7 @@ public class Image implements Comparable<Image> {
 	@Id
 	@GeneratedValue
 	@Column(name="idimage")
-	private int idimage;
+	private Integer idimage;
 	@Column(name="iduser")
 	private int iduser;
 	@Column(name="title")
@@ -57,20 +57,21 @@ public class Image implements Comparable<Image> {
     private Set<ImageVote> votes;
     
 	public Image(){}
-	public Image(int idimage, int iduser, String title, String content,
+	public Image(Integer idimage, int iduser, String title, String address, String content,
 			int points, Date createTime) {
 		super();
 		this.idimage = idimage;
 		this.iduser = iduser;
 		this.title = title;
+		this.address = address;
 		this.content = content;
 		this.points = points;
 		this.createTime = createTime;
 	}
-	public int getIdimage() {
+	public Integer getIdimage() {
 		return idimage;
 	}
-	public void setIdimage(int idimage) {
+	public void setIdimage(Integer idimage) {
 		this.idimage = idimage;
 	}
 	public int getIduser() {

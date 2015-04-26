@@ -2,8 +2,6 @@ package wto.util;
 
 import java.util.Properties;
 
-import javax.servlet.annotation.MultipartConfig;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -24,7 +22,6 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @ComponentScan("wto")
 @EnableTransactionManagement
-@MultipartConfig
 @Import({ SecurityConfig.class })
 public class AppConfig extends WebMvcConfigurerAdapter{
  
@@ -74,11 +71,13 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
 	    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+	    registry.addResourceHandler("/i/**").addResourceLocations("/i/");
 	}
 	
-	@Bean
-	public StandardServletMultipartResolver multipartResolver() {
-		StandardServletMultipartResolver resolver = new StandardServletMultipartResolver();
-	    return resolver;
+	@Bean(name="filterMultipartResolver")
+	public CommonsMultipartResolver filterMultipartResolver() {
+	    CommonsMultipartResolver filterMultipartResolver = new CommonsMultipartResolver();
+	    filterMultipartResolver.setMaxUploadSize(1024*1024);
+	    return filterMultipartResolver;
 	}
 }

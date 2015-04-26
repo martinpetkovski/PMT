@@ -31,13 +31,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 
 	@Override
 	@Transactional
-	public Integer create(Image entity) {
+	public void create(Image entity) {
 		Session session = sf.getCurrentSession();
-		Integer imageID = null;
-		
-		imageID = (int)session.save(entity);
-			
-		return imageID;
+		session.save(entity);
 	}
 
 	@Override

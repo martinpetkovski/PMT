@@ -20,4 +20,6 @@ public interface ImageService {
 	public Set<Image> getImagesByAll(String query, String order);
 	public String getRandomImage();
 	public void voteImage(int iduser, int idimage, boolean voteType);
+	void voteComment(int iduser, int idcomment, boolean voteType);
+	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime);
 }

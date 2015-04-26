@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -29,6 +30,7 @@ import wto.model.User;
 import wto.service.CommentService;
 import wto.service.ImageService;
 import wto.service.UserService;
+import wto.util.ImageAddressGenerator;
 
 @Controller
 public class HelloController{
@@ -38,6 +40,15 @@ public class HelloController{
 	UserService userService;
 	@Autowired
 	CommentService commentService;
+	@Autowired
+    private ServletContext servletContext;
+	
+	private static String getFileExtension(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
+        return fileName.substring(fileName.lastIndexOf(".")+1);
+        else return "";
+    }
 	
 	public String imagePage(Model model, Image theImage, List<String> nextprev, String order) {
 		int mostPoints = 0;
@@ -259,18 +270,23 @@ public class HelloController{
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/upload", method = RequestMethod.POST)
-	public @ResponseBody String handleFileUpload(@RequestParam("title") String title,
-			@RequestParam("tags") String tags,
-            @RequestParam("file") MultipartFile file){
+	public String handleFileUpload(@RequestParam("title") String title, @RequestParam("tags") String tags, @RequestParam("file") MultipartFile file){
+		
+		String address = ImageAddressGenerator.generate();
+		CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
         if (!file.isEmpty()) {
             try {
                 byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(title)));
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("D:\\programming\\Workspaces\\STS\\" + servletContext.getContextPath() + "\\WebContent\\i\\" + address + "." + getFileExtension(file))));
                 stream.write(bytes);
                 stream.close();
+                imageService.saveImage(null, user.getUser().getIduser(), title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null);
+                
                 return "index";
             } catch (Exception e) {
-                return "user";
+                e.printStackTrace();
+                return "";
             }
         } else {
             return "user";
@@ -283,6 +299,19 @@ public class HelloController{
 	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 
 	    imageService.voteImage(user.getUser().getIduser(), imageId, voteType);
+	    
+	    if(voteType)
+	    	return "user";
+	    else
+	    	return "index";
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/comment_vote", method = RequestMethod.POST)
+	public String commentVoteProcess(@RequestParam boolean voteType, @RequestParam int commentId) {
+	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+
+	    imageService.voteComment(user.getUser().getIduser(), commentId, voteType);
 	    
 	    if(voteType)
 	    	return "user";

@@ -96,7 +96,18 @@
 	
 	
 						<div class="votes">
-							<span id="upvote">upvote</span> <span id="downvote">downvote</span>
+							<form action="<c:url value='/comment_vote' />" method="POST">
+								<input type="hidden" name="voteType" value="true">
+								<input type="hidden" name="commentId" value="${Comment.getIdcomment() }">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<span class="submit" id="upvote">upvote</span>
+							</form>
+							<form action="<c:url value='/comment_vote' />" method="POST">
+								<input type="hidden" name="voteType" value="false">
+								<input type="hidden" name="commentId" value="${Comment.getIdcomment() }">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<span class="submit" id="downvote">downvote</span>
+							</form>
 						</div>
 	
 	

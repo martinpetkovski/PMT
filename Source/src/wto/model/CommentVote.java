@@ -19,7 +19,7 @@ public class CommentVote {
 	@Id
 	@GeneratedValue
 	@Column(name="idvote")
-	private int idvote;
+	private Integer idvote;
 	@Column(name="iduser")
 	private int iduser;
 	@Column(name="idcomment")
@@ -38,7 +38,7 @@ public class CommentVote {
     private Comment comment;
 	
 	public CommentVote() {}
-	public CommentVote(int idvote, int iduser, int idcomment,
+	public CommentVote(Integer idvote, int iduser, int idcomment,
 			boolean votetype, Date createTime) {
 		super();
 		this.idvote = idvote;
@@ -47,10 +47,10 @@ public class CommentVote {
 		this.votetype = votetype;
 		this.createTime = createTime;
 	}
-	public int getIdvote() {
+	public Integer getIdvote() {
 		return idvote;
 	}
-	public void setIdvote(int idvote) {
+	public void setIdvote(Integer idvote) {
 		this.idvote = idvote;
 	}
 	public int getIduser() {

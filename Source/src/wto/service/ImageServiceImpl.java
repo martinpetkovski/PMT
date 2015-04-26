@@ -9,8 +9,10 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import wto.model.CommentVote;
 import wto.model.Image;
 import wto.model.ImageVote;
+import wto.repository.CommentVoteRepository;
 import wto.repository.ImageRepository;
 import wto.repository.ImageVoteRepository;
 
@@ -21,6 +23,8 @@ public class ImageServiceImpl implements ImageService {
 	ImageRepository img;
 	@Autowired
 	ImageVoteRepository ivr;
+	@Autowired
+	CommentVoteRepository cvr;
 	
 	public ImageServiceImpl() {}
 	
@@ -90,4 +94,17 @@ public class ImageServiceImpl implements ImageService {
 		ivr.create(new ImageVote(null, iduser, idimage, voteType, null));
 		
 	}
+	
+	@Override
+	public void voteComment(int iduser, int idcomment, boolean voteType) {
+		cvr.create(new CommentVote(null, iduser, idcomment, voteType, null));
+	}
+
+	@Override
+	public void saveImage(Integer idimage, int iduser, String title,
+			String address, String content, int points, Date createTime) {
+		img.create(new Image(idimage, iduser, title, address, content, points, createTime));
+		
+	}
+	
 }

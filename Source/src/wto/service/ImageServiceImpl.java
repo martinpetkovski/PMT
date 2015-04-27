@@ -1,5 +1,6 @@
 package wto.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 import wto.model.CommentVote;
 import wto.model.Image;
 import wto.model.ImageVote;
+import wto.model.Tag;
 import wto.repository.CommentVoteRepository;
 import wto.repository.ImageRepository;
 import wto.repository.ImageVoteRepository;
+import wto.repository.TagRepository;
 
 @Service("ImageService")
 public class ImageServiceImpl implements ImageService {
@@ -25,6 +28,8 @@ public class ImageServiceImpl implements ImageService {
 	ImageVoteRepository ivr;
 	@Autowired
 	CommentVoteRepository cvr;
+	@Autowired
+	TagRepository tr;
 	
 	public ImageServiceImpl() {}
 	
@@ -102,9 +107,17 @@ public class ImageServiceImpl implements ImageService {
 
 	@Override
 	public void saveImage(Integer idimage, int iduser, String title,
-			String address, String content, int points, Date createTime) {
-		img.create(new Image(idimage, iduser, title, address, content, points, createTime));
+			String address, String content, int points, Date createTime, String tagsArg) {
 		
+		String[] tags = tagsArg.split(",");
+		List<Tag> tagList = new ArrayList<Tag>();
+		
+		for(String tag : tags) {
+			tagList.add(new Tag(null, idimage, tag));
+		}
+		
+		img.create(new Image(idimage, iduser, title, address, content, points, createTime));	
+		tr.create(tagList);
 	}
 	
 }

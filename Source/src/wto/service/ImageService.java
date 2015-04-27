@@ -21,5 +21,5 @@ public interface ImageService {
 	public String getRandomImage();
 	public void voteImage(int iduser, int idimage, boolean voteType);
 	void voteComment(int iduser, int idcomment, boolean voteType);
-	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime);
+	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime, String tags);
 }

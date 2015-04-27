@@ -15,7 +15,7 @@ public class Tag {
 	@Id
 	@GeneratedValue
 	@Column(name="idtag")
-	private int idtag;
+	private Integer idtag;
 	@Column(name="idimage")
 	private int idimage;
 	@Column(name="content")
@@ -26,16 +26,17 @@ public class Tag {
     private Image image;
 	
 	public Tag(){}
-	public Tag(int idtag, int idimage, String content) {
+	
+	public Tag(Integer idtag, int idimage, String content) {
 		super();
 		this.idtag = idtag;
 		this.idimage = idimage;
 		this.content = content;
 	}
-	public int getIdtag() {
+	public Integer getIdtag() {
 		return idtag;
 	}
-	public void setIdtag(int idtag) {
+	public void setIdtag(Integer idtag) {
 		this.idtag = idtag;
 	}
 	public int getIdimage() {

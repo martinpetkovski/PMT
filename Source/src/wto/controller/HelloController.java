@@ -281,7 +281,7 @@ public class HelloController{
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("D:\\programming\\Workspaces\\STS\\" + servletContext.getContextPath() + "\\WebContent\\i\\" + address + "." + getFileExtension(file))));
                 stream.write(bytes);
                 stream.close();
-                imageService.saveImage(null, user.getUser().getIduser(), title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null);
+                imageService.saveImage(null, user.getUser().getIduser(), title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null, tags);
                 
                 return "index";
             } catch (Exception e) {

@@ -11,7 +11,6 @@ import wto.model.ImageVote;
 
 @Repository
 public class ImageVoteRepositoryImpl implements ImageVoteRepository {
-	
 	@Autowired
 	SessionFactory sf;
 	

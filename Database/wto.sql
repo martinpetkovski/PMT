@@ -201,7 +201,7 @@ BEGIN
 	IF NEW.`votetype` = TRUE AND OLD.`votetype` = FALSE THEN 
 		UPDATE `image` SET `points` = `points` + 2 WHERE `image`.`idimage` = NEW.`idimage`;
         UPDATE `user`, `image` SET `user`.`points` = `user`.`points` + 2 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
-	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = FALSE THEN
+	ELSEIF NEW.`votetype` = FALSE AND OLD.`votetype` = TRUE THEN
 		UPDATE `image` SET `points` = `points` - 2 WHERE `image`.`idimage` = NEW.`idimage`;
         UPDATE `user`, `image` SET `user`.`points` = `user`.`points` - 2 WHERE `user`.`iduser` = (SELECT `iduser` FROM `image` WHERE `idimage` = NEW.`idimage`);
 	END IF;

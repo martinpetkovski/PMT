@@ -6,7 +6,7 @@ import java.util.List;
 import wto.model.Image;
 
 public interface ImageRepository {
-	public void create(Image entity);
+	public int create(Image entity);
 	public Image read(Integer primaryKey);
 	public void update(Image entity);
 	public void delete(Integer primaryKey);

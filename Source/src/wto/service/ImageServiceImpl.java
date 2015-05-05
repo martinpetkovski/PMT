@@ -109,14 +109,16 @@ public class ImageServiceImpl implements ImageService {
 	public void saveImage(Integer idimage, int iduser, String title,
 			String address, String content, int points, Date createTime, String tagsArg) {
 		
-		String[] tags = tagsArg.split(",");
+		String[] tags = tagsArg.split(", ");
+		
+		int imageid = img.create(new Image(idimage, iduser, title, address, content, points, createTime));
+		
 		List<Tag> tagList = new ArrayList<Tag>();
 		
 		for(String tag : tags) {
-			tagList.add(new Tag(null, idimage, tag));
+			tagList.add(new Tag(null, imageid, tag));
 		}
 		
-		img.create(new Image(idimage, iduser, title, address, content, points, createTime));	
 		tr.create(tagList);
 	}
 	

@@ -25,9 +25,10 @@ public class TagRepositoryImpl implements TagRepository {
 	
 	@Override
 	@Transactional
-	public void create(List<Tag> entity) {
+	public void create(List<Tag> entities) {
 		Session session = sf.getCurrentSession();
-		session.save(entity);
+		for(Tag entity : entities)
+			session.save(entity);
 	}
 
 }

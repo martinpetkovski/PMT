@@ -3,6 +3,7 @@ package wto.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import wto.model.Tag;
 import wto.repository.UserRepository;
 
 public class Main {
@@ -10,7 +11,8 @@ public class Main {
 	static UserRepository userRepository;
 	
 	public static void main(String[] args) {
-		System.out.println(userRepository.readByNameAndFetch("Martin"));
+		Tag asdf = new Tag(0, 5, "Test");
+		System.out.println(asdf.getContent());
 	}
 
 }*/

@@ -259,7 +259,7 @@ public class HelloController{
 	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 	    
 		commentService.saveComment(new Comment(null, user.getUser().getIduser(), idimage, content, 0, null));
-		return "redirect:/";
+		return "redirect:/image/"+imageService.getImageById(idimage).getAddress();
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -286,10 +286,10 @@ public class HelloController{
                 return "index";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "";
+                return "404";
             }
         } else {
-            return "user";
+            return "redirect:/image/"+address;
         }
     }
 	
@@ -300,23 +300,18 @@ public class HelloController{
 
 	    imageService.voteImage(user.getUser().getIduser(), imageId, voteType);
 	    
-	    if(voteType)
-	    	return "user";
-	    else
-	    	return "index";
+	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress();
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/comment_vote", method = RequestMethod.POST)
-	public String commentVoteProcess(@RequestParam boolean voteType, @RequestParam int commentId) {
+	public String commentVoteProcess(@RequestParam boolean voteType, @RequestParam int imageId, @RequestParam int commentId) {
 	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 
 	    imageService.voteComment(user.getUser().getIduser(), commentId, voteType);
-	    
-	    if(voteType)
-	    	return "user";
-	    else
-	    	return "index";
+
+	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId;
+
 	}
 
 }

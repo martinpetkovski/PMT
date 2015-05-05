@@ -44,7 +44,19 @@
 		
 		
 							<div class="titleMeta">
-								<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${image.getCreateTimeAsString()}
+								<form action="<c:url value='/image_vote' />" method="POST">
+									<input type="hidden" name="voteType" value="true">
+									<input type="hidden" name="imageId" value="${image.getIdimage() }">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<span class="submit" id="upvote">upvote</span>
+								</form>
+								<form action="<c:url value='/image_vote' />" method="POST">
+									<input type="hidden" name="voteType" value="false">
+									<input type="hidden" name="imageId" value="${image.getIdimage() }">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<span class="submit" id="downvote">downvote</span>
+								</form>
+								 - ${image.getCreateTimeAsString()}
 							</div>
 							<span class="titleSiz">&gt;&gt;</span> ${image.getTitle()}
 						</div>
@@ -72,7 +84,21 @@
 		
 		
 							<div class="titleMeta">
-								<span id="upvote">upvote</span> <span id="downvote">downvote</span> - ${comment.getCreateTimeAsString()}
+								<form action="<c:url value='/comment_vote' />" method="POST">
+									<input type="hidden" name="voteType" value="true">
+									<input type="hidden" name="commentId" value="${comment.getIdcomment() }">
+									<input type="hidden" name="imageId" value="${comment.getImg().getIdimage()}">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<span class="submit" id="upvote">upvote</span>
+								</form>
+								<form action="<c:url value='/comment_vote' />" method="POST">
+									<input type="hidden" name="voteType" value="false">
+									<input type="hidden" name="commentId" value="${comment.getIdcomment() }">
+									<input type="hidden" name="imageId" value="${comment.getImg().getIdimage()}">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+									<span class="submit" id="downvote">downvote</span>
+								</form>
+								 - ${comment.getCreateTimeAsString()}
 							</div>
 							<span class="titleSiz">&gt;&gt;</span> ${comment.getContent()}
 						</div>

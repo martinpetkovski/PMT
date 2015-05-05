@@ -89,7 +89,7 @@
 				</div>
 
 				<c:forEach var="Comment" items="${Comments}">
-					<div class="comment">
+					<div class="comment" id="comment${Comment.getIdcomment() }">
 						<div class="body">
 							${Comment.getContent() }
 						</div>
@@ -99,12 +99,14 @@
 							<form action="<c:url value='/comment_vote' />" method="POST">
 								<input type="hidden" name="voteType" value="true">
 								<input type="hidden" name="commentId" value="${Comment.getIdcomment() }">
+								<input type="hidden" name="imageId" value="${ImageId}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<span class="submit" id="upvote">upvote</span>
 							</form>
 							<form action="<c:url value='/comment_vote' />" method="POST">
 								<input type="hidden" name="voteType" value="false">
 								<input type="hidden" name="commentId" value="${Comment.getIdcomment() }">
+								<input type="hidden" name="imageId" value="${ImageId}">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<span class="submit" id="downvote">downvote</span>
 							</form>

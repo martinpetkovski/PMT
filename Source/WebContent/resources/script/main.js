@@ -16,12 +16,12 @@ function loginRegisterClick() {
 
 function searchBarClick() {
 	$('.search input').focus(function(){
-		$('.search input').animate({width: 500}, 500, function() {
-			$('.buttonArea .syntax').fadeIn(500);
+		$('.search input').animate({width: 600}, 300, function() {
+			$('.buttonArea .syntax').fadeIn(300);
 		});
 	});
 	$('.search input').blur(function(){
-		$('.search input').animate({width: 150}, 400);
+		$('.search input').animate({width: 200}, 200);
 		$('.buttonArea .syntax').fadeOut(100);
 	});
 }

@@ -34,6 +34,37 @@
 					</div>
 				</a>
 			</c:if>
+			
+			<c:if test="${pageContext.request.userPrincipal.name == null}">
+				<a href="${pageContext.request.contextPath}/login">
+					<div class="logoButton" id="login">
+						<img src="${pageContext.request.contextPath}/resources/style/login.png" />
+					</div>
+				</a>
+
+
+				<a href="${pageContext.request.contextPath}/register">
+					<div class="logoButton" id="register">
+						<img src="${pageContext.request.contextPath}/resources/style/register.png" />
+					</div>
+				</a>
+			</c:if>
+			
+			<c:if test="${pageContext.request.userPrincipal.name != null}">
+				<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}">
+					<div class="logoButton" id="settings">
+							<img src="${pageContext.request.contextPath}/resources/style/settings.png">
+					</div>
+				</a>
+				
+				<c:url value="/logout" var="logoutUrl" />
+				<form action="${logoutUrl}" method="post">
+					<div class="logoButton" id="logout">
+						<input type="image" src="${pageContext.request.contextPath}/resources/style/logout.png" ></input>
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</form>
+			</c:if>
 
 			<div class="buttonArea">
 				<div class="search">
@@ -62,34 +93,7 @@
 					<div class="syntaxTitle">search syntax</div>
 				</div>
 
-				<c:if test="${pageContext.request.userPrincipal.name == null}">
-					<a href="${pageContext.request.contextPath}/login">
-						<div class="button" id="login">
-							Login
-						</div>
-					</a>
-	
-	
-					<a href="${pageContext.request.contextPath}/register">
-						<div class="button" id="register">
-							Register
-						</div>
-					</a>
-				</c:if>
-				<c:if test="${pageContext.request.userPrincipal.name != null}">
-					<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}">
-						<div class="button" id="login">
-							${pageContext.request.userPrincipal.name}
-						</div>
-					</a>
-					
-					<c:url value="/logout" var="logoutUrl" />
-					<form action="${logoutUrl}" method="post">
-						<button id="logout">Logout</button>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					</form>
-					
-				</c:if>
+				
 			</div>
 		</div>
 	</header>

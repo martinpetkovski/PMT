@@ -74,22 +74,48 @@ header {
 	left: 244px;
 }
 
-.logoButton#random, .logoButton#help, .logoButton#upload {
+.logoButton#settings {
+	left: 296px;
+}
+
+.logoButton#login {
+	left: 244px;
+}
+
+.logoButton#register {
+	left: 296px;
+}
+
+.logoButton#logout {
+	left: 348px;
+	padding:0px;
+}
+
+.logoButton input {
+	width:32px;
+	height:32px;
+	background-color:transparent;
+	padding: 0px;
+	margin: 3px 0px -3px 0px ;
+	padding:7px 10px;
+}
+
+.logoButton {
 	position: absolute;
 	padding:7px 10px;
 }
 
-.logoButton#random img, .logoButton#help img, .logoButton#upload img {
+.logoButton img {
 	position:relative;
 	top:2px;
 	text-align:center;
 }
 
-.logoButton#random:hover, .logoButton#help:hover,  .logoButton#upload:hover {
+.logoButton:hover {
 	background-color:#069;
 }
 
-.logoButton#random:active, .logoButton#help:active, .logoButton#upload:active {
+.logoButton:active {
 	background-color:#036;
 }
 
@@ -97,8 +123,8 @@ header {
 	box-sizing: border-box;
 	background-color:#111;
 	position: absolute;
-	right:170px;
-	width: 150px;
+	right: 0px;
+	width: 200px;
 	height: 50px;
 }
 
@@ -106,46 +132,12 @@ header {
 	background-color:#222;
 }
 
-.button, button#logout {
+.button {
 	display: inline-block;
 	padding: 12px;
 	font-size:18px;
 	background-color:#048;
 	color:#FFF;
-}
-
-.button#login {
-	box-sizing: border-box;
-	position: absolute;
-	right:91px;
-	height:50px;
-	background-color:transparent;
-}
-
-.button#register {
-	box-sizing: border-box;
-	position: absolute;
-	right:0px;
-	height:50px;
-	background-color:transparent;
-}
-
-button#logout {
-	position:relative;
-	top:-1px;
-	padding:12px;
-	padding-bottom:16px;
-	background-color:#090909;
-}
-
-.button:hover, .button#login:hover, .button#register:hover, button#logout:hover {
-	cursor: pointer;
-	background-color: #069;
-}
-
-.button:active, .button#login:active, .button#register:active, button#logout:active {
-	background-color: #148;
-	border: none;
 }
 
 .button#submit {
@@ -194,9 +186,9 @@ button#logout {
 	display:none;
 	position:absolute;
 	top:50px;
-	right:170px;
+	right: 0px;
 	border-top:#636 thick solid;
-	width:500px;
+	width:600px;
 	padding:10px;
 	font-size:12px;
 	background-color:rgba(0,0,0,0.9);
@@ -269,4 +261,10 @@ button#logout {
 
 .siz {
 	color:#930;
+}
+
+.dropDownMenu {
+	background-color:#069;
+	position:relative;
+	top:50px;
 }

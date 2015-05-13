@@ -16,20 +16,20 @@
 			</a>
 			
 			<a href="${pageContext.request.contextPath}/image/random">
-				<div class="logoButton" id="random">
+				<div class="logoButton" id="random" alt="select random image">
 					<img src="${pageContext.request.contextPath}/resources/style/random.png" />
 				</div>
 			</a>
 			
 			<a href="${pageContext.request.contextPath}/help">
-				<div class="logoButton" id="help">
+				<div class="logoButton" id="help" alt="help">
 					<img src="${pageContext.request.contextPath}/resources/style/help.png" />
 				</div>
 			</a>
 			
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
 				<a href="${pageContext.request.contextPath}/upload">
-					<div class="logoButton" id="upload">
+					<div class="logoButton" id="upload" alt="upload image">
 						<img src="${pageContext.request.contextPath}/resources/style/upload.png" />
 					</div>
 				</a>
@@ -37,14 +37,14 @@
 			
 			<c:if test="${pageContext.request.userPrincipal.name == null}">
 				<a href="${pageContext.request.contextPath}/login">
-					<div class="logoButton" id="login">
+					<div class="logoButton" id="login" alt="login">
 						<img src="${pageContext.request.contextPath}/resources/style/login.png" />
 					</div>
 				</a>
 
 
 				<a href="${pageContext.request.contextPath}/register">
-					<div class="logoButton" id="register">
+					<div class="logoButton" id="register" alt="register">
 						<img src="${pageContext.request.contextPath}/resources/style/register.png" />
 					</div>
 				</a>
@@ -52,19 +52,21 @@
 			
 			<c:if test="${pageContext.request.userPrincipal.name != null}">
 				<a href="${pageContext.request.contextPath}/user/${pageContext.request.userPrincipal.name}">
-					<div class="logoButton" id="settings">
+					<div class="logoButton" id="settings" alt="${pageContext.request.userPrincipal.name}">
 							<img src="${pageContext.request.contextPath}/resources/style/settings.png">
 					</div>
 				</a>
 				
 				<c:url value="/logout" var="logoutUrl" />
 				<form action="${logoutUrl}" method="post">
-					<div class="logoButton" id="logout">
+					<div class="logoButton" id="logout" alt="logout">
 						<input type="image" src="${pageContext.request.contextPath}/resources/style/logout.png" ></input>
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 			</c:if>
+			
+			<div class="buttonDescription">Login</div>
 
 			<div class="buttonArea">
 				<div class="search">

@@ -5,9 +5,10 @@
 <head>
 	<meta charset="utf8">
 
-	<title>WTO Front Page</title>
+	<title>Upload</title>
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/index.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/style/upload.css" rel="stylesheet">
 	<script src=
 	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
@@ -29,10 +30,9 @@
 							Upload image
 						</div>
 						<input placeholder="file location..." name="file" type="file" /><br/>
-						<input placeholder="title" name="title" type="text" /><br/>
-						<input placeholder="tags" name="tags" type="text" id="last"/>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-						<button class="button" id="submit">-></button>
+						<input placeholder="title" name="title" type="text" autocomplete="off" /><br/>
+						<input placeholder="tags" name="tags" type="text" id="last" autocomplete="off"/>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><button class="button" id="submit">-></button>
 					</form>
 				</div>
 			</div>

@@ -313,5 +313,10 @@ public class HelloController{
 	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId;
 
 	}
+	
+	@RequestMapping(value="/help", method = RequestMethod.GET)
+	public String helpMapper() {
+		return "help";
+	}
 
 }

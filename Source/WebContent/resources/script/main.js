@@ -21,15 +21,28 @@ function searchBarClick() {
 		});
 	});
 	$('.search input').blur(function(){
-		$('.search input').animate({width: 200}, 200);
+		$('.search input').animate({width: 300}, 200);
 		$('.buttonArea .syntax').fadeOut(100);
+	});
+}
+
+function logoButtonHover() {
+	
+	$(".logoButton").mouseover(function(e){
+		$(".buttonDescription").css("left", $(this).css("left"));
+		$(".buttonDescription").html($(this).attr("alt"));
+		$(".buttonDescription").show();
+	});
+	
+	$(".logoButton").mouseout(function(e){
+		$(".buttonDescription").hide();
 	});
 }
 
 
 $(document).ready(function(){
 
-	//loginRegisterClick();
+	logoButtonHover();
 	searchBarClick();
 	focusSearchBarOnKeypress();
 });

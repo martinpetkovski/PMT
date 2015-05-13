@@ -6,11 +6,11 @@
 <head>
 	<meta charset="utf8">
 
-	<title>WTO Front Page</title>
+	<title>${UserName}'s profile</title>
+	<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/favicon.ico">
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/user.css" rel="stylesheet">
-	<script src=
-	"https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/user.js" type="text/javascript"></script>
 </head>

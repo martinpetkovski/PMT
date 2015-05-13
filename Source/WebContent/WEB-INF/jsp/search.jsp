@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf8">
 
-	<title>WTO Front Page</title>
+	<title>Search</title>
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/index.css" rel="stylesheet">
 	<script src=

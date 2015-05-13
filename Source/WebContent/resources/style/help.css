@@ -1,0 +1,40 @@
+.helpTitle {
+	background-color: #000;
+	color:#FFF;
+	padding:10px 20px;
+	font-size: 35px;
+}
+
+.section {
+	color: #FFF;
+	text-align: left;
+	padding: 0px 20px;
+	font-size:18px;
+}
+
+.sectionTitle {
+	font-size: 22px;
+	color: #AAA;
+	margin:20px 0px;
+}
+
+.section a:link, .section a:visited {
+	color: #09C;
+}
+
+.section a:hover {
+	color: #0AF;
+}
+
+table, tr, td {
+	padding:0px;
+	margin: 0px;
+}
+
+table {
+	margin-top:-20px;
+}
+
+td {
+	padding:2px 20px;
+}

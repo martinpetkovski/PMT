@@ -5,7 +5,8 @@
 <head>
 	<meta charset="utf8">
 
-	<title>WTO Front Page</title>
+	<title>${ImageTitle }</title>
+	<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/favicon.ico">
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/image.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

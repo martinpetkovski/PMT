@@ -24,6 +24,7 @@
 
 	<div class="mainContent">
 		<div class="sort">
+			<a href="${pageContext.request.contextPath}/feed"><div class="sortItem">news feed</div></a>
 			<a href="${pageContext.request.contextPath}/bypoints"><div class="sortItem">by highest scoring</div></a>
 			<a href="${pageContext.request.contextPath}"><div class="sortItem">by newest first</div></a>
 			<a href="${pageContext.request.contextPath}/byrandom"><div class="sortItem">by random number</div></a>
@@ -38,6 +39,11 @@
 						<img src="${Image.getContent() }">
 					</div>
 				</a>
+			</c:forEach>
+		</div>
+		<div class="pages">
+			<c:forEach begin="${PagesStart}" end="${PagesEnd}" varStatus="loop">
+				<a href="${pageContext.request.contextPath}/${loop.index}"><div class="page">${loop.index}</div></a>
 			</c:forEach>
 		</div>
 	</div>

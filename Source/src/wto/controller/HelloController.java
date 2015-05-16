@@ -91,13 +91,39 @@ public class HelloController{
 			
 	}
 	
-	public String indexPage(Model model, String order) {
-        
-        List<Image> images = imageService.getAllImages(order);
+	public String indexPage(Model model, String order, int page) {
+		int pagesStart;
+		int pagesEnd;
+		int MAX_PAGES = 10;
+		
+		page--;
+		
+        List<Image> images = imageService.getAllImages(order, page);
+                
+        int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        numberOfPages++; // ceils the number of pages
+        if(page <= MAX_PAGES / 2)
+        {
+        	pagesStart = 1;
+        	if(numberOfPages > MAX_PAGES)
+        		pagesEnd = MAX_PAGES;
+        	else
+        		pagesEnd = numberOfPages;
+        }
+        else
+        {
+        	pagesStart = page - (MAX_PAGES/2);
+        	pagesEnd = page + (MAX_PAGES/2);
+        }
         
         model.addAttribute("Images", images);
+        model.addAttribute("PagesStart", pagesStart);
+        model.addAttribute("PagesEnd", pagesEnd);
         
-        return "index";
+        if(page <= numberOfPages)
+        	return "index";
+        else
+        	return "error";
 	}
 	
 	public String searchPageWithTitle(Model model, String query, String order) {
@@ -199,17 +225,32 @@ public class HelloController{
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String indexPageMapper(Model model) {
-        return indexPage(model, "ORDER BY i.createTime DESC");
+        return indexPage(model, "ORDER BY i.createTime DESC", 1);
     }
 	
 	@RequestMapping(value = "/bypoints", method = RequestMethod.GET)
 	public String indexPageByPointsMapper(Model model) {
-		return indexPage(model, "ORDER BY i.points DESC");
+		return indexPage(model, "ORDER BY i.points DESC", 1);
 	}
 	
 	@RequestMapping(value = "/byrandom", method = RequestMethod.GET)
 	public String indexPageByRandom(Model model) {
-		return indexPage(model, "ORDER BY rand()");
+		return indexPage(model, "ORDER BY rand()", 1);
+	}
+	
+	@RequestMapping(value = "/{page}", method = RequestMethod.GET)
+	public String indexPageMapper(@PathVariable("page") int page, Model model) {
+        return indexPage(model, "ORDER BY i.createTime DESC", page);
+    }
+	
+	@RequestMapping(value = "/{page}/bypoints", method = RequestMethod.GET)
+	public String indexPageByPointsMapper(@PathVariable("page") int page, Model model) {
+		return indexPage(model, "ORDER BY i.points DESC", page);
+	}
+	
+	@RequestMapping(value = "/{page}/byrandom", method = RequestMethod.GET)
+	public String indexPageByRandom(@PathVariable("page") int page, Model model) {
+		return indexPage(model, "ORDER BY rand()", page);
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)

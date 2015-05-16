@@ -68,3 +68,24 @@
    background-color: rgba(0, 0, 0, 0.8);
    font-size: 18px;
 }
+
+.pages {
+	position: relative;
+	background-color:#111;
+	width:100%;
+	text-align:center;
+}
+
+.page {
+	position: static;
+	display:inline-block;
+	background-color:#069;
+	color: #FFF;
+	padding:10px 20px;
+	
+}
+
+.page:hover {
+	background-color: #09F;
+	cursor: pointer;
+}

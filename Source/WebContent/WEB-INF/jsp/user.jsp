@@ -58,7 +58,7 @@
 								</form>
 								 - ${image.getCreateTimeAsString()}
 							</div>
-							<span class="titleSiz">&gt;&gt;</span> ${image.getTitle()}
+							${image.getTitle()}
 						</div>
 					</div>
 					
@@ -100,7 +100,7 @@
 								</form>
 								 - ${comment.getCreateTimeAsString()}
 							</div>
-							<span class="titleSiz">&gt;&gt;</span> ${comment.getContent()}
+							${comment.getContent()}
 						</div>
 					</div>
 					

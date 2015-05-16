@@ -23,6 +23,8 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@Autowired
 	SessionFactory sf;
 	
+	private int IMAGES_PER_PAGE = 12;
+	
 	public ImageRepositoryImpl() {}
 	
 	public ImageRepositoryImpl(SessionFactory sessionFactory) {
@@ -174,11 +176,13 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Image> readAll(String order) {
+	public List<Image> readAll(String order, int page) {
 		Session session = sf.getCurrentSession();
 		List<Image> images = null;
 		
 		Query q = session.createQuery("FROM Image i " + order);
+		q.setFirstResult(page * this.IMAGES_PER_PAGE);
+		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
 			
 		return images;
@@ -225,6 +229,14 @@ public class ImageRepositoryImpl implements ImageRepository {
 		image = (String) q.uniqueResult();
 			
 		return image;
+	}
+
+	@Override
+	@Transactional
+	public int numberOfImages() {
+		Session session = sf.getCurrentSession();		
+		Query q = session.createQuery("SELECT COUNT(*) FROM Image i");
+		return Integer.parseInt(q.uniqueResult().toString());
 	}
 
 }

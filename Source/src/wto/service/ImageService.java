@@ -14,11 +14,12 @@ public interface ImageService {
 	public Image getImageByAddress(String address);
 	public List<String> getNextPrevAddress(Date id, int points, String order);
 	public List<Image> getImagesByUserId(Integer userId);
-	public List<Image> getAllImages(String order);
+	public List<Image> getAllImages(String order, int page);
 	public List<Image> getImagesByQuery(String query, String order);
 	public List<Image> getImagesByTag(String query, String order);
 	public Set<Image> getImagesByAll(String query, String order);
 	public String getRandomImage();
+	public int numberOfImages();
 	public void voteImage(int iduser, int idimage, boolean voteType);
 	void voteComment(int iduser, int idcomment, boolean voteType);
 	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime, String tags);

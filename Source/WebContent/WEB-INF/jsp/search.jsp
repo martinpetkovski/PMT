@@ -6,6 +6,7 @@
 	<meta charset="utf8">
 
 	<title>Search</title>
+	<link rel="icon" type="image/ico" href="${pageContext.request.contextPath}/resources/favicon.ico">
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/index.css" rel="stylesheet">
 	<script src=

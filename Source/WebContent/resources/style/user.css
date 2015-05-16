@@ -14,28 +14,40 @@
 }
 
 .userMetaData {
-	padding: 20px;
 	background-color: #111;
 	font-size: 14px;
 }
 
+.metaDataWrapper {
+	width:100%;
+	background-color: #111;
+	padding-left:20px;
+	box-sizing: border-box;
+}
+
 .metaItem {
 	display: inline-block;
-	margin: 0px 5px 5px 0px;
-	padding: 5px;
+	padding: 5px 20px;
 	color: #FFF;
-	border-radius: 5px;
+	font-size: 20px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
 }
 
 .metaItem:hover {
-	background-color: #000;
+	background-color: #333;
 	color: #FFF;
-	border-radius: 5px;
 	cursor: pointer;
 }
 
 .userMetaData .username {
 	font-size: 40px;
+}
+
+.username {
+	padding:20px;
+	position: relative;
+	width: 100%;
 }
 
 .userMetaData .siz, .titleSiz {
@@ -49,7 +61,7 @@
 }
 
 .userMetaData .number {
-	font-size: 18px;
+	font-size: 26px;
 	color:#0C0;
 	vertical-align: middle;
 	
@@ -120,4 +132,39 @@
 
 #user .comments {
 	display:none;
+}
+
+.username .mainPoints {
+	font-size:24px;
+	position: absolute;
+	display:inline-block;
+	right:80px;
+	top:24px;
+}
+
+.username .mainPoints .number {
+	font-size:36px;
+}
+
+.username .mainPoints .number#blue {
+	color: #09F;
+	font-size:36px;
+	margin-left:20px;
+}
+
+.followButton {
+	display:inline-block;
+	font-size: 16px;
+	vertical-align: middle;
+	padding:5px 20px;
+	background-color: #069;
+}
+
+.followButton:hover {
+	cursor:pointer;
+	background-color: #09F;
+}
+
+.followButton:active {
+	background-color: #069;
 }

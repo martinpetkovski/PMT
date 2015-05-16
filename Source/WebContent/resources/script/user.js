@@ -6,7 +6,7 @@ function submitParentForm() {
 
 function imagesButtonClick() {
 	$("#imagesButton").click(function(){
-		$("#imagesButton").attr("style", "background-color: #06A;");
+		$("#imagesButton").attr("style", "background-color: #222;");
 		$("#commentsButton").attr("style", "");
 		$(".comments").hide();
 		$(".images").show();
@@ -16,9 +16,9 @@ function imagesButtonClick() {
 function commentsButtonClick() {
 	$("#commentsButton").click(function(){
 		$("#imagesButton").attr("style", "");
-		$("#commentsButton").attr("style", "background-color: #06A;");
-		$(".images").hide(0);
-		$(".comments").show(0);
+		$("#commentsButton").attr("style", "background-color: #222;");
+		$(".images").hide();
+		$(".comments").show();
 	});
 }
 

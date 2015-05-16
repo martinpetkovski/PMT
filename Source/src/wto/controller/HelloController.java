@@ -119,6 +119,7 @@ public class HelloController{
         model.addAttribute("Images", images);
         model.addAttribute("PagesStart", pagesStart);
         model.addAttribute("PagesEnd", pagesEnd);
+        model.addAttribute("Page", page+1);
         
         if(page <= numberOfPages)
         	return "index";

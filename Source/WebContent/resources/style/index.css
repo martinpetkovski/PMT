@@ -89,3 +89,7 @@
 	background-color: #09F;
 	cursor: pointer;
 }
+
+.page#active {
+	background-color: #90F;
+}

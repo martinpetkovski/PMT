@@ -43,7 +43,7 @@
 		</div>
 		<div class="pages">
 			<c:forEach begin="${PagesStart}" end="${PagesEnd}" varStatus="loop">
-				<a href="${pageContext.request.contextPath}/${loop.index}"><div class="page">${loop.index}</div></a>
+				<a href="${pageContext.request.contextPath}/${loop.index}"><div class="page" <c:if test="${Page == loop.index}"> id="active" </c:if>>${loop.index}</div></a>
 			</c:forEach>
 		</div>
 	</div>

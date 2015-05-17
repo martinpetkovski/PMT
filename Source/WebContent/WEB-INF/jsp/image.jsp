@@ -10,7 +10,7 @@
 	<link href="${pageContext.request.contextPath}/resources/style/main.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/style/image.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script>var ctxPath = "${pageContext.request.contextPath}"; var prevImage = "${PrevImage}"; var nextImage = "${NextImage}";</script>
+	<script>var ctxPath = "${pageContext.request.contextPath}"; var prevImage = "${PrevImage}"; var nextImage = "${NextImage}"; var imageIndex = ${sessionScope.imageIndex};</script>
 	<script src="${pageContext.request.contextPath}/resources/script/main.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/resources/script/image.js" type="text/javascript"></script>
 </head>
@@ -29,7 +29,7 @@
 		<div class="image">
 			<div class="imageMeta">
 				<div class="votes">
-					<a href="${pageContext.request.contextPath}/image/${PrevImage}${Order}"><span id="prev">« previous</span></a> 
+					<a href="${pageContext.request.contextPath}/image/${PrevImage}/${sessionScope.imageIndex - 1}"><span id="prev">« previous</span></a> 
 					<form action="<c:url value='/image_vote' />" method="POST">
 						<input type="hidden" name="voteType" value="true">
 						<input type="hidden" name="imageId" value="${ImageId }">
@@ -42,7 +42,7 @@
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<span class="submit" id="downvote">downvote</span>
 					</form>
-					<a href="${pageContext.request.contextPath}/image/${NextImage}${Order}"><span id="next">next »</span></a>
+					<a href="${pageContext.request.contextPath}/image/${NextImage}/${sessionScope.imageIndex + 1}"><span id="next">next »</span></a>
 				</div>
 				
 				<div class="user">

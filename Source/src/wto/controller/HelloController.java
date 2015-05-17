@@ -3,10 +3,14 @@ package wto.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,8 +36,25 @@ import wto.service.ImageService;
 import wto.service.UserService;
 import wto.util.ImageAddressGenerator;
 
+
+
 @Controller
 public class HelloController{
+	
+	public int randInt() {
+		int min = 0;
+		int max = 694242;
+	    // NOTE: Usually this should be a field rather than a method
+	    // variable so that it is not re-seeded every call.
+	    Random rand = new Random();
+
+	    // nextInt is normally exclusive of the top value,
+	    // so add 1 to make it inclusive
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
+	    return randomNum;
+	}
+	
 	@Autowired
     ImageService imageService;
 	@Autowired
@@ -91,7 +112,9 @@ public class HelloController{
 			
 	}
 	
-	public String indexPage(Model model, String order, int page) {
+	public String indexPage(Model model, HttpServletRequest request, String order, int page, int orderFlag) {
+		HttpSession session = request.getSession();
+		
 		int pagesStart;
 		int pagesEnd;
 		int MAX_PAGES = 10;
@@ -99,6 +122,9 @@ public class HelloController{
 		page--;
 		
         List<Image> images = imageService.getAllImages(order, page);
+        session.setAttribute("listImages", images);
+        session.setAttribute("listOrder", order);
+        session.setAttribute("listPage", page);
                 
         int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
@@ -120,6 +146,12 @@ public class HelloController{
         model.addAttribute("PagesStart", pagesStart);
         model.addAttribute("PagesEnd", pagesEnd);
         model.addAttribute("Page", page+1);
+        if(orderFlag == 0)
+        	model.addAttribute("OrderAddress", "");
+        else if(orderFlag == 1)
+        	model.addAttribute("OrderAddress", "/bypoints");
+        else if(orderFlag == 2)
+        	model.addAttribute("OrderAddress", "/byrandom");
         
         if(page <= numberOfPages)
         	return "index";
@@ -196,24 +228,90 @@ public class HelloController{
         return userPage(model, userName);
     }
 	
-	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
-    public String imagePageMapper(@PathVariable("address") String address, Model model) {
-        
-        Image theImage = imageService.getImageByAddress(address);
-        
-        List<String> nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), "ORDER BY i.createTime DESC");
-        
-        return imagePage(model, theImage, nextprev, "");
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/image/{address}/{index}", method = RequestMethod.GET)
+    public String imagePageMapper(@PathVariable("address") String address, @PathVariable("index") int index, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		 int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+	     numberOfPages++; // ceils the number of pages
+		
+		if(index > ((List<Image>)session.getAttribute("listImages")).size() - 1)
+		{
+			index = 0;
+			int page = ((int)session.getAttribute("listPage")) + 1;
+			if(page > numberOfPages)
+				page --;
+				
+			session.setAttribute("listImages", imageService.getAllImages((String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listPage", page);
+			session.setAttribute("imageIndex", index);
+		}
+		else if(index < 0)
+		{
+			index = 11;
+			int page = ((int)session.getAttribute("listPage")) - 1;
+			if(page < 0)
+				page ++;			
+			
+			session.setAttribute("listImages", imageService.getAllImages((String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listPage", page);
+			session.setAttribute("imageIndex", index);
+		}
+		
+		session.setAttribute("imageIndex", index);
+		
+		return "redirect:../"+address;
     }
 	
-	@RequestMapping(value = "/image/{address}/{order}", method = RequestMethod.GET)
-    public String imageOrderedPageMapper(@PathVariable("address") String address, @PathVariable("order") String order, Model model) {
-        
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
+    public String imagePageMapper(@PathVariable("address") String address, Model model, HttpServletRequest request) {		
+		HttpSession session = request.getSession();
+		
         Image theImage = imageService.getImageByAddress(address);
+        List<String> nextprev = new ArrayList<String>();
+        Image skipPageImage;
         
-        List<String> nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), order);
+        int index = (int) session.getAttribute("imageIndex");
+       
+        int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+	    numberOfPages++; // ceils the number of pages
         
-        return imagePage(model, theImage, nextprev, "/" + order);
+        if(session.getAttribute("listImages") != null) {
+	        @SuppressWarnings("unchecked")
+			List<Image> images = (List<Image>) session.getAttribute("listImages");
+	        
+	        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size())
+			{
+	        	int page = ((int)session.getAttribute("listPage")) + 1;
+				
+				if(page < numberOfPages) {
+					skipPageImage = imageService.getAllImages((String)session.getAttribute("listOrder"), page).get(0);
+					nextprev.add(skipPageImage.getAddress());
+				}
+				else
+					nextprev.add("notExist");
+					
+		        nextprev.add(images.get(index - 1).getAddress()); 
+			}
+			else if((index-1) < 0)
+			{
+				int page = ((int)session.getAttribute("listPage")) - 1;
+				List<Image> temp = imageService.getAllImages((String)session.getAttribute("listOrder"), page);
+				skipPageImage = temp.get(temp.size() - 1);
+				nextprev.add(images.get(index + 1).getAddress());
+		        nextprev.add(skipPageImage.getAddress()); 
+			}
+			else {
+		        nextprev.add(images.get(index + 1).getAddress());
+		        nextprev.add(images.get(index - 1).getAddress());  
+			}
+        }
+        else
+        	nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), "");
+        
+        return imagePage(model, theImage, nextprev, "");
     }
 	
 	@RequestMapping(value = "/image/random", method = RequestMethod.GET)
@@ -225,33 +323,48 @@ public class HelloController{
     }
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String indexPageMapper(Model model) {
-        return indexPage(model, "ORDER BY i.createTime DESC", 1);
+	public String indexPageMapper(Model model, HttpServletRequest request) {
+        return indexPage(model, request, "ORDER BY i.create_time DESC", 1, 0);
     }
 	
 	@RequestMapping(value = "/bypoints", method = RequestMethod.GET)
-	public String indexPageByPointsMapper(Model model) {
-		return indexPage(model, "ORDER BY i.points DESC", 1);
+	public String indexPageByPointsMapper(Model model, HttpServletRequest request) {
+		return indexPage(model, request, "ORDER BY i.points DESC", 1, 1);
 	}
 	
 	@RequestMapping(value = "/byrandom", method = RequestMethod.GET)
-	public String indexPageByRandom(Model model) {
-		return indexPage(model, "ORDER BY rand()", 1);
+	public String indexPageByRandom(Model model, HttpServletRequest request) {
+		int seed = this.randInt();
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("randomSeed", seed);
+		
+		return indexPage(model, request, "ORDER BY RAND("+seed+")", 1, 2);
 	}
 	
 	@RequestMapping(value = "/{page}", method = RequestMethod.GET)
-	public String indexPageMapper(@PathVariable("page") int page, Model model) {
-        return indexPage(model, "ORDER BY i.createTime DESC", page);
+	public String indexPageMapper(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+        return indexPage(model, request, "ORDER BY i.create_time DESC", page, 0);
     }
 	
 	@RequestMapping(value = "/{page}/bypoints", method = RequestMethod.GET)
-	public String indexPageByPointsMapper(@PathVariable("page") int page, Model model) {
-		return indexPage(model, "ORDER BY i.points DESC", page);
+	public String indexPageByPointsMapper(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+		return indexPage(model, request, "ORDER BY i.points DESC", page, 1);
 	}
 	
 	@RequestMapping(value = "/{page}/byrandom", method = RequestMethod.GET)
-	public String indexPageByRandom(@PathVariable("page") int page, Model model) {
-		return indexPage(model, "ORDER BY rand()", page);
+	public String indexPageByRandom(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		
+		int seed;
+		
+		if(session.getAttribute("randomSeed") == null) {
+			session.setAttribute("randomSeed", this.randInt());
+		}
+		
+		seed = (int) session.getAttribute("randomSeed");
+			
+		return indexPage(model, request, "ORDER BY RAND("+seed+")", page, 2);
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)

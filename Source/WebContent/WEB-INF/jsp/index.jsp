@@ -30,8 +30,8 @@
 			<a href="${pageContext.request.contextPath}/byrandom"><div class="sortItem">by random number</div></a>
 		</div>
 		<div class="mainContentWrapper">
-			<c:forEach var="Image" items="${Images }">
-				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}">
+			<c:forEach var="Image" items="${Images }" varStatus="loop">
+				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}/${loop.index}">
 					<div class="image">
 						<div class="title">
 							<span>${Image.getTitle() }</span>
@@ -43,7 +43,7 @@
 		</div>
 		<div class="pages">
 			<c:forEach begin="${PagesStart}" end="${PagesEnd}" varStatus="loop">
-				<a href="${pageContext.request.contextPath}/${loop.index}"><div class="page" <c:if test="${Page == loop.index}"> id="active" </c:if>>${loop.index}</div></a>
+				<a href="${pageContext.request.contextPath}/${loop.index}${OrderAddress}"><div class="page" <c:if test="${Page == loop.index}"> id="active" </c:if>>${loop.index}</div></a>
 			</c:forEach>
 		</div>
 	</div>

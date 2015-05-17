@@ -1,10 +1,12 @@
 function changeImagesOnKeypress() {
 	$('body').bind('keydown', function(event){
 		if(event.keyCode  == 37) {
-			window.location.href = ctxPath + "/image/" + prevImage;
+			imageIndex--;
+			window.location.href = ctxPath + "/image/" + prevImage + "/" + imageIndex;
 		}
 		else if(event.keyCode == 39) {
-			window.location.href = ctxPath + "/image/" + nextImage;
+			imageIndex++;
+			window.location.href = ctxPath + "/image/" + nextImage + "/" + imageIndex;
 		}
 	});
 }

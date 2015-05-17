@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,7 +133,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 			prevnext.add("notExist");
 		else
 			prevnext.add((String)q.list().get(0));
-			
+				
 			
 		return prevnext;
 	}
@@ -180,7 +181,8 @@ public class ImageRepositoryImpl implements ImageRepository {
 		Session session = sf.getCurrentSession();
 		List<Image> images = null;
 		
-		Query q = session.createQuery("FROM Image i " + order);
+		SQLQuery q = session.createSQLQuery("SELECT * FROM Image i " + order);
+		q.addEntity(Image.class);
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();

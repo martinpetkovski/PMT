@@ -62,8 +62,8 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<Image> getImagesByQuery(String query, String order) {
-		return img.readByQuery(query, order);
+	public List<Image> getImagesByQuery(String query, String order, int page) {
+		return img.readByQuery(query, order,  page);
 	}
 
 	@Override
@@ -72,11 +72,11 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<Image> getImagesByTag(String query, String order) {
-		return img.readByTag(query, order);
+	public List<Image> getImagesByTag(String query, String order, int page) {
+		return img.readByTag(query, order, page);
 	}
 
-	public Set<Image> getImagesByAll(String query, String order) {
+	public Set<Image> getImagesByAll(String query, String order, int page) {
 		SortedSet<Image> images;
 		
 		if(order.equals("bypoints"))
@@ -86,9 +86,9 @@ public class ImageServiceImpl implements ImageService {
 		else 
 			images = new TreeSet<Image>();
 		
-		images.addAll(img.readByQuery(query,""));
-		images.addAll(img.readByTag(query,""));
-		images.addAll(img.readByUsername(query,""));
+		images.addAll(img.readByQuery(query,"", page));
+		images.addAll(img.readByTag(query,"", page));
+		images.addAll(img.readByUsername(query,"", page));
 		
 		return images;
 	}

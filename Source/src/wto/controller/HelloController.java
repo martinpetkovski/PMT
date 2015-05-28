@@ -41,6 +41,8 @@ import wto.util.ImageAddressGenerator;
 @Controller
 public class HelloController{
 	
+	int MAX_PAGES = 10;
+	
 	public int randInt() {
 		int min = 0;
 		int max = 694242;
@@ -53,6 +55,34 @@ public class HelloController{
 	    int randomNum = rand.nextInt((max - min) + 1) + min;
 
 	    return randomNum;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List calculatePages(int page, int numberOfPages) {
+		
+		int pagesStart;
+		int pagesEnd;
+		
+		List<Integer> startEnd = new ArrayList<Integer>();
+		
+		if(page <= MAX_PAGES / 2)
+        {
+        	pagesStart = 1;
+        	if(numberOfPages > MAX_PAGES)
+        		pagesEnd = MAX_PAGES;
+        	else
+        		pagesEnd = numberOfPages;
+        }
+        else
+        {
+        	pagesStart = page - (MAX_PAGES/2);
+        	pagesEnd = page + (MAX_PAGES/2);
+        }
+		
+		startEnd.add(pagesStart);
+		startEnd.add(pagesEnd);
+		
+		return startEnd;
 	}
 	
 	@Autowired
@@ -95,14 +125,21 @@ public class HelloController{
 		return "image";
 	}
 	
-	public String userPage(Model model, String userName) {        
+	public String userPage(Model model, HttpServletRequest request, String userName) {        
+		HttpSession session = request.getSession();
+		
         User theUser = userService.getUserByNameAndFetch(userName);
         
         List<Comment> comments = theUser.getComments();
         List<Image> images = theUser.getImages();
+
+        session.setAttribute("listImages", images);
+        session.setAttribute("listOrder", "ORDER BY i.points DESC");
+        session.setAttribute("listPage", 0);
         
         model.addAttribute("UserName",theUser.getUsername());
 		model.addAttribute("UserPoints", theUser.getPoints());
+		model.addAttribute("UserFollowers", theUser.getFollowers());
 		model.addAttribute("ImageNumber", images.size());
 		model.addAttribute("CommentNumber", comments.size());
 		
@@ -113,11 +150,7 @@ public class HelloController{
 	}
 	
 	public String indexPage(Model model, HttpServletRequest request, String order, int page, int orderFlag) {
-		HttpSession session = request.getSession();
-		
-		int pagesStart;
-		int pagesEnd;
-		int MAX_PAGES = 10;
+		HttpSession session = request.getSession();	
 		
 		page--;
 		
@@ -128,23 +161,13 @@ public class HelloController{
                 
         int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
-        if(page <= MAX_PAGES / 2)
-        {
-        	pagesStart = 1;
-        	if(numberOfPages > MAX_PAGES)
-        		pagesEnd = MAX_PAGES;
-        	else
-        		pagesEnd = numberOfPages;
-        }
-        else
-        {
-        	pagesStart = page - (MAX_PAGES/2);
-        	pagesEnd = page + (MAX_PAGES/2);
-        }
+        
+        @SuppressWarnings("unchecked")
+		List<Integer> startEnd = calculatePages(page, numberOfPages);
         
         model.addAttribute("Images", images);
-        model.addAttribute("PagesStart", pagesStart);
-        model.addAttribute("PagesEnd", pagesEnd);
+        model.addAttribute("PagesStart", startEnd.get(0));
+        model.addAttribute("PagesEnd", startEnd.get(1));
         model.addAttribute("Page", page+1);
         if(orderFlag == 0)
         	model.addAttribute("OrderAddress", "");
@@ -159,62 +182,122 @@ public class HelloController{
         	return "error";
 	}
 	
-	public String searchPageWithTitle(Model model, String query, String order) {
-		List<Image> images = imageService.getImagesByQuery(query, order);
-		model.addAttribute("Images", images);
+	public String searchPageWithTitle(Model model, HttpServletRequest request, String query, String order, String originalOrderString, int page) {
+		HttpSession session = request.getSession();	
+		
+		page--;
+		
+		List<Image> images = imageService.getImagesByQuery(query, order, page);
+		
+		session.setAttribute("listImages", images);
+        session.setAttribute("listOrder", order);
+        session.setAttribute("listPage", page);
+		
+		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        numberOfPages++; // ceils the number of pages
+		
+		@SuppressWarnings("unchecked")
+		List<Integer> startEnd = calculatePages(page, numberOfPages);
+        
+        model.addAttribute("PagesStart", startEnd.get(0));
+        model.addAttribute("PagesEnd", startEnd.get(1));
+        model.addAttribute("Page", page+1);
+        model.addAttribute("Images", images);
 		model.addAttribute("Query", "title:" + query);
+
+        model.addAttribute("OrderAddress", originalOrderString);
+		
 		return "search";
 	}
 	
-	public String searchPageWithTag(Model model, String query, String order) {
-		List<Image> images = imageService.getImagesByTag(query, order);
-		model.addAttribute("Images", images);
+	public String searchPageWithTag(Model model, HttpServletRequest request, String query, String order, String originalOrderString, int page) {
+		HttpSession session = request.getSession();	
+		
+		page--;
+		
+		List<Image> images = imageService.getImagesByTag(query, order, page);
+		
+		session.setAttribute("listImages", images);
+        session.setAttribute("listOrder", order);
+        session.setAttribute("listPage", page);
+		
+		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        numberOfPages++; // ceils the number of pages
+		
+		@SuppressWarnings("unchecked")
+		List<Integer> startEnd = calculatePages(page, numberOfPages);
+        
+        model.addAttribute("PagesStart", startEnd.get(0));
+        model.addAttribute("PagesEnd", startEnd.get(1));
+        model.addAttribute("Page", page+1);
+        model.addAttribute("Images", images);
 		model.addAttribute("Query", "tag:" + query);
 		model.addAttribute("Order", order);
+		
+        model.addAttribute("OrderAddress",  originalOrderString);
+		
 		return "search";
 	}
 	
-	public String searchPageWithAll(Model model, String query, String order) {
-		Set<Image> images = imageService.getImagesByAll(query, order);
+	public String searchPageWithAll(Model model, String query, String order, int page) {
+		
+		page--;
+		
+		Set<Image> images = imageService.getImagesByAll(query, order, page);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", query);
 		model.addAttribute("Order", order);
+		
+		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        numberOfPages++; // ceils the number of pages
+		
+		@SuppressWarnings("unchecked")
+		List<Integer> startEnd = calculatePages(page, numberOfPages);
+        
+        model.addAttribute("PagesStart", startEnd.get(0));
+        model.addAttribute("PagesEnd", startEnd.get(1));
+        model.addAttribute("Page", page+1);
+        
+        model.addAttribute("OrderAddress", order);
+        
 		return "search";
 	}
 	
-	public String searchPageFlagHandler(Model model, String query, String order) {
-		String orderStatement = "ORDER BY i.points DESC";
+	public String searchPageFlagHandler(Model model, HttpServletRequest request, String query, String order, int page) {
+		HttpSession session = request.getSession();
+		
+		String orderStatement;
+		int seed;
+		
+		if(order.equals("bypoints"))
+			orderStatement = "ORDER BY i.points DESC";
+		else if(order.equals("byrandom")) {		
+			if(session.getAttribute("randomSeed") == null) {
+				session.setAttribute("randomSeed", this.randInt());
+			}
+			seed = (int) session.getAttribute("randomSeed");
+				
+			orderStatement = "ORDER BY rand("+seed+")";
+		}
+		else if(order.equals("bynewest"))
+			orderStatement = "ORDER BY i.create_time DESC";
+		else
+			orderStatement = "ORDER BY i.points DESC";
 		
 		if(query.startsWith("user:")) {
 			query = query.replace("user:", "");
 			return "redirect:/user/" + query;
 		}
 		else if(query.startsWith("title:")) {
-			if(order.equals("bypoints"))
-				orderStatement = "ORDER BY i.points DESC";
-			else if(order.equals("byrandom"))
-				orderStatement = "ORDER BY rand()";
-			else if(order.equals("bynewest"))
-				orderStatement = "ORDER BY i.createTime DESC";
-			else
-				orderStatement = "";
 			query = query.replace("title:", "");
-			return searchPageWithTitle(model, query, orderStatement);
+			return searchPageWithTitle(model, request, query, orderStatement, order, page);
 		}
 		else if(query.startsWith("tag:")) {
-			if(order.equals("bypoints"))
-				orderStatement = "ORDER BY t.image.points DESC";
-			else if(order.equals("byrandom"))
-				orderStatement = "ORDER BY rand()";
-			else if(order.equals("bynewest"))
-				orderStatement = "ORDER BY t.image.createTime DESC";
-			else
-				orderStatement = "";
 			query = query.replace("tag:", "");
-			return searchPageWithTag(model, query, orderStatement);
+			return searchPageWithTag(model, request, query, orderStatement, order, page);
 		}
 		else {
-			return searchPageWithAll(model, query, order);
+			return searchPageWithAll(model, query, order, page);
 		}
 		
 	}
@@ -224,8 +307,8 @@ public class HelloController{
 	// Mapper functions
 	
 	@RequestMapping(value = "/user/{userName}", method = RequestMethod.GET)
-    public String userImagesPageMapper(@PathVariable("userName") String userName, Model model) {
-        return userPage(model, userName);
+    public String userImagesPageMapper(@PathVariable("userName") String userName, Model model, HttpServletRequest request) {
+        return userPage(model, request, userName);
     }
 	
 	@SuppressWarnings("unchecked")
@@ -233,8 +316,8 @@ public class HelloController{
     public String imagePageMapper(@PathVariable("address") String address, @PathVariable("index") int index, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		 int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
-	     numberOfPages++; // ceils the number of pages
+		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+	    numberOfPages++; // ceils the number of pages
 		
 		if(index > ((List<Image>)session.getAttribute("listImages")).size() - 1)
 		{
@@ -273,43 +356,49 @@ public class HelloController{
         List<String> nextprev = new ArrayList<String>();
         Image skipPageImage;
         
-        int index = (int) session.getAttribute("imageIndex");
+        Integer index = (Integer) session.getAttribute("imageIndex");
+        if(index == null) {
+        	Image blankImage = new Image(null, 0, null, "notExist", null, 0, null);
+        	List<Image> blankImages = new ArrayList<Image>();
+        	blankImages.add(blankImage);
+        	blankImages.add(blankImage);
+        	session.setAttribute("listImages", blankImages);
+            session.setAttribute("listOrder", "");
+            session.setAttribute("listPage", 0);
+            index = 1;
+        }
        
         int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
 	    numberOfPages++; // ceils the number of pages
         
-        if(session.getAttribute("listImages") != null) {
-	        @SuppressWarnings("unchecked")
-			List<Image> images = (List<Image>) session.getAttribute("listImages");
-	        
-	        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size())
-			{
-	        	int page = ((int)session.getAttribute("listPage")) + 1;
+		List<Image> images = (List<Image>) session.getAttribute("listImages");
+        
+        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size())
+		{
+        	int page = ((int)session.getAttribute("listPage")) + 1;
+			
+			if(page < numberOfPages) {
+				skipPageImage = imageService.getAllImages((String)session.getAttribute("listOrder"), page).get(0);
+				nextprev.add(skipPageImage.getAddress());
+			}
+			else
+				nextprev.add("notExist");
 				
-				if(page < numberOfPages) {
-					skipPageImage = imageService.getAllImages((String)session.getAttribute("listOrder"), page).get(0);
-					nextprev.add(skipPageImage.getAddress());
-				}
-				else
-					nextprev.add("notExist");
-					
-		        nextprev.add(images.get(index - 1).getAddress()); 
-			}
-			else if((index-1) < 0)
-			{
-				int page = ((int)session.getAttribute("listPage")) - 1;
-				List<Image> temp = imageService.getAllImages((String)session.getAttribute("listOrder"), page);
-				skipPageImage = temp.get(temp.size() - 1);
-				nextprev.add(images.get(index + 1).getAddress());
-		        nextprev.add(skipPageImage.getAddress()); 
-			}
-			else {
-		        nextprev.add(images.get(index + 1).getAddress());
-		        nextprev.add(images.get(index - 1).getAddress());  
-			}
-        }
-        else
-        	nextprev = imageService.getNextPrevAddress(theImage.getCreateTime(), theImage.getPoints(), "");
+	        nextprev.add(images.get(index - 1).getAddress()); 
+		}
+		else if((index-1) < 0)
+		{
+			int page = ((int)session.getAttribute("listPage")) - 1;
+			List<Image> temp = imageService.getAllImages((String)session.getAttribute("listOrder"), page);
+			skipPageImage = temp.get(temp.size() - 1);
+			nextprev.add(images.get(index + 1).getAddress());
+	        nextprev.add(skipPageImage.getAddress());
+		}
+		else {
+	        nextprev.add(images.get(index + 1).getAddress());
+	        nextprev.add(images.get(index - 1).getAddress());  
+		}
+
         
         return imagePage(model, theImage, nextprev, "");
     }
@@ -372,14 +461,28 @@ public class HelloController{
 		return new ModelAndView(new RedirectView("search/" + query));
 	}
 	
-	@RequestMapping(value = "/search/{query}/{order}", method = RequestMethod.GET)
-	public String searchPageOrderedMapper(@PathVariable("query") String query, @PathVariable("order") String order, Model model) {
-		return searchPageFlagHandler(model, query, order);
+	@RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
+	public String searchPageMapper(@PathVariable("query") String query, Model model,  HttpServletRequest request) {
+		return searchPageFlagHandler(model, request, query, "", 1);
 	}
 	
-	@RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
-	public String searchPageMapper(@PathVariable("query") String query, Model model) {
-		return searchPageFlagHandler(model, query, "");
+	@RequestMapping(value = "/search/{query}/{page}/{order}", method = RequestMethod.GET)
+	public String searchPagePagedOrderedMapper(@PathVariable("query") String query, @PathVariable("order") String order, @PathVariable("page") int page, Model model,  HttpServletRequest request) {
+		return searchPageFlagHandler(model, request, query, order, page);
+	}
+	
+	@RequestMapping(value = "/search/{query}/{page}", method = RequestMethod.GET)
+	public String searchPagePagedMapper(@PathVariable("query") String query, @PathVariable("page") String page, Model model,  HttpServletRequest request) {
+		if(page.compareTo("random") == 0)
+		{
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("randomSeed", this.randInt());
+			
+			return "redirect:/search/"+query+"/1/byrandom";
+		}
+		else
+			return searchPageFlagHandler(model, request, query, "", Integer.parseInt(page));
 	}
 	
 	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
@@ -403,7 +506,7 @@ public class HelloController{
 		
 		PasswordEncoder pe = new BCryptPasswordEncoder();
 		password = pe.encode(password);
-		userService.saveUser(new User(null,username,email,password,0,null));
+		userService.saveUser(new User(null, username, email, password, 0, 0, false, null));
 		return "register";
 			
 	}
@@ -450,22 +553,26 @@ public class HelloController{
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/image_vote", method = RequestMethod.POST)
-	public String imageVoteProcess(@RequestParam boolean voteType, @RequestParam int imageId) {
+	public String imageVoteProcess(@RequestParam boolean voteType, HttpServletRequest request, @RequestParam int imageId) {
+		HttpSession session = request.getSession();
+		
 	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 
 	    imageService.voteImage(user.getUser().getIduser(), imageId, voteType);
 	    
-	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress();
+	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"/"+Integer.toString((int)session.getAttribute("imageIndex"));
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@RequestMapping(value="/comment_vote", method = RequestMethod.POST)
-	public String commentVoteProcess(@RequestParam boolean voteType, @RequestParam int imageId, @RequestParam int commentId) {
-	    CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+	public String commentVoteProcess(@RequestParam boolean voteType, HttpServletRequest request, @RequestParam int imageId, @RequestParam int commentId) {
+		HttpSession session = request.getSession();
+		
+		CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 
 	    imageService.voteComment(user.getUser().getIduser(), commentId, voteType);
 
-	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId;
+	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId+"/"+Integer.toString((int)session.getAttribute("imageIndex"));
 
 	}
 	

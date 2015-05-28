@@ -21,15 +21,17 @@
 	<!-- HEADER END -->
 	<!-- MAIN CONTENT START -->
 
+
 	<div class="mainContent">
 		<div class="sort">
-			<a href="${pageContext.request.contextPath}/search/${Query }/bypoints"><div class="sortItem">by highest scoring</div></a>
-			<a href="${pageContext.request.contextPath}/search/${Query }/bynewest"><div class="sortItem">by newest first</div></a>
-			<a href="${pageContext.request.contextPath}/search/${Query }/byrandom"><div class="sortItem">by random number</div></a>
+		
+			<a href="${pageContext.request.contextPath}/search/${Query }/1/bypoints"><div class="sortItem">by highest scoring</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }/1/bynewest"><div class="sortItem">by newest first</div></a>
+			<a href="${pageContext.request.contextPath}/search/${Query }/random"><div class="sortItem">by random number</div></a>
 		</div>
 		<div class="mainContentWrapper">
-			<c:forEach var="Image" items="${Images }">
-				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}">
+			<c:forEach var="Image" items="${Images }" varStatus="loop">
+				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}/${loop.index}">
 					<div class="image">
 						<div class="title">
 							<span>${Image.getTitle() }</span>
@@ -37,6 +39,11 @@
 						<img src="${Image.getContent() }">
 					</div>
 				</a>
+			</c:forEach>
+		</div>
+		<div class="pages">
+			<c:forEach begin="${PagesStart}" end="${PagesEnd}" varStatus="loop">
+				<a href="${pageContext.request.contextPath}/search/${Query}/${loop.index}/${OrderAddress}"><div class="page" <c:if test="${Page == loop.index}"> id="active" </c:if>>${loop.index}</div></a>
 			</c:forEach>
 		</div>
 	</div>

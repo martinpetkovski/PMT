@@ -15,9 +15,9 @@ public interface ImageService {
 	public List<String> getNextPrevAddress(Date id, int points, String order);
 	public List<Image> getImagesByUserId(Integer userId);
 	public List<Image> getAllImages(String order, int page);
-	public List<Image> getImagesByQuery(String query, String order);
-	public List<Image> getImagesByTag(String query, String order);
-	public Set<Image> getImagesByAll(String query, String order);
+	public List<Image> getImagesByQuery(String query, String order, int page);
+	public List<Image> getImagesByTag(String query, String order, int page);
+	public Set<Image> getImagesByAll(String query, String order, int page);
 	public String getRandomImage();
 	public int numberOfImages();
 	public void voteImage(int iduser, int idimage, boolean voteType);

@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,6 +36,8 @@ public class User implements Serializable {
 	private String password;
 	@Column(name="points")
 	private Integer points;
+	@Column(name="followers")
+	private Integer followers;
 	@Column(name="enabled")
 	private boolean enabled;
     @Temporal(TemporalType.TIMESTAMP)
@@ -42,6 +45,7 @@ public class User implements Serializable {
 	private Date createTime;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
+    @OrderBy("points DESC")
     private List<Image> images;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iduser", fetch = FetchType.LAZY)
     private List<Comment> comments;
@@ -54,13 +58,15 @@ public class User implements Serializable {
 	
 	public User() {}
 	public User(Integer iduser, String username, String email, String password, Integer points,
-			Date createTime) {
+			Integer followers, boolean enabled, Date createTime) {
 		super();
 		this.iduser = iduser;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.points = points;
+		this.followers = followers;
+		this.enabled = enabled;
 		this.createTime = createTime;
 	}
 	public Integer getIduser() {
@@ -92,6 +98,13 @@ public class User implements Serializable {
 	}
 	public void setPoints(Integer points) {
 		this.points = points;
+	}
+	
+	public Integer getFollowers() {
+		return followers;
+	}
+	public void setFollowers(Integer followers) {
+		this.followers = followers;
 	}
 	public Date getCreateTime() {
 		return this.createTime;

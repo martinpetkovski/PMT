@@ -155,7 +155,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Image> readByUsername(String username, String order) {
+	public List<Image> readByUsername(String username, String order, int page) {
 		Session session = sf.getCurrentSession();
 		List<User> users = null;
 		List<Image> images = new ArrayList<Image>();
@@ -193,11 +193,14 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Image> readByQuery(String query, String order) {
+	public List<Image> readByQuery(String query, String order, int page) {
 		Session session = sf.getCurrentSession();
 		List<Image> images = null;
-		Query q = session.createQuery("FROM Image i WHERE i.title LIKE :sb " + order);
+		SQLQuery q = session.createSQLQuery("SELECT * FROM Image i WHERE i.title LIKE :sb " + order);
 		q.setParameter("sb", "%" + query + "%");
+		q.addEntity(Image.class);
+		q.setFirstResult(page * this.IMAGES_PER_PAGE);
+		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
 			
 		return images;
@@ -206,18 +209,16 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Image> readByTag(String query, String order) {
+	public List<Image> readByTag(String query, String order, int page) {
 		Session session = sf.getCurrentSession();
-		List<Tag> tags = null;
 		List<Image> images = new ArrayList<Image>();
-		Query q = session.createQuery("FROM Tag t WHERE t.content = :sb " + order);
+		SQLQuery q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i WHERE t.idimage = i.idimage AND t.content = :sb " + order);
 		q.setParameter("sb", query);
-		tags = q.list();
-		for(Tag tag : tags) {
-			Hibernate.initialize(tag.getImage());
-			images.add(tag.getImage());
-		}
-			
+		q.addEntity(Image.class);
+		q.setFirstResult(page * this.IMAGES_PER_PAGE);
+		q.setMaxResults(this.IMAGES_PER_PAGE);
+		images = q.list();
+		
 		return images;
 	}
 

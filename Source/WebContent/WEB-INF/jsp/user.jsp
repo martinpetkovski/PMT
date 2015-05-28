@@ -30,10 +30,10 @@
 				<div class="contentTitle">
 					Showing submitted images
 				</div>
-				<c:forEach var="image" items="${Images}">
+				<c:forEach var="image" items="${Images}" varStatus="loop">
 	
 					<div class="image">
-						<a href="${pageContext.request.contextPath}/image/${image.getAddress()}">
+						<a href="${pageContext.request.contextPath}/image/${image.getAddress()}/${loop.index}">
 						<div class="content"><img src="${image.getContent()}">
 						</div></a>
 		

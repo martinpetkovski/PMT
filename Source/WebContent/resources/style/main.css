@@ -179,6 +179,7 @@ header {
 .buttonArea {
 	position:absolute;
 	right:0px;
+	z-index: 6000;
 }
 
 .syntax {

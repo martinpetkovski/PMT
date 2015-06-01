@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `wto`.`user` (
   `email` VARCHAR(150) NOT NULL,
   `password` MEDIUMTEXT NOT NULL,
   `points` INT NOT NULL,
+  `followers` INT NOT NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`iduser`),
@@ -179,6 +180,30 @@ CREATE TABLE IF NOT EXISTS `wto`.`user_roles` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `wto`.`follower`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wto`.`follower` (
+  `idfollower` INT NOT NULL AUTO_INCREMENT,
+  `followerid` INT NOT NULL,
+  `followeeid` INT NOT NULL,
+  PRIMARY KEY (`idfollower`),
+  INDEX `fk_follower_user1_idx` (`followerid` ASC),
+  INDEX `fk_follower_user2_idx` (`followeeid` ASC),
+  UNIQUE INDEX `index4` (`followerid` ASC, `followeeid` ASC),
+  CONSTRAINT `fk_follower_user1`
+    FOREIGN KEY (`followerid`)
+    REFERENCES `wto`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_follower_user2`
+    FOREIGN KEY (`followeeid`)
+    REFERENCES `wto`.`user` (`iduser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `wto`;
 
 DELIMITER $$
@@ -259,6 +284,14 @@ BEGIN
 	END IF;
 END
 $$
+
+USE `wto`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`follower_AFTER_INSERT` AFTER INSERT ON `follower` FOR EACH ROW
+	UPDATE `user` SET `user`.`followers` = `user`.`followers` + 1 WHERE `user`.`iduser` = NEW.`followeeid`;$$
+
+USE `wto`$$
+CREATE DEFINER = CURRENT_USER TRIGGER `wto`.`follower_AFTER_DELETE` AFTER DELETE ON `follower` FOR EACH ROW
+	UPDATE `user` SET `user`.`followers` = `user`.`followers` - 1 WHERE `user`.`iduser` = OLD.`followeeid`;$$
 
 
 DELIMITER ;

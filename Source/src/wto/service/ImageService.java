@@ -18,8 +18,11 @@ public interface ImageService {
 	public List<Image> getImagesByQuery(String query, String order, int page);
 	public List<Image> getImagesByTag(String query, String order, int page);
 	public Set<Image> getImagesByAll(String query, String order, int page);
+	public List<Image> getImagesByFollowers(int userid, int page);
+	public boolean isFollowing(int follower, int followee);
 	public String getRandomImage();
 	public int numberOfImages();
+	public void follow(int follower, int folowee);
 	public void voteImage(int iduser, int idimage, boolean voteType);
 	void voteComment(int iduser, int idcomment, boolean voteType);
 	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime, String tags);

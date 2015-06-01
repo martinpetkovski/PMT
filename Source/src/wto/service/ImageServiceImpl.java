@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import wto.model.CommentVote;
+import wto.model.Follower;
 import wto.model.Image;
 import wto.model.ImageVote;
 import wto.model.Tag;
 import wto.repository.CommentVoteRepository;
+import wto.repository.FollowerRepository;
 import wto.repository.ImageRepository;
 import wto.repository.ImageVoteRepository;
 import wto.repository.TagRepository;
@@ -28,6 +30,8 @@ public class ImageServiceImpl implements ImageService {
 	ImageVoteRepository ivr;
 	@Autowired
 	CommentVoteRepository cvr;
+	@Autowired
+	FollowerRepository fr;
 	@Autowired
 	TagRepository tr;
 	
@@ -75,7 +79,13 @@ public class ImageServiceImpl implements ImageService {
 	public List<Image> getImagesByTag(String query, String order, int page) {
 		return img.readByTag(query, order, page);
 	}
+	
+	@Override
+	public List<Image> getImagesByFollowers(int userid, int page) {
+		return img.readByFollowers(userid, page);
+	}
 
+	@Override
 	public Set<Image> getImagesByAll(String query, String order, int page) {
 		SortedSet<Image> images;
 		
@@ -124,6 +134,15 @@ public class ImageServiceImpl implements ImageService {
 		}
 		
 		tr.create(tagList);
+	}
+
+	@Override
+	public void follow(int follower, int followee) {
+		fr.create(new Follower(null, follower, followee));
+	}
+	
+	public boolean isFollowing(int follower, int followee) {
+		return fr.isFollowing(follower, followee);
 	}
 	
 }

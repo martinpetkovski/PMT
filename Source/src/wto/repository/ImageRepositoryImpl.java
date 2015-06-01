@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import wto.model.Image;
-import wto.model.Tag;
 import wto.model.User;
 
 @Repository
@@ -172,6 +171,24 @@ public class ImageRepositoryImpl implements ImageRepository {
 		}
 			
 		return images;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Image> readByFollowers(int userid, int page) {
+		Session session = sf.getCurrentSession();
+		List<Image> images = null;
+		
+		SQLQuery q = session.createSQLQuery("SELECT image.idimage, image.iduser, image.title, image.address, image.content, image.points, image.create_time FROM image, user, follower WHERE image.iduser = user.iduser AND follower.followerid = :uid AND follower.followeeid = image.iduser ORDER BY image.create_time DESC");
+		q.addEntity(Image.class);
+		q.setParameter("uid", userid);
+		q.setFirstResult(page * this.IMAGES_PER_PAGE);
+		q.setMaxResults(this.IMAGES_PER_PAGE);
+		images = q.list();
+			
+		return images;
+
 	}
 
 	@SuppressWarnings("unchecked")

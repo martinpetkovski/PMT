@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -137,12 +138,18 @@ public class HelloController{
         session.setAttribute("listOrder", "ORDER BY i.points DESC");
         session.setAttribute("listPage", 0);
         
+        model.addAttribute("UserId",theUser.getIduser());
         model.addAttribute("UserName",theUser.getUsername());
 		model.addAttribute("UserPoints", theUser.getPoints());
 		model.addAttribute("UserFollowers", theUser.getFollowers());
 		model.addAttribute("ImageNumber", images.size());
 		model.addAttribute("CommentNumber", comments.size());
 		
+		if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof CustomUserDetails) {
+			CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			model.addAttribute("isFollowing", imageService.isFollowing(user.getUser().getIduser(), theUser.getIduser()));
+		}
+				
 		model.addAttribute("Images", images);
 		model.addAttribute("Comments", comments);
 		return "user";
@@ -154,7 +161,15 @@ public class HelloController{
 		
 		page--;
 		
-        List<Image> images = imageService.getAllImages(order, page);
+		List<Image> images = new ArrayList<Image> ();
+		
+		if(orderFlag != 3)
+			images = imageService.getAllImages(order, page);
+		else {
+			CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			images = imageService.getImagesByFollowers(user.getUser().getIduser(), page);
+		}
+        
         session.setAttribute("listImages", images);
         session.setAttribute("listOrder", order);
         session.setAttribute("listPage", page);
@@ -175,6 +190,8 @@ public class HelloController{
         	model.addAttribute("OrderAddress", "/bypoints");
         else if(orderFlag == 2)
         	model.addAttribute("OrderAddress", "/byrandom");
+        else if(orderFlag == 3)
+        	model.addAttribute("OrderAddress", "/feed");
         
         if(page <= numberOfPages)
         	return "index";
@@ -456,6 +473,18 @@ public class HelloController{
 		return indexPage(model, request, "ORDER BY RAND("+seed+")", page, 2);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/feed", method = RequestMethod.GET)
+	public String indexPageByFeed(Model model, HttpServletRequest request) {
+		return indexPage(model, request, "", 1, 3);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value = "/{page}/feed", method = RequestMethod.GET)
+	public String indexPageByFeed(@PathVariable("page") int page, Model model, HttpServletRequest request) {
+		return indexPage(model, request, "", page, 3);
+	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public ModelAndView searchMapper(@RequestParam("query") String query) {
 		return new ModelAndView(new RedirectView("search/" + query));
@@ -573,6 +602,18 @@ public class HelloController{
 	    imageService.voteComment(user.getUser().getIduser(), commentId, voteType);
 
 	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId+"/"+Integer.toString((int)session.getAttribute("imageIndex"));
+
+	}
+	
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@RequestMapping(value="/follow", method = RequestMethod.POST)
+	public String followProcess(@RequestParam int followee) {
+		
+		CustomUserDetails user = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
+
+	    imageService.follow(user.getUser().getIduser(), followee);
+
+	    return "redirect:/user/" + userService.getUserById(followee).getUsername();
 
 	}
 	

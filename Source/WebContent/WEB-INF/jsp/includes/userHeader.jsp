@@ -18,9 +18,20 @@
 			<span class="number">${UserPoints}</span> points <span class="number" id="blue">${UserFollowers} </span> followers
 		</div>
 		
-		<div class="followButton">
-			Follow
-		</div>
+		<form action="<c:url value='/follow' />" method="POST">
+			<input type="hidden" value="${UserId}" name="followee" />
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			<div class="submit" id="followButton">
+				<c:choose> 
+				  	<c:when test="${isFollowing == true}">
+				    	Unfollow
+				  	</c:when>
+				  	<c:otherwise>
+				    	Follow
+				  	</c:otherwise>
+				</c:choose>
+			</div>
+		</form>
 	</div>
 	<div class="metaDataWrapper">
 	

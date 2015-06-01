@@ -175,7 +175,7 @@
 
 
 
-.followButton {
+#followButton {
 	display:inline-block;
 	font-size: 16px;
 	vertical-align: middle;
@@ -183,11 +183,11 @@
 	background-color: #069;
 }
 
-.followButton:hover {
+#followButton:hover {
 	cursor:pointer;
 	background-color: #09F;
 }
 
-.followButton:active {
+#followButton:active {
 	background-color: #069;
 }

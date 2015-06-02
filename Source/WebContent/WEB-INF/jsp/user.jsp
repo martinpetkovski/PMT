@@ -39,7 +39,7 @@
 		
 						<div class="title">
 							<div class="points">
-								<span class="numberOfPoints">${image.getPoints()}</span> points
+								<span class="numberOfPoints" id="<c:choose><c:when test="${image.getPoints() < 0}">negative</c:when><c:when test="${image.getPoints() > 0}">positive</c:when><c:otherwise>neutral</c:otherwise></c:choose>">${image.getPoints()}</span> points 
 							</div>
 		
 		
@@ -79,7 +79,7 @@
 		
 						<div class="title">
 							<div class="points">
-								<span class="numberOfPoints">${comment.getPoints()}</span> points
+								<span class="numberOfPoints" id="<c:choose><c:when test="${comment.getPoints() < 0}">negative</c:when><c:when test="${comment.getPoints() > 0}">positive</c:when><c:otherwise>neutral</c:otherwise></c:choose>">${comment.getPoints() }</span> points
 							</div>
 		
 		

@@ -186,6 +186,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
+		for(Image image : images) {
+			Hibernate.initialize(image.getUser());
+		}
 			
 		return images;
 
@@ -203,6 +206,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
+		for(Image image : images) {
+			Hibernate.initialize(image.getUser());
+		}
 			
 		return images;
 	}
@@ -219,6 +225,9 @@ public class ImageRepositoryImpl implements ImageRepository {
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
+		for(Image image : images) {
+			Hibernate.initialize(image.getUser());
+		}
 			
 		return images;
 	}
@@ -235,6 +244,29 @@ public class ImageRepositoryImpl implements ImageRepository {
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
 		images = q.list();
+		for(Image image : images) {
+			Hibernate.initialize(image.getUser());
+		}
+		
+		return images;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Image> readByAll(String query, String order, int page) {
+		Session session = sf.getCurrentSession();
+		List<Image> images = new ArrayList<Image>();
+		SQLQuery q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i, User u WHERE u.iduser = i.iduser AND t.idimage = i.idimage AND (t.content = :sb OR i.title LIKE :sbp OR u.username LIKE :sbp) " + order);
+		q.setParameter("sb", query);
+		q.setParameter("sbp", "%" + query + "%");
+		q.addEntity(Image.class);
+		q.setFirstResult(page * this.IMAGES_PER_PAGE);
+		q.setMaxResults(this.IMAGES_PER_PAGE);
+		images = q.list();
+		for(Image image : images) {
+			Hibernate.initialize(image.getUser());
+		}
 		
 		return images;
 	}

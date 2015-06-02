@@ -2,7 +2,6 @@ package wto.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +16,7 @@ public interface ImageService {
 	public List<Image> getAllImages(String order, int page);
 	public List<Image> getImagesByQuery(String query, String order, int page);
 	public List<Image> getImagesByTag(String query, String order, int page);
-	public Set<Image> getImagesByAll(String query, String order, int page);
+	public List<Image> getImagesByAll(String query, String order, int page);
 	public List<Image> getImagesByFollowers(int userid, int page);
 	public boolean isFollowing(int follower, int followee);
 	public String getRandomImage();

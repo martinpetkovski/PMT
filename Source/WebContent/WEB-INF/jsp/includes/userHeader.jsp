@@ -15,7 +15,7 @@
 		${UserName}
 		
 		<div class="mainPoints">
-			<span class="number">${UserPoints}</span> points <span class="number" id="blue">${UserFollowers} </span> followers
+			<span class="number" id="<c:choose><c:when test="${UserPoints < 0}">negative</c:when><c:when test="${UserPoints > 0}">positive</c:when><c:otherwise>neutral</c:otherwise></c:choose>">${UserPoints}</span> points <span class="number" id="blue">${UserFollowers} </span> followers
 		</div>
 		
 		<form action="<c:url value='/follow' />" method="POST">

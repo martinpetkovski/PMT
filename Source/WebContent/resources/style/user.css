@@ -162,7 +162,7 @@
 }
 
 .points .numberOfPoints {
-	color: #0A0;
+	color: #FFF;
 }
 
 .contentTitle {
@@ -173,9 +173,11 @@
 	display:none;
 }
 
+.username form {
+	display:inline-block;
+}
 
-
-#followButton {
+form #followButton {
 	display:inline-block;
 	font-size: 16px;
 	vertical-align: middle;
@@ -183,11 +185,11 @@
 	background-color: #069;
 }
 
-#followButton:hover {
+form #followButton:hover {
 	cursor:pointer;
 	background-color: #09F;
 }
 
-#followButton:active {
+form #followButton:active {
 	background-color: #069;
 }

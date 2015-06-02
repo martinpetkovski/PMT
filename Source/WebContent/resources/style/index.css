@@ -50,23 +50,46 @@
 	height: 300px;
 	vertical-align: top;
 	background-color: #000;
+	z-index: 20;
 }
 
-.mainContent .image .title {
-	position: absolute;
+.mainContent .image .metaBox {
+	position: relative;
 	display: none;
-	top: 20px;
-	left: 0px;
 	width: 100%;
 	z-index: 25;
 	text-align: left;
 }
 
-.mainContent .image .title span { 
-   padding: 10px; 
-   color: #FFF; 
-   background-color: rgba(0, 0, 0, 0.8);
-   font-size: 18px;
+.mainContent .image .metaBox div { 
+	position: relative;
+	box-sizing: border-box;
+	padding: 2px 8px;
+   	width: 100%;
+   	color: #FFF; 
+   	background-color: rgba(0, 0, 0, 0.8);
+   	font-size: 18px;
+   	z-index: 26;
+}
+
+.mainContent .image .metaBox form { 
+	display:inline-block;
+	z-index: 27;
+	float:right;
+}
+
+.mainContent .image .metaBox form span { 
+	padding-left:5px;
+}
+
+.mainContent .image .metaBox a { 
+	color: #0AF;
+	padding-right:10px;
+}
+
+.mainContent .image .metaBox div#info {
+	background-color: rgba(0,0,0,0.9);
+	font-size: 12px;
 }
 
 .pages {

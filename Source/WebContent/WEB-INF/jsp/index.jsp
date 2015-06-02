@@ -31,14 +31,36 @@
 		</div>
 		<div class="mainContentWrapper">
 			<c:forEach var="Image" items="${Images }" varStatus="loop">
-				<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}/${loop.index}">
-					<div class="image">
-						<div class="title">
-							<span>${Image.getTitle() }</span>
-						</div>
-						<img src="${Image.getContent() }">
+				<div class="image">
+					<div class="metaBox">
+						<div id="title">${Image.getTitle() }</div>
+						<div id="info">
+						 
+						 	<a href="${pageContext.request.contextPath}/user/${Image.getUser().getUsername()}">${Image.getUser().getUsername() }</a>
+							 
+								
+							<span id="<c:choose><c:when test="${Image.getPoints() < 0}">negative</c:when><c:when test="${Image.getPoints() > 0}">positive</c:when><c:otherwise>neutral</c:otherwise></c:choose>">${Image.getPoints() }</span> points 
+							 
+							<form action="<c:url value='/image_vote' />" method="POST">
+								<input type="hidden" name="voteType" value="false">
+								<input type="hidden" name="imageId" value="${Image.getIdimage() }">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<span class="submit" id="downvote">downvote</span>
+							</form>
+							<form action="<c:url value='/image_vote' />" method="POST">
+								<input type="hidden" name="voteType" value="true">
+								<input type="hidden" name="imageId" value="${Image.getIdimage() }">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<span class="submit" id="upvote">upvote</span>
+							</form>
+						
+						 </div>
 					</div>
-				</a>
+					<a href="${pageContext.request.contextPath}/image/${Image.getAddress()}/${loop.index}">
+						<img src="${Image.getContent() }">
+					</a>
+				</div>
+				
 			</c:forEach>
 		</div>
 		<div class="pages">

@@ -3,9 +3,6 @@ package wto.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,21 +83,9 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public Set<Image> getImagesByAll(String query, String order, int page) {
-		SortedSet<Image> images;
+	public List<Image> getImagesByAll(String query, String order, int page) {
 		
-		if(order.equals("bypoints"))
-			images = new TreeSet<Image>(Image.getPointsComparator());
-		else if(order.equals("bynewest"))
-			images = new TreeSet<Image>(Image.getTimeComparator());
-		else 
-			images = new TreeSet<Image>();
-		
-		images.addAll(img.readByQuery(query,"", page));
-		images.addAll(img.readByTag(query,"", page));
-		images.addAll(img.readByUsername(query,"", page));
-		
-		return images;
+		return img.readByAll(query, order, page);
 	}
 
 	@Override

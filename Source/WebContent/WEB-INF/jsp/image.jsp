@@ -57,7 +57,7 @@
 			<div class="commentAreaWrapper">
 				<div class="imageTitle">
 					<div class="imagePoints">
-						${ImagePoints }
+						<span id="<c:choose><c:when test="${ImagePoints < 0}">negative</c:when><c:when test="${ImagePoints > 0}">positive</c:when><c:otherwise>neutral</c:otherwise></c:choose>">${ImagePoints }</span> 
 					</div>
 
 
@@ -120,7 +120,7 @@
 	
 	
 						<div class="voteBar">
-							<div class="upvotes" style="width:${Comment.getPoints() / MostPoints * 100}%">
+							<div class="upvotes" style="width:${ (Comment.getPoints() - LeastPoints) / (MostPoints - LeastPoints) * 100}%">
 							</div>
 						</div>
 					</div>

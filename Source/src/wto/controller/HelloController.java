@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -104,9 +102,12 @@ public class HelloController{
 	
 	public String imagePage(Model model, Image theImage, List<String> nextprev, String order) {
 		int mostPoints = 0;
+		int leastPoints = 0;
         
-        if(theImage.getComments().size() > 0)
+        if(theImage.getComments().size() > 0) {
         	 mostPoints = theImage.getComments().get(0).getPoints();
+        	 leastPoints = theImage.getComments().get(theImage.getComments().size()-1).getPoints();
+        }
         
         model.addAttribute("ImageId", theImage.getIdimage());
         model.addAttribute("ImageLocation", theImage.getContent());
@@ -123,6 +124,7 @@ public class HelloController{
         model.addAttribute("Comments", theImage.getComments());
         model.addAttribute("Tags", theImage.getTags());
         model.addAttribute("MostPoints", mostPoints);
+        model.addAttribute("LeastPoints", leastPoints);
 		return "image";
 	}
 	
@@ -256,11 +258,11 @@ public class HelloController{
 		return "search";
 	}
 	
-	public String searchPageWithAll(Model model, String query, String order, int page) {
+	public String searchPageWithAll(Model model, String query, String order, String orderAddress, int page) {
 		
 		page--;
 		
-		Set<Image> images = imageService.getImagesByAll(query, order, page);
+		List<Image> images = imageService.getImagesByAll(query, order, page);
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", query);
 		model.addAttribute("Order", order);
@@ -275,7 +277,7 @@ public class HelloController{
         model.addAttribute("PagesEnd", startEnd.get(1));
         model.addAttribute("Page", page+1);
         
-        model.addAttribute("OrderAddress", order);
+        model.addAttribute("OrderAddress", orderAddress);
         
 		return "search";
 	}
@@ -314,7 +316,7 @@ public class HelloController{
 			return searchPageWithTag(model, request, query, orderStatement, order, page);
 		}
 		else {
-			return searchPageWithAll(model, query, order, page);
+			return searchPageWithAll(model, query, orderStatement, order, page);
 		}
 		
 	}
@@ -589,7 +591,11 @@ public class HelloController{
 
 	    imageService.voteImage(user.getUser().getIduser(), imageId, voteType);
 	    
-	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"/"+Integer.toString((int)session.getAttribute("imageIndex"));
+	    Integer imageIndex = (Integer)session.getAttribute("imageIndex");
+	    if(imageIndex != null)
+	    	return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"/"+Integer.toString((Integer)session.getAttribute("imageIndex"));
+	    else
+	    	return "redirect:/image/"+imageService.getImageById(imageId).getAddress();
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")
@@ -600,9 +606,11 @@ public class HelloController{
 		CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  
 
 	    imageService.voteComment(user.getUser().getIduser(), commentId, voteType);
-
-	    return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId+"/"+Integer.toString((int)session.getAttribute("imageIndex"));
-
+	    Integer imageIndex = (Integer)session.getAttribute("imageIndex");
+	    if(imageIndex != null)
+	    	return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId+"/"+Integer.toString((Integer)session.getAttribute("imageIndex"));
+	    else
+	    	return "redirect:/image/"+imageService.getImageById(imageId).getAddress()+"#comment"+commentId;
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")

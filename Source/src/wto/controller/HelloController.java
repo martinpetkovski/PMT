@@ -363,7 +363,7 @@ public class HelloController{
 			if(page > numberOfPages)
 				page --;
 				
-			session.setAttribute("listImages", imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listImages", imageService.getAllImages((Integer)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
 			session.setAttribute("listPage", page);
 			session.setAttribute("imageIndex", index);
 		}
@@ -374,7 +374,7 @@ public class HelloController{
 			if(page < 0)
 				page ++;			
 			
-			session.setAttribute("listImages", imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listImages", imageService.getAllImages((Integer)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
 			session.setAttribute("listPage", page);
 			session.setAttribute("imageIndex", index);
 		}
@@ -386,8 +386,13 @@ public class HelloController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/image/{address}", method = RequestMethod.GET)
-    public String imagePageMapper(@PathVariable("address") String address, Model model, HttpServletRequest request) {		
+    public String imagePageMapper(@PathVariable("address") String address, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("selectionFlag") == null) {
+			session.setAttribute("selectionFlag", 0);
+			session.setAttribute("queryCriteria", " ");
+		}
 		
         Image theImage = imageService.getImageByAddress(address);
         List<String> nextprev = new ArrayList<String>();
@@ -409,13 +414,12 @@ public class HelloController{
 	    numberOfPages++; // ceils the number of pages
         
 		List<Image> images = (List<Image>) session.getAttribute("listImages");
-        
-        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size())
-		{
+		        
+        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size()) {
         	int page = ((int)session.getAttribute("listPage")) + 1;
 			
 			if(page < numberOfPages) {
-				skipPageImage = imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page).get(0);
+				skipPageImage = imageService.getAllImages((Integer)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page).get(0);
 				nextprev.add(skipPageImage.getAddress());
 			}
 			else
@@ -423,13 +427,19 @@ public class HelloController{
 				
 	        nextprev.add(images.get(index - 1).getAddress()); 
 		}
-		else if((index-1) < 0)
-		{
+		else if((index-1) < 0) {
 			int page = ((int)session.getAttribute("listPage")) - 1;
-			List<Image> temp = imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page);
+			List<Image> temp = imageService.getAllImages((Integer)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page);
 			skipPageImage = temp.get(temp.size() - 1);
-			nextprev.add(images.get(index + 1).getAddress());
-	        nextprev.add(skipPageImage.getAddress());
+			if(page < numberOfPages) {
+				nextprev.add(images.get(index + 1).getAddress());
+				nextprev.add("notExist");
+			}
+			else {
+				nextprev.add(images.get(index + 1).getAddress());
+				nextprev.add(skipPageImage.getAddress());
+			}
+				
 		}
 		else {
 	        nextprev.add(images.get(index + 1).getAddress());
@@ -439,6 +449,11 @@ public class HelloController{
         
         return imagePage(model, theImage, nextprev, "");
     }
+	
+	@RequestMapping(value="/image/notExist", method = RequestMethod.GET)
+	public String image404Mapper(Model model) {
+		return "errors/image404";
+	}
 	
 	@RequestMapping(value = "/image/random", method = RequestMethod.GET)
     public String imageRandomPageMapper(Model model) {
@@ -593,7 +608,7 @@ public class HelloController{
                 return "index";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "404";
+                return "errors/image404.jsp";
             }
         } else {
             return "redirect:/image/"+address;

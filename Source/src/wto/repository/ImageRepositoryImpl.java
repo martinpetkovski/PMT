@@ -169,6 +169,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 				images.add(temp);
 			}
 		}
+		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -189,6 +190,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
+		Image.imageCount = images.size();
 			
 		return images;
 
@@ -197,11 +199,51 @@ public class ImageRepositoryImpl implements ImageRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Image> readAll(String order, int page) {
+	public List<Image> readAll(int selectionFlag, String criteria, String order, int page) {
 		Session session = sf.getCurrentSession();
 		List<Image> images = null;
+		SQLQuery q;
 		
-		SQLQuery q = session.createSQLQuery("SELECT * FROM Image i " + order);
+		/*
+			selectionFlag 
+				0 = noquery
+				1 = user
+				2 = comment
+				3 = tag
+				4 = title
+				5 = all
+			queryCriteria
+				1 = iduser
+				2 = iduser // notworking
+				3 = query
+				4 = query
+				5 = query
+		 */
+		
+		if(selectionFlag == 1) {
+			q = session.createSQLQuery("SELECT * FROM Image i WHERE i.iduser = :u " + order);
+			q.setParameter("u", Integer.parseInt(criteria));
+		}
+		else if(selectionFlag == 2) {
+			q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Image i, Comment c WHERE c.idimage = i.idimage AND c.iduser = :u " + order);
+			q.setParameter("u", Integer.parseInt(criteria));
+		}
+		else if(selectionFlag == 3) {
+			q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i WHERE t.idimage = i.idimage AND t.content = :u " + order);
+			q.setParameter("u", criteria);
+		}
+		else if(selectionFlag == 4) {
+			q = session.createSQLQuery("SELECT * FROM Image i WHERE i.title LIKE :u " + order);
+			q.setParameter("u", "%"+criteria+"%");
+		}
+		else if(selectionFlag == 5) {
+			q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i, User u WHERE u.iduser = i.iduser AND t.idimage = i.idimage AND (t.content = :sb OR i.title LIKE :sbp OR u.username LIKE :sbp) " + order);
+			q.setParameter("sb", criteria);
+			q.setParameter("sbp", "%" + criteria + "%");
+		}
+		else
+			q = session.createSQLQuery("SELECT * FROM Image i " + order);
+		
 		q.addEntity(Image.class);
 		q.setFirstResult(page * this.IMAGES_PER_PAGE);
 		q.setMaxResults(this.IMAGES_PER_PAGE);
@@ -209,6 +251,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
+		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -228,6 +271,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
+		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -247,6 +291,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
+		Image.imageCount = images.size();
 		
 		return images;
 	}
@@ -267,6 +312,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
+		Image.imageCount = images.size();
 		
 		return images;
 	}
@@ -284,11 +330,8 @@ public class ImageRepositoryImpl implements ImageRepository {
 	}
 
 	@Override
-	@Transactional
 	public int numberOfImages() {
-		Session session = sf.getCurrentSession();		
-		Query q = session.createQuery("SELECT COUNT(*) FROM Image i");
-		return Integer.parseInt(q.uniqueResult().toString());
+		return Image.imageCount;
 	}
 
 }

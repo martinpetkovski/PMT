@@ -43,6 +43,8 @@ public class Image implements Comparable<Image> {
 	private Date createTime;
     @Transient
     private int lastIndex;
+    @Transient
+    public static int imageCount;
     
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="iduser", referencedColumnName="iduser", insertable = false, updatable = false)

@@ -14,7 +14,7 @@ public interface ImageRepository {
 	public List<String> readNextPrev(Date id, int points, String order);
 	public List<Image> readByUserId(int userId);
 	public List<Image> readByFollowers(int userid, int page);
-	public List<Image> readAll(String order, int page);
+	public List<Image> readAll(int selectionFlag, String criteria, String order, int page);
 	public List<Image> readByQuery(String query, String order, int page);
 	public List<Image> readByTag(String query, String order, int page);
 	public String randomImage();

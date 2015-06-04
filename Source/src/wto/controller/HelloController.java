@@ -140,6 +140,9 @@ public class HelloController{
         session.setAttribute("listOrder", "ORDER BY i.points DESC");
         session.setAttribute("listPage", 0);
         
+        session.setAttribute("selectionFlag", 1);
+        session.setAttribute("queryCriteria", Integer.toString(theUser.getIduser()));
+        
         model.addAttribute("UserId",theUser.getIduser());
         model.addAttribute("UserName",theUser.getUsername());
 		model.addAttribute("UserPoints", theUser.getPoints());
@@ -166,7 +169,7 @@ public class HelloController{
 		List<Image> images = new ArrayList<Image> ();
 		
 		if(orderFlag != 3)
-			images = imageService.getAllImages(order, page);
+			images = imageService.getAllImages(0, "", order, page);
 		else {
 			CustomUserDetails user =  (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			images = imageService.getImagesByFollowers(user.getUser().getIduser(), page);
@@ -211,6 +214,9 @@ public class HelloController{
 		session.setAttribute("listImages", images);
         session.setAttribute("listOrder", order);
         session.setAttribute("listPage", page);
+        
+        session.setAttribute("selectionFlag", 4);
+        session.setAttribute("queryCriteria", query);
 		
 		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
@@ -239,6 +245,9 @@ public class HelloController{
 		session.setAttribute("listImages", images);
         session.setAttribute("listOrder", order);
         session.setAttribute("listPage", page);
+        
+        session.setAttribute("selectionFlag", 3);
+        session.setAttribute("queryCriteria", query);
 		
 		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
@@ -258,11 +267,20 @@ public class HelloController{
 		return "search";
 	}
 	
-	public String searchPageWithAll(Model model, String query, String order, String orderAddress, int page) {
+	public String searchPageWithAll(Model model, HttpServletRequest request, String query, String order, String orderAddress, int page) {
+		HttpSession session = request.getSession();	
 		
 		page--;
 		
 		List<Image> images = imageService.getImagesByAll(query, order, page);
+		
+		session.setAttribute("listImages", images);
+        session.setAttribute("listOrder", order);
+        session.setAttribute("listPage", page);
+        
+        session.setAttribute("selectionFlag", 5);
+        session.setAttribute("queryCriteria", query);
+		
 		model.addAttribute("Images", images);
 		model.addAttribute("Query", query);
 		model.addAttribute("Order", order);
@@ -316,7 +334,7 @@ public class HelloController{
 			return searchPageWithTag(model, request, query, orderStatement, order, page);
 		}
 		else {
-			return searchPageWithAll(model, query, orderStatement, order, page);
+			return searchPageWithAll(model, request, query, orderStatement, order, page);
 		}
 		
 	}
@@ -332,7 +350,7 @@ public class HelloController{
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/image/{address}/{index}", method = RequestMethod.GET)
-    public String imagePageMapper(@PathVariable("address") String address, @PathVariable("index") int index, HttpServletRequest request) {
+    public String imagePageMapperWithIndex(@PathVariable("address") String address, @PathVariable("index") int index, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
 		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
@@ -345,7 +363,7 @@ public class HelloController{
 			if(page > numberOfPages)
 				page --;
 				
-			session.setAttribute("listImages", imageService.getAllImages((String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listImages", imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
 			session.setAttribute("listPage", page);
 			session.setAttribute("imageIndex", index);
 		}
@@ -356,7 +374,7 @@ public class HelloController{
 			if(page < 0)
 				page ++;			
 			
-			session.setAttribute("listImages", imageService.getAllImages((String)session.getAttribute("listOrder"), page));
+			session.setAttribute("listImages", imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page));
 			session.setAttribute("listPage", page);
 			session.setAttribute("imageIndex", index);
 		}
@@ -397,7 +415,7 @@ public class HelloController{
         	int page = ((int)session.getAttribute("listPage")) + 1;
 			
 			if(page < numberOfPages) {
-				skipPageImage = imageService.getAllImages((String)session.getAttribute("listOrder"), page).get(0);
+				skipPageImage = imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page).get(0);
 				nextprev.add(skipPageImage.getAddress());
 			}
 			else
@@ -408,7 +426,7 @@ public class HelloController{
 		else if((index-1) < 0)
 		{
 			int page = ((int)session.getAttribute("listPage")) - 1;
-			List<Image> temp = imageService.getAllImages((String)session.getAttribute("listOrder"), page);
+			List<Image> temp = imageService.getAllImages((int)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page);
 			skipPageImage = temp.get(temp.size() - 1);
 			nextprev.add(images.get(index + 1).getAddress());
 	        nextprev.add(skipPageImage.getAddress());

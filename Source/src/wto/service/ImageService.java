@@ -13,7 +13,7 @@ public interface ImageService {
 	public Image getImageByAddress(String address);
 	public List<String> getNextPrevAddress(Date id, int points, String order);
 	public List<Image> getImagesByUserId(Integer userId);
-	public List<Image> getAllImages(String order, int page);
+	public List<Image> getAllImages(int selectionFlag, String criteria, String order, int page);
 	public List<Image> getImagesByQuery(String query, String order, int page);
 	public List<Image> getImagesByTag(String query, String order, int page);
 	public List<Image> getImagesByAll(String query, String order, int page);

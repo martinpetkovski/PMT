@@ -54,8 +54,8 @@ public class ImageServiceImpl implements ImageService {
 	}
 
 	@Override
-	public List<Image> getAllImages(String order, int page) {
-		return img.readAll(order, page);
+	public List<Image> getAllImages(int selectionFlag, String criteria, String order, int page) {
+		return img.readAll(selectionFlag, criteria, order, page);
 	}
 	
 	public int numberOfImages() {

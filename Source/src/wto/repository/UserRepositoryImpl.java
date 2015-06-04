@@ -105,5 +105,20 @@ public class UserRepositoryImpl implements UserRepository {
 			
 		return users;
 	}
+	
+	@Override
+	@Transactional
+	public boolean checkUID(String uid) {
+		Session session = sf.getCurrentSession();
+			
+		if(session.createSQLQuery("SELECT * FROM User WHERE uid = :uid AND enabled = 0").setParameter("uid", uid).uniqueResult() != null) {
+			session.createSQLQuery("UPDATE user SET enabled = 1 WHERE uid = :uid").setParameter("uid", uid).executeUpdate();
+			session.createSQLQuery("INSERT INTO user_roles VALUES(NULL, (SELECT u.iduser FROM User u WHERE uid = :uid), 'ROLE_USER')").setParameter("uid", uid).executeUpdate();
+			return true;
+		}
+		else
+			return false;
+		
+	}
 
 }

@@ -12,4 +12,5 @@ public interface UserRepository {
 	public User readByUsername(String username);
 	public User readByNameAndFetch(String username);
 	public List<User> readAll();
+	public boolean checkUID(String uid);
 }

@@ -32,6 +32,8 @@ public class User implements Serializable {
 	private String username;
 	@Column(name="email")
 	private String email;
+	@Column(name="uid")
+	private String uid;
 	@Column(name="password")
 	private String password;
 	@Column(name="points")
@@ -57,12 +59,13 @@ public class User implements Serializable {
     private Set<UserRole> userRoles;
 	
 	public User() {}
-	public User(Integer iduser, String username, String email, String password, Integer points,
+	public User(Integer iduser, String username, String email, String uid, String password, Integer points,
 			Integer followers, boolean enabled, Date createTime) {
 		super();
 		this.iduser = iduser;
 		this.username = username;
 		this.email = email;
+		this.uid =  uid;
 		this.password = password;
 		this.points = points;
 		this.followers = followers;
@@ -86,6 +89,15 @@ public class User implements Serializable {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public String getPassword() {
 		return password;

@@ -11,4 +11,5 @@ public interface UserService {
 	public User getUserByNameAndFetch(String username);
 	public User getUserByQuery(String username);
 	public void saveUser(User theUser);
+	public boolean checkUID(String uid);
 }

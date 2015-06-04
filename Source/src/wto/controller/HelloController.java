@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,7 @@ import wto.service.CommentService;
 import wto.service.ImageService;
 import wto.service.UserService;
 import wto.util.ImageAddressGenerator;
+import wto.util.MailMail;
 
 
 
@@ -564,15 +566,26 @@ public class HelloController{
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String registerPageProcess(@RequestParam("username") String username, 
+	public String registerPageProcess(HttpServletRequest request, @RequestParam("username") String username, 
 			@RequestParam("email") String email, @RequestParam("password") String password,
 			@RequestParam("password2") String password2) {
-		
-		PasswordEncoder pe = new BCryptPasswordEncoder();
-		password = pe.encode(password);
-		userService.saveUser(new User(null, username, email, password, 0, 0, false, null));
-		return "register";
+
+			PasswordEncoder pe = new BCryptPasswordEncoder();
+			password = pe.encode(password);
 			
+			String uid = UUID.randomUUID().toString();
+			
+			userService.saveUser(new User(null, username, email, uid, password, 0, 0, false, null));
+			MailMail.sendMessage(email, uid, username, request.getLocalAddr().toString());
+			
+			return "register";
+			
+	}
+	
+	@RequestMapping(value = "/confirm/{uid}", method = RequestMethod.GET)
+	public String confirmPageMapper(@PathVariable("uid") String uid) {
+		userService.checkUID(uid);
+		return "index";
 	}
 	
 	@PreAuthorize("hasRole('ROLE_USER')")

@@ -37,8 +37,14 @@ public class UserServiceImpl implements UserService {
 		return ur.readByUsername(username);
 	}
 	
+	@Override
 	public void saveUser(User theUser) {
 		ur.create(theUser);
+	}
+	
+	@Override
+	public boolean checkUID(String uid) {
+		return ur.checkUID(uid);
 	}
 
 }

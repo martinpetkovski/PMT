@@ -21,13 +21,16 @@ CREATE TABLE IF NOT EXISTS `wto`.`user` (
   `iduser` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(16) NOT NULL,
   `email` VARCHAR(150) NOT NULL,
+  `uid` VARCHAR(200) NOT NULL,
   `password` MEDIUMTEXT NOT NULL,
   `points` INT NOT NULL,
   `followers` INT NOT NULL,
   `enabled` TINYINT NOT NULL DEFAULT 1,
   `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`iduser`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  UNIQUE INDEX `uid_UNIQUE` (`uid` ASC),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB
 AUTO_INCREMENT = 0
 DEFAULT CHARACTER SET = utf8

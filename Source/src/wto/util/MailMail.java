@@ -31,7 +31,7 @@ public class MailMail
 		  });
  
 		try {
-			String confirmationAddress = appAddress + "../confirm/" + generatedId;
+			String confirmationAddress = appAddress + "/confirm/" + generatedId;
 			
 			String text = "Hello " + registredUsername +"!"
 					+ "<br/><br/>Thanks for registring an account on the world's best image hosting service!<br/><br/>"

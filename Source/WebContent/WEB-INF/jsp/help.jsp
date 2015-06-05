@@ -69,18 +69,18 @@
 				<div class="sectionBody">
 					<table>
 						<tr><td>CRITERIA</td> <td>FUNCTION</td> <td>AVAILABILITY</td></tr> 
-						<tr><td>by highest scoring</td> <td>Sorts the images from highest to lowest scoring</td> <td>index, search, image page(!)</td></tr> 
+						<tr><td>by highest scoring</td> <td>Sorts the images from highest to lowest scoring</td> <td>index, search, image page</td></tr> 
 						<tr><td>by newest first</td> <td>Sorts the images from the newest to oldest by upload time</td> <td>index, search, image page</td></tr> 
-						<tr><td>by random</td> <td>Sorts the images by random order</td> <td>index, search, image page(!)</td></tr> 
+						<tr><td>by random</td> <td>Sorts the images by random order</td> <td>index, search, image page</td></tr> 
 						<tr><td>default</td> <td>The default sort is by newest first</td> <td>index, search, image page</td></tr>
-						<tr><td colspan="3">(!) - there is a bug with some sorting algorithms on the image page that is not yet resolved.</td></tr>
 					</table>
 				</div>
 				
 				<div class="sectionTitle">Image uploads</div>
 				<div class="sectionBody">
 					Maximum upload size is 1048576 bytes or ~1 Megabyte.<br/>
-					Permitted formats are all image formats.
+					Permitted formats are all image formats.<br/>
+					Tags are divided by using a comma.
 				</div>
 				
 				<div class="sectionTitle">About WTO imager</div>

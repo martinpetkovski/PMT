@@ -20,7 +20,7 @@ public interface ImageService {
 	public List<Image> getImagesByFollowers(int userid, int page);
 	public boolean isFollowing(int follower, int followee);
 	public String getRandomImage();
-	public int numberOfImages();
+	public int numberOfImages(int selectionFlag, String criteria);
 	public void follow(int follower, int folowee);
 	public void voteImage(int iduser, int idimage, boolean voteType);
 	void voteComment(int iduser, int idcomment, boolean voteType);

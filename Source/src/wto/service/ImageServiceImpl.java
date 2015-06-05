@@ -58,8 +58,8 @@ public class ImageServiceImpl implements ImageService {
 		return img.readAll(selectionFlag, criteria, order, page);
 	}
 	
-	public int numberOfImages() {
-		return img.numberOfImages();
+	public int numberOfImages(int selectionFlag, String criteria) {
+		return img.numberOfImages(selectionFlag, criteria);
 	}
 
 	@Override

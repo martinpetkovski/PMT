@@ -169,7 +169,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 				images.add(temp);
 			}
 		}
-		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -190,7 +189,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
-		Image.imageCount = images.size();
 			
 		return images;
 
@@ -251,7 +249,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
-		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -271,7 +268,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
-		Image.imageCount = images.size();
 			
 		return images;
 	}
@@ -291,7 +287,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
-		Image.imageCount = images.size();
 		
 		return images;
 	}
@@ -302,7 +297,7 @@ public class ImageRepositoryImpl implements ImageRepository {
 	public List<Image> readByAll(String query, String order, int page) {
 		Session session = sf.getCurrentSession();
 		List<Image> images = new ArrayList<Image>();
-		SQLQuery q = session.createSQLQuery("SELECT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i, User u WHERE u.iduser = i.iduser AND t.idimage = i.idimage AND (t.content = :sb OR i.title LIKE :sbp OR u.username LIKE :sbp) " + order);
+		SQLQuery q = session.createSQLQuery("SELECT DISTINCT i.idimage, i.iduser, i.title, i.address, i.content, i.points, i.create_time FROM Tag t, Image i, User u WHERE u.iduser = i.iduser AND t.idimage = i.idimage AND (t.content = :sb OR i.title LIKE :sbp OR u.username LIKE :sbp) " + order);
 		q.setParameter("sb", query);
 		q.setParameter("sbp", "%" + query + "%");
 		q.addEntity(Image.class);
@@ -312,7 +307,6 @@ public class ImageRepositoryImpl implements ImageRepository {
 		for(Image image : images) {
 			Hibernate.initialize(image.getUser());
 		}
-		Image.imageCount = images.size();
 		
 		return images;
 	}
@@ -330,8 +324,36 @@ public class ImageRepositoryImpl implements ImageRepository {
 	}
 
 	@Override
-	public int numberOfImages() {
-		return Image.imageCount;
+	@Transactional
+	public int numberOfImages(int selectionFlag, String criteria) {
+		Session session = sf.getCurrentSession();		
+		SQLQuery q;
+		
+		if(selectionFlag == 1) {
+			q = session.createSQLQuery("SELECT COUNT(*) FROM Image i WHERE i.iduser = :u ");
+			q.setParameter("u", Integer.parseInt(criteria));
+		}
+		else if(selectionFlag == 2) {
+			q = session.createSQLQuery("SELECT COUNT(*) FROM Image i, Comment c WHERE c.idimage = i.idimage AND c.iduser = :u ");
+			q.setParameter("u", Integer.parseInt(criteria));
+		}
+		else if(selectionFlag == 3) {
+			q = session.createSQLQuery("SELECT COUNT(*) FROM Tag t, Image i WHERE t.idimage = i.idimage AND t.content = :u ");
+			q.setParameter("u", criteria);
+		}
+		else if(selectionFlag == 4) {
+			q = session.createSQLQuery("SELECT COUNT(*) FROM Image i WHERE i.title LIKE :u ");
+			q.setParameter("u", "%"+criteria+"%");
+		}
+		else if(selectionFlag == 5) {
+			q = session.createSQLQuery("SELECT COUNT(DISTINCT i.idimage) FROM Tag t, Image i, User u WHERE u.iduser = i.iduser AND t.idimage = i.idimage AND (t.content = :sb OR i.title LIKE :sbp OR u.username LIKE :sbp) ");
+			q.setParameter("sb", criteria);
+			q.setParameter("sbp", "%" + criteria + "%");
+		}
+		else
+			q = session.createSQLQuery("SELECT COUNT(*) FROM Image i ");
+		
+		return Integer.parseInt(q.uniqueResult().toString());
 	}
 
 }

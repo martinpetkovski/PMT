@@ -181,7 +181,7 @@ public class HelloController{
         session.setAttribute("listOrder", order);
         session.setAttribute("listPage", page);
                 
-        int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        int numberOfPages = imageService.numberOfImages(0, "") / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
         
         @SuppressWarnings("unchecked")
@@ -220,7 +220,7 @@ public class HelloController{
         session.setAttribute("selectionFlag", 4);
         session.setAttribute("queryCriteria", query);
 		
-		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+		int numberOfPages = imageService.numberOfImages(4, query) / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
 		
 		@SuppressWarnings("unchecked")
@@ -251,7 +251,7 @@ public class HelloController{
         session.setAttribute("selectionFlag", 3);
         session.setAttribute("queryCriteria", query);
 		
-		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+		int numberOfPages = imageService.numberOfImages(3, query) / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
 		
 		@SuppressWarnings("unchecked")
@@ -287,7 +287,7 @@ public class HelloController{
 		model.addAttribute("Query", query);
 		model.addAttribute("Order", order);
 		
-		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+		int numberOfPages = imageService.numberOfImages(5, query) / 12; // strips the decimal
         numberOfPages++; // ceils the number of pages
 		
 		@SuppressWarnings("unchecked")
@@ -355,7 +355,7 @@ public class HelloController{
     public String imagePageMapperWithIndex(@PathVariable("address") String address, @PathVariable("index") int index, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		
-		int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+		int numberOfPages = imageService.numberOfImages(0, "") / 12; // strips the decimal
 	    numberOfPages++; // ceils the number of pages
 		
 		if(index > ((List<Image>)session.getAttribute("listImages")).size() - 1)
@@ -412,12 +412,13 @@ public class HelloController{
             index = 1;
         }
        
-        int numberOfPages = imageService.numberOfImages() / 12; // strips the decimal
+        int numberOfPages = imageService.numberOfImages(0, "") / 12; // strips the decimal
 	    numberOfPages++; // ceils the number of pages
         
 		List<Image> images = (List<Image>) session.getAttribute("listImages");
-		        
-        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size()) {
+        
+        if((index+1) >= ((List<Image>)session.getAttribute("listImages")).size())
+		{
         	int page = ((int)session.getAttribute("listPage")) + 1;
 			
 			if(page < numberOfPages) {
@@ -429,19 +430,13 @@ public class HelloController{
 				
 	        nextprev.add(images.get(index - 1).getAddress()); 
 		}
-		else if((index-1) < 0) {
+		else if((index-1) < 0)
+		{
 			int page = ((int)session.getAttribute("listPage")) - 1;
 			List<Image> temp = imageService.getAllImages((Integer)session.getAttribute("selectionFlag"), (String)session.getAttribute("queryCriteria"), (String)session.getAttribute("listOrder"), page);
 			skipPageImage = temp.get(temp.size() - 1);
-			if(page < numberOfPages) {
-				nextprev.add(images.get(index + 1).getAddress());
-				nextprev.add("notExist");
-			}
-			else {
-				nextprev.add(images.get(index + 1).getAddress());
-				nextprev.add(skipPageImage.getAddress());
-			}
-				
+			nextprev.add(images.get(index + 1).getAddress());
+	        nextprev.add(skipPageImage.getAddress());
 		}
 		else {
 	        nextprev.add(images.get(index + 1).getAddress());
@@ -576,7 +571,7 @@ public class HelloController{
 			String uid = UUID.randomUUID().toString();
 			
 			userService.saveUser(new User(null, username, email, uid, password, 0, 0, false, null));
-			MailMail.sendMessage(email, uid, username, request.getLocalAddr().toString());
+			MailMail.sendMessage(email, uid, username, "http://localhost:8080/WTO");
 			
 			return "register";
 			

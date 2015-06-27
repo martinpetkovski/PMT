@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.and().logout().logoutSuccessUrl("/login?logout")
-				.and().csrf()
+				.and().csrf().ignoringAntMatchers("/uploadScreenshot")
 				.and().exceptionHandling().accessDeniedPage("/403");
 	}
 	

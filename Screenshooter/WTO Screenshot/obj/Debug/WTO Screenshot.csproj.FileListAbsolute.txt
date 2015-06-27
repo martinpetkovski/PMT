@@ -1,0 +1,19 @@
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\WTO Screenshot.exe
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\WTO Screenshot.pdb
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot.csprojResolveAssemblyReference.cache
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\MainWindow.baml
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\MainWindow.g.cs
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\App.g.cs
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot_MarkupCompile.cache
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot.g.resources
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO_Screenshot.Properties.Resources.resources
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot.csproj.GenerateResource.Cache
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot.exe
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\WTO Screenshot.pdb
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\App.baml
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\MySql.Data.dll
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\MySql.Web.dll
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\BCrypt.Net.dll
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\BCrypt.Net.xml
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\Screenshooter.baml
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\Screenshooter.g.cs

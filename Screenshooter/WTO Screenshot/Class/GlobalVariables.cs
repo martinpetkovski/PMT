@@ -12,6 +12,10 @@ namespace WTO_Screenshot.Class
     {
         public static User theUser {get; set;}
 
+        public static String title { get; set; }
+        public static String tags { get; set; }
+
+
         public static bool setSetting(string pstrKey, string pstrValue)
         {
             Configuration objConfigFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);

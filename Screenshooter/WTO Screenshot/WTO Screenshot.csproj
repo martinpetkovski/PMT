@@ -73,6 +73,9 @@
     <Compile Include="Screenshooter.xaml.cs">
       <DependentUpon>Screenshooter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TitleAndTags.xaml.cs">
+      <DependentUpon>TitleAndTags.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,6 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Screenshooter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TitleAndTags.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

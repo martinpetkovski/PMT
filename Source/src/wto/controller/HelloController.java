@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -625,7 +627,7 @@ public class HelloController{
 	
 	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value="/uploadScreenshot", method = RequestMethod.POST)
-	public void handleScreenshotUpload(@RequestParam("iduser") Integer iduser, @RequestParam("title") String title, @RequestParam("file") MultipartFile file){
+	public void handleScreenshotUpload(HttpServletResponse response, @RequestParam("iduser") Integer iduser, @RequestParam("title") String title, @RequestParam("tags") String tags, @RequestParam("file") MultipartFile file){
 		
 		String address = ImageAddressGenerator.generate();
 		
@@ -635,9 +637,13 @@ public class HelloController{
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("D:\\programming\\Workspaces\\STS\\" + servletContext.getContextPath() + "\\WebContent\\i\\" + address + "." + getFileExtension(file))));
                 stream.write(bytes);
                 stream.close();
-                imageService.saveImage(null, iduser, title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null, new String("Screenshot"));
+                imageService.saveImage(null, iduser, title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null, tags);
+                response.addHeader("url", "http://localhost:8080/"+servletContext.getContextPath()+"/image/"+address);
+                response.setStatus(200);
+            
             } catch (Exception e) {
                 e.printStackTrace();
+                response.setStatus(501);
             }
         }
     }

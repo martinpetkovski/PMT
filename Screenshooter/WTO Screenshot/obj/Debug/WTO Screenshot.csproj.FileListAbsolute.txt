@@ -17,3 +17,5 @@ D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screens
 D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\bin\Debug\BCrypt.Net.xml
 D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\Screenshooter.baml
 D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\Screenshooter.g.cs
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\TitleAndTags.baml
+D:\programming\fakultet\vizuelno-programiranje\proekt\WTO Screenshot\WTO Screenshot\obj\Debug\TitleAndTags.g.cs

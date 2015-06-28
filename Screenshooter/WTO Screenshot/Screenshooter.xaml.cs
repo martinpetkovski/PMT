@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Forms;
+using System.Diagnostics;
 using WTO_Screenshot.Class;
 
 namespace WTO_Screenshot
@@ -21,6 +22,10 @@ namespace WTO_Screenshot
     /// </summary>
     public partial class Screenshooter : Window
     {
+        private String saveAddress;
+        private String saveFile;
+        private short saveType;
+
         public Screenshooter()
         {
             InitializeComponent();
@@ -29,6 +34,10 @@ namespace WTO_Screenshot
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.Title = "Screenshooter: " + GlobalVariables.theUser.username;
+            lbl_username.Content = GlobalVariables.theUser.username.ToUpper();
+            lbl_points.Content = "Points: " + GlobalVariables.theUser.points.ToString();
+            lbl_followers.Content = "Followers: " + GlobalVariables.theUser.followers.ToString();
+            saveType = 0;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -44,6 +53,8 @@ namespace WTO_Screenshot
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
+            saveType = 2;
+
             int posX = (int)this.Left;
             int posY = (int)this.Top;
             int width = (int)this.Width;
@@ -58,25 +69,59 @@ namespace WTO_Screenshot
             saveDialog.Filter = "Portable Network Graphics  (*.png)|*.png";
             saveDialog.FileName = "Screenshot";
             saveDialog.Title = "Save As";
+            saveDialog.RestoreDirectory = false;
             if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 scrs.save(saveDialog.FileName);
+                saveAddress = System.IO.Path.GetDirectoryName(saveDialog.FileName);
+                saveFile = saveDialog.FileName;
+                btn_info.Content = "Click here to open image location.";
             }
         }
 
         private void btn_upload_Click(object sender, RoutedEventArgs e)
         {
-            int posX = (int)this.Left;
-            int posY = (int)this.Top;
-            int width = (int)this.Width;
-            int height = (int)this.Height;
+            saveType = 1;
 
-            this.Hide();
-            Screenshot scrs = new Screenshot(posX, posY, width, height);
-            scrs.shoot();
-            this.Show();
+            TitleAndTags tat = new TitleAndTags();
+            tat.ShowInTaskbar = false;
+            tat.ShowDialog();
+            if (GlobalVariables.title != null)
+            {
+                int posX = (int)this.Left;
+                int posY = (int)this.Top;
+                int width = (int)this.Width;
+                int height = (int)this.Height;
 
-            scrs.upload();
+                this.Hide();
+                Screenshot scrs = new Screenshot(posX, posY, width, height);
+                scrs.shoot();
+                this.Show();
+
+                saveAddress = scrs.upload();
+                btn_info.Content = "Click here to copy image address to clipboard.";
+
+                GlobalVariables.title = null;
+                GlobalVariables.tags = null;
+            }
+        }
+
+        private void btn_info_Click(object sender, RoutedEventArgs e)
+        {
+            if(saveType == 1)
+            {
+                System.Windows.Clipboard.SetText(saveAddress);
+            }
+            else if(saveType == 2)
+            {
+                Process.Start("explorer.exe", " /select, " + saveFile);
+            }
+        }
+
+        private void btn_upload_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left)
+                btn_info.Content = "Uploading...";
         }
     }
 }

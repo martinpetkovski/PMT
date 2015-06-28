@@ -23,6 +23,52 @@ namespace WTO_Screenshot
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Brush convertToBrush(String color)
+        {
+            BrushConverter converter = new System.Windows.Media.BrushConverter();
+            Brush brush = (Brush)converter.ConvertFromString(color);
+            return brush;
+        }
+
+        private void setInfoLabel()
+        {
+            lbl_error.Content = "Trying to log in...";
+            lbl_error.Foreground = this.convertToBrush("#FFCCCCCC");
+            lbl_error.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void setErrorLabel()
+        {
+            lbl_error.Content = "Incorrect username / password combination.";
+            lbl_error.Foreground = this.convertToBrush("#FFCC0000");
+            lbl_error.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void setSuccessLabel()
+        {
+            lbl_error.Content = "Successful login.";
+            lbl_error.Foreground = this.convertToBrush("#FF00CC00");
+            lbl_error.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void checkInput()
+        {
+            GlobalVariables.theUser = new User(txt_username.Text, txt_password.Password);
+
+            if (!GlobalVariables.theUser.loadUser())
+            {
+                this.setErrorLabel();
+            }
+            else
+            {
+                this.setErrorLabel();
+                Screenshooter scsh = new Screenshooter();
+                this.Close();
+                scsh.Show();
+
+                GlobalVariables.setSetting("username", GlobalVariables.theUser.username);
+            }
+        }
 
         public MainWindow()
         {
@@ -82,20 +128,7 @@ namespace WTO_Screenshot
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
         {
-            GlobalVariables.theUser = new User(txt_username.Text, txt_password.Password);
-
-            if (!GlobalVariables.theUser.loadUser())
-            {
-                lbl_error.Visibility = System.Windows.Visibility.Visible;
-            }
-            else
-            {
-                Screenshooter scsh = new Screenshooter();
-                this.Close();
-                scsh.Show();
-
-                GlobalVariables.setSetting("username", GlobalVariables.theUser.username);
-            }
+            this.checkInput();
         }
 
         private void txt_username_TextChanged(object sender, TextChangedEventArgs e)
@@ -111,6 +144,41 @@ namespace WTO_Screenshot
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void lbl_drag_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
+
+        private void txt_username_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.checkInput();
+        }
+
+        private void txt_password_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.checkInput();
+        }
+
+        private void txt_username_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                this.setInfoLabel();
+        }
+
+        private void txt_password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                this.setInfoLabel();
+        }
+
+        private void btn_login_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.setInfoLabel();
         }
     }
 }

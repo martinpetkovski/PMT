@@ -14,13 +14,15 @@ namespace WTO_Screenshot.Class
 {
     class Screenshot
     {
-        private int offset = 55;
+        private int offset = 90;
         public Bitmap bitmap {get; set;}
         private int positionX;
         private int positionY;
         private int width;
         private int height;
         private String savePath;
+        private String title;
+        private String tags;
 
         public Screenshot(int positionX, int positionY, int width, int height)
         {
@@ -37,6 +39,17 @@ namespace WTO_Screenshot.Class
             this.width = width;
             this.height = height - this.offset;
             this.savePath = savePath;
+        }
+
+        public Screenshot(int positionX, int positionY, int width, int height, String savePath, String title, String tags)
+        {
+            this.positionX = positionX;
+            this.positionY = positionY + this.offset;
+            this.width = width;
+            this.height = height - this.offset;
+            this.savePath = savePath;
+            this.title = title;
+            this.tags = tags;
         }
 
         public void shoot()
@@ -56,17 +69,18 @@ namespace WTO_Screenshot.Class
             bitmap.Save(path, ImageFormat.Png);
         }
 
-        public void upload()
+        public String upload()
         {
             bitmap.Save("temp.png",ImageFormat.Png);
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("iduser", GlobalVariables.theUser.iduser.ToString());
-            nvc.Add("title", "Screenshot");
+            nvc.Add("title", this.title);
+            nvc.Add("tags", this.tags);
 
-            this.HttpUploadFile("http://localhost:8080/WTO/uploadScreenshot", "temp.png" , "file", "image/png", nvc);
+            return this.HttpUploadFile("http://localhost:8080/WTO/uploadScreenshot", "temp.png" , "file", "image/png", nvc);
         }
 
-        private void HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
+        private String HttpUploadFile(string url, string file, string paramName, string contentType, NameValueCollection nvc)
         {
             String log;
             log = string.Format("Uploading {0} to {1}", file, url);
@@ -113,9 +127,8 @@ namespace WTO_Screenshot.Class
             try
             {
                 wresp = wr.GetResponse();
-                Stream stream2 = wresp.GetResponseStream();
-                StreamReader reader2 = new StreamReader(stream2);
-                log = string.Format("File uploaded, server response is: {0}", reader2.ReadToEnd());
+                return wresp.Headers["url"];
+
             }
             catch (Exception ex)
             {
@@ -124,7 +137,8 @@ namespace WTO_Screenshot.Class
                 {
                     wresp.Close();
                     wresp = null;
-                }                
+                }
+                return "error";
             }
             finally
             {

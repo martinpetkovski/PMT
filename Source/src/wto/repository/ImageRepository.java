@@ -20,5 +20,6 @@ public interface ImageRepository {
 	public String randomImage();
 	public List<Image> readByUsername(String username, String order, int page);
 	public int numberOfImages(int selectionFlag, String criteria);
+	public boolean getToken(String uid);
 	List<Image> readByAll(String query, String order, int page);
 }

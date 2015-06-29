@@ -94,7 +94,7 @@ namespace WTO_Screenshot
                 int height = (int)this.Height;
 
                 this.Hide();
-                Screenshot scrs = new Screenshot(posX, posY, width, height);
+                Screenshot scrs = new Screenshot(posX, posY, width, height, GlobalVariables.title, GlobalVariables.tags);
                 scrs.shoot();
                 this.Show();
 

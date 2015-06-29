@@ -23,6 +23,7 @@ public interface ImageService {
 	public int numberOfImages(int selectionFlag, String criteria);
 	public void follow(int follower, int folowee);
 	public void voteImage(int iduser, int idimage, boolean voteType);
+	public boolean getToken(String uid);
 	void voteComment(int iduser, int idcomment, boolean voteType);
 	void saveImage(Integer idimage, int iduser, String title, String address, String content, int points, Date createTime, String tags);
 }

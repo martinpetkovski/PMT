@@ -627,25 +627,30 @@ public class HelloController{
 	
 	@PreAuthorize("hasRole('ROLE_ANONYMOUS')")
 	@RequestMapping(value="/uploadScreenshot", method = RequestMethod.POST)
-	public void handleScreenshotUpload(HttpServletResponse response, @RequestParam("iduser") Integer iduser, @RequestParam("title") String title, @RequestParam("tags") String tags, @RequestParam("file") MultipartFile file){
+	public void handleScreenshotUpload(HttpServletResponse response, @RequestParam("iduser") Integer iduser, @RequestParam("title") String title, @RequestParam("tags") String tags, @RequestParam("uid") String uid, @RequestParam("file") MultipartFile file){
 		
-		String address = ImageAddressGenerator.generate();
-		
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("D:\\programming\\Workspaces\\STS\\" + servletContext.getContextPath() + "\\WebContent\\i\\" + address + "." + getFileExtension(file))));
-                stream.write(bytes);
-                stream.close();
-                imageService.saveImage(null, iduser, title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null, tags);
-                response.addHeader("url", "http://localhost:8080/"+servletContext.getContextPath()+"/image/"+address);
-                response.setStatus(200);
-            
-            } catch (Exception e) {
-                e.printStackTrace();
-                response.setStatus(501);
-            }
-        }
+		if(imageService.getToken(uid))
+		{
+			String address = ImageAddressGenerator.generate();
+			
+	        if (!file.isEmpty()) {
+	            try {
+	                byte[] bytes = file.getBytes();
+	                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File("D:\\programming\\Workspaces\\STS\\" + servletContext.getContextPath() + "\\WebContent\\i\\" + address + "." + getFileExtension(file))));
+	                stream.write(bytes);
+	                stream.close();
+	                imageService.saveImage(null, iduser, title, address, servletContext.getContextPath()+"/i/" + address + "." + getFileExtension(file), 0, null, tags);
+	                response.addHeader("url", "http://localhost:8080"+servletContext.getContextPath()+"/image/"+address);
+	                response.setStatus(200);
+	            
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                response.setStatus(501);
+	            }
+	        }
+		}
+		else
+			response.setStatus(501);
     }
 	
 	@PreAuthorize("hasRole('ROLE_USER')")

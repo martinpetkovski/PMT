@@ -207,6 +207,16 @@ CREATE TABLE IF NOT EXISTS `wto`.`follower` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `wto`.`tokens`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wto`.`tokens` (
+  `id` INT NULL AUTO_INCREMENT,
+  `token` TEXT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
 USE `wto`;
 
 DELIMITER $$

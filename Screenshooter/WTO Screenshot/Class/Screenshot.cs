@@ -9,6 +9,8 @@ using System.Net;
 using System.Collections.Specialized;
 using System.IO;
 using System.Diagnostics;
+using MySql.Data.MySqlClient;
+using WTO_Screenshot.Class.Connection;
 
 namespace WTO_Screenshot.Class
 {
@@ -23,6 +25,7 @@ namespace WTO_Screenshot.Class
         private String savePath;
         private String title;
         private String tags;
+        DBConnect connection = new DBConnect();
 
         public Screenshot(int positionX, int positionY, int width, int height)
         {
@@ -41,15 +44,15 @@ namespace WTO_Screenshot.Class
             this.savePath = savePath;
         }
 
-        public Screenshot(int positionX, int positionY, int width, int height, String savePath, String title, String tags)
+        public Screenshot(int positionX, int positionY, int width, int height, String title, String tags)
         {
             this.positionX = positionX;
             this.positionY = positionY + this.offset;
             this.width = width;
             this.height = height - this.offset;
-            this.savePath = savePath;
             this.title = title;
             this.tags = tags;
+            connection.init();
         }
 
         public void shoot()
@@ -76,6 +79,17 @@ namespace WTO_Screenshot.Class
             nvc.Add("iduser", GlobalVariables.theUser.iduser.ToString());
             nvc.Add("title", this.title);
             nvc.Add("tags", this.tags);
+
+            String uid = Guid.NewGuid().ToString("N");
+
+            nvc.Add("uid", uid);
+
+            connection.open();
+            string query = "INSERT INTO tokens VALUES(NULL, @uid)";
+            MySqlCommand cmd = new MySqlCommand(query, connection.mysqlconnection);
+            cmd.Parameters.AddWithValue("@uid", uid);
+            cmd.ExecuteNonQuery();
+            connection.close();
 
             return this.HttpUploadFile("http://localhost:8080/WTO/uploadScreenshot", "temp.png" , "file", "image/png", nvc);
         }

@@ -129,5 +129,10 @@ public class ImageServiceImpl implements ImageService {
 	public boolean isFollowing(int follower, int followee) {
 		return fr.isFollowing(follower, followee);
 	}
+
+	@Override
+	public boolean getToken(String uid) {
+		return img.getToken(uid);
+	}
 	
 }

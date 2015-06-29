@@ -34,7 +34,47 @@ namespace WTO_Screenshot
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            txt_title.Text = "Title";
+            txt_tags.Text = "First Tag, Second Tag, Third Tag";
+            txt_title.Foreground = Brushes.LightGray;
+            txt_tags.Foreground = Brushes.LightGray;
             txt_title.Focus();
+        }
+
+        private void txt_title_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txt_title.Text == "Title")
+            {
+                txt_title.Text = "";
+                txt_title.Foreground = Brushes.Black;
+            }
+        }
+
+        private void txt_title_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txt_title.Text == "" || txt_title.Text == "Title")
+            {
+                txt_title.Text = "Title";
+                txt_title.Foreground = Brushes.LightGray;
+            }
+        }
+
+        private void txt_tags_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txt_tags.Text == "First Tag, Second Tag, Third Tag")
+            {
+                txt_tags.Text = "";
+                txt_tags.Foreground = Brushes.Black;
+            }
+        }
+
+        private void txt_tags_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txt_tags.Text == "" || txt_tags.Text == "First Tag, Second Tag, Third Tag")
+            {
+                txt_tags.Text = "First Tag, Second Tag, Third Tag";
+                txt_tags.Foreground = Brushes.LightGray;
+            }
         }
     }
 }

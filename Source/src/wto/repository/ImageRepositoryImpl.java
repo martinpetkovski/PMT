@@ -356,4 +356,23 @@ public class ImageRepositoryImpl implements ImageRepository {
 		return Integer.parseInt(q.uniqueResult().toString());
 	}
 
+	@Override
+	@Transactional
+	public boolean getToken(String uid) {
+		Session session = sf.getCurrentSession();
+		SQLQuery q = session.createSQLQuery("SELECT * FROM tokens WHERE tokens.token = :uid");
+		q.setParameter("uid", uid);
+		if(q.list().size() == 1)
+		{
+			q = session.createSQLQuery("DELETE FROM tokens WHERE tokens.token = :uid");
+			q.setParameter("uid", uid);
+			q.executeUpdate();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 }
